@@ -1,0 +1,2 @@
+ALTER TABLE posts ADD COLUMN public_at DATETIME;
+UPDATE posts SET public_at = created_at;
