@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà Đẹp - Kênh bất động sản số 1 Việt Nam</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Chỉ sử dụng Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <span>Tìm</span>NhàĐẹp
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#projects">Dự án</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#listings">Mua bán</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#news">Tin tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">Về chúng tôi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Liên hệ</a>
+                        </li>
+                    </ul>
+                    <div class="user-actions">
+                        <button class="btn btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                        </button>
+                        <button class="btn btn-primary btn-register" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            <i class="fas fa-user-plus me-2"></i>Đăng ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="hero-content">
+                        <h1 class="animate__animated animate__fadeInDown">Tìm Ngôi Nhà Hoàn Hảo Cho Gia Đình Bạn</h1>
+                        <p class="animate__animated animate__fadeInUp animate__delay-1s">Khám phá hàng nghìn bất động sản cao cấp, đăng tin mua bán miễn phí và nhận tư vấn từ chuyên gia hàng đầu.</p>
+                        <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                            <a href="#projects" class="btn btn-primary me-3 mb-3 mb-md-0"><i class="fas fa-building me-2"></i>Xem dự án</a>
+                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#postModal"><i class="fas fa-plus-circle me-2"></i>Đăng tin ngay</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="hero-stats animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">2,580+</div>
+                                    <div class="stat-text">Dự án bất động sản</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">15,230+</div>
+                                    <div class="stat-text">Tin đăng mua bán</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">8,940+</div>
+                                    <div class="stat-text">Khách hàng hài lòng</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">98%</div>
+                                    <div class="stat-text">Giao dịch thành công</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Navigation -->
+    <section class="section-tabs" id="section-tabs">
+        <div class="container">
+            <ul class="nav nav-pills tabs-navigation" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-projects-tab" data-bs-toggle="pill" data-bs-target="#pills-projects" type="button" role="tab">Dự án bất động sản</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-listings-tab" data-bs-toggle="pill" data-bs-target="#pills-listings" type="button" role="tab">Tin đăng mua bán</button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="pills-tabContent">
+                <!-- Projects Tab -->
+                <div class="tab-pane fade show active" id="pills-projects" role="tabpanel">
+                    <div class="projects-section" id="projects">
+                        <div class="container">
+                            <h2 class="section-title center">Dự án nổi bật</h2>
+                            <p class="text-center text-muted mb-5">Khám phá những dự án bất động sản cao cấp với vị trí đắc địa và tiện ích hoàn hảo</p>
+                            
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="project-card animate-on-scroll">
+                                        <div class="project-img">
+                                            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80" alt="Sunshine City">
+                                            <div class="project-badge">
+                                                <span class="badge bg-primary">Mới</span>
+                                            </div>
+                                        </div>
+                                        <div class="project-info">
+                                            <h3 class="project-title">Sunshine City - Khu đô thị sinh thái</h3>
+                                            <div class="project-location">
+                                                <i class="fas fa-map-marker-alt me-2"></i>Quận 7, TP. Hồ Chí Minh
+                                            </div>
+                                            <div class="project-price">12.5 - 25 tỷ VNĐ</div>
+                                            <p class="mb-3">Khu đô thị hiện đại với đầy đủ tiện ích: trường học quốc tế, bệnh viện, trung tâm thương mại, công viên 10ha.</p>
+                                            <div class="project-features">
+                                                <div class="project-feature">
+                                                    <i class="fas fa-bed"></i>
+                                                    <div>2-5 PN</div>
+                                                </div>
+                                                <div class="project-feature">
+                                                    <i class="fas fa-ruler-combined"></i>
+                                                    <div>70-200m²</div>
+                                                </div>
+                                                <div class="project-feature">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <div>2024</div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="btn btn-primary w-100 mt-3">Xem chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="project-card animate-on-scroll">
+                                        <div class="project-img">
+                                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Golden River">
+                                            <div class="project-badge">
+                                                <span class="badge bg-primary">Bán chạy</span>
+                                            </div>
+                                        </div>
+                                        <div class="project-info">
+                                            <h3 class="project-title">Golden River - Căn hộ cao cấp view sông</h3>
+                                            <div class="project-location">
+                                                <i class="fas fa-map-marker-alt me-2"></i>Quận 1, TP. Hồ Chí Minh
+                                            </div>
+                                            <div class="project-price">25 - 50 tỷ VNĐ</div>
+                                            <p class="mb-3">Căn hộ cao cấp với view sông Sài Gòn, thiết kế sang trọng, nội thất nhập khẩu từ Ý, hệ thống an ninh 24/7.</p>
+                                            <div class="project-features">
+                                                <div class="project-feature">
+                                                    <i class="fas fa-bed"></i>
+                                                    <div>3-4 PN</div>
+                                                </div>
+                                                <div class="project-feature">
+                                                    <i class="fas fa-ruler-combined"></i>
+                                                    <div>120-180m²</div>
+                                                </div>
+                                                <div class="project-feature">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <div>Q3/2023</div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="btn btn-primary w-100 mt-3">Xem chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="project-card animate-on-scroll">
+                                        <div class="project-img">
+                                            <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Eco Lake">
+                                        </div>
+                                        <div class="project-info">
+                                            <h3 class="project-title">Eco Lake - Khu đô thị sinh thái hồ nước</h3>
+                                            <div class="project-location">
+                                                <i class="fas fa-map-marker-alt me-2"></i>Quận 2, TP. Hồ Chí Minh
+                                            </div>
+                                            <div class="project-price">15 - 35 tỷ VNĐ</div>
+                                            <p class="mb-3">Khu đô thị sinh thái với không gian xanh, hồ nước nhân tạo rộng 3ha, công viên 5ha và khu vui chơi trẻ em.</p>
+                                            <div class="project-features">
+                                                <div class="project-feature">
+                                                    <i class="fas fa-bed"></i>
+                                                    <div>4-5 PN</div>
+                                                </div>
+                                                <div class="project-feature">
+                                                    <i class="fas fa-ruler-combined"></i>
+                                                    <div>150-250m²</div>
+                                                </div>
+                                                <div class="project-feature">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <div>Q4/2023</div>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="btn btn-primary w-100 mt-3">Xem chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-5">
+                                <a href="#" class="btn btn-outline-primary btn-lg">Xem tất cả dự án <i class="fas fa-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Listings Tab -->
+                <div class="tab-pane fade" id="pills-listings" role="tabpanel">
+                    <div class="post-listing-section" id="listings">
+                        <div class="container">
+                            <h2 class="section-title center">Đăng tin mua bán bất động sản</h2>
+                            <p class="text-center text-muted mb-5">Đăng tin miễn phí, tiếp cận hàng nghìn khách hàng tiềm năng trong vài phút</p>
+                            
+                            <div class="row mb-5">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="post-card animate-on-scroll">
+                                        <div class="post-icon">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                        <h3>Tạo tài khoản</h3>
+                                        <p>Đăng ký tài khoản miễn phí trong 2 phút để bắt đầu đăng tin mua bán bất động sản.</p>
+                                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#registerModal">Đăng ký ngay</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="post-card animate-on-scroll">
+                                        <div class="post-icon">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <h3>Đăng tin miễn phí</h3>
+                                        <p>Điền thông tin bất động sản của bạn, thêm hình ảnh và mô tả chi tiết để thu hút người xem.</p>
+                                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#postModal">Đăng tin ngay</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="post-card animate-on-scroll">
+                                        <div class="post-icon">
+                                            <i class="fas fa-handshake"></i>
+                                        </div>
+                                        <h3>Kết nối & Giao dịch</h3>
+                                        <p>Nhận liên hệ từ khách hàng tiềm năng, thương lượng và hoàn tất giao dịch một cách nhanh chóng.</p>
+                                        <button class="btn btn-primary w-100">Tìm hiểu thêm</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Featured Listings -->
+                            <div class="featured-listings" id="featured-listings">
+                                <h2 class="section-title center">Tin đăng nổi bật</h2>
+                                <p class="text-center text-muted mb-5">Khám phá những tin đăng mua bán mới nhất từ cộng đồng</p>
+                                
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="listing-card animate-on-scroll">
+                                            <div class="listing-header">
+                                                <div class="listing-user">
+                                                    <div class="user-avatar">
+                                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Nguyễn Văn An">
+                                                    </div>
+                                                    <div>
+                                                        <div class="user-name">Nguyễn Văn An</div>
+                                                        <div class="user-rating">
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star-half-alt text-warning"></i>
+                                                            <span class="ms-1">4.5</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="listing-date">2 giờ trước</div>
+                                            </div>
+                                            <div class="listing-content">
+                                                <h3 class="listing-title">Cần bán căn hộ chung cư 70m² tại Sunshine City</h3>
+                                                <span class="listing-type">Căn hộ chung cư</span>
+                                                <p class="listing-description">Căn hộ 2 phòng ngủ, 2 toilet, full nội thất cao cấp, view thành phố. Vị trí đẹp, gần trung tâm thương mại, trường học và bệnh viện.</p>
+                                                <div class="listing-price">8.2 tỷ VNĐ</div>
+                                            </div>
+                                            <div class="listing-footer">
+                                                <div class="listing-location">
+                                                    <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                                                    Quận 7, TP.HCM
+                                                </div>
+                                                <a href="#" class="btn btn-outline-primary btn-sm">Liên hệ ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="listing-card animate-on-scroll">
+                                            <div class="listing-header">
+                                                <div class="listing-user">
+                                                    <div class="user-avatar">
+                                                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Trần Thị Bích">
+                                                    </div>
+                                                    <div>
+                                                        <div class="user-name">Trần Thị Bích</div>
+                                                        <div class="user-rating">
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <i class="fas fa-star text-warning"></i>
+                                                            <span class="ms-1">5.0</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="listing-date">5 giờ trước</div>
+                                            </div>
+                                            <div class="listing-content">
+                                                <h3 class="listing-title">Cho thuê biệt thự 4 phòng ngủ tại Quận 2</h3>
+                                                <span class="listing-type">Biệt thự</span>
+                                                <p class="listing-description">Biệt thự 4 phòng ngủ, 1 phòng khách, 1 phòng bếp, 1 phòng ăn, 4 toilet, hồ bơi riêng, sân vườn 200m². Nội thất cao cấp, an ninh 24/7.</p>
+                                                <div class="listing-price">45 triệu/tháng</div>
+                                            </div>
+                                            <div class="listing-footer">
+                                                <div class="listing-location">
+                                                    <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                                                    Quận 2, TP.HCM
+                                                </div>
+                                                <a href="#" class="btn btn-outline-primary btn-sm">Liên hệ ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center mt-5">
+                                    <a href="#" class="btn btn-outline-primary btn-lg">Xem tất cả tin đăng <i class="fas fa-arrow-right ms-2"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section" id="news">
+        <div class="container">
+            <h2 class="section-title center">Tin tức bất động sản</h2>
+            <p class="text-center text-muted mb-5">Cập nhật tin tức mới nhất về thị trường bất động sản, chính sách và xu hướng đầu tư</p>
+            
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="news-card animate-on-scroll">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Thị trường bất động sản 2023">
+                            <div class="news-category">Phân tích</div>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date"><i class="far fa-calendar-alt me-1"></i> 15/10/2023</span>
+                                <span class="news-author"><i class="far fa-user me-1"></i> Nguyễn Văn A</span>
+                            </div>
+                            <h3 class="news-title">Xu hướng thị trường bất động sản 2023: Cơ hội cho nhà đầu tư</h3>
+                            <p class="news-excerpt">Thị trường bất động sản năm 2023 có nhiều biến động với sự điều chỉnh về giá và nhu cầu. Các chuyên gia nhận định đây là cơ hội tốt cho nhà đầu tư dài hạn...</p>
+                            <a href="#" class="news-link">Đọc tiếp <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="news-card animate-on-scroll">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chính sách mới">
+                            <div class="news-category">Chính sách</div>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date"><i class="far fa-calendar-alt me-1"></i> 12/10/2023</span>
+                                <span class="news-author"><i class="far fa-user me-1"></i> Trần Thị B</span>
+                            </div>
+                            <h3 class="news-title">Chính sách mới về thuế đất và nhà ở: Những điểm cần lưu ý</h3>
+                            <p class="news-excerpt">Bộ Tài chính vừa ban hành thông tư mới về thuế sử dụng đất và nhà ở, có hiệu lực từ đầu năm 2024. Bài viết phân tích những thay đổi quan trọng...</p>
+                            <a href="#" class="news-link">Đọc tiếp <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="news-card animate-on-scroll">
+                        <div class="news-img">
+                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mẹo đầu tư">
+                            <div class="news-category">Đầu tư</div>
+                        </div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-date"><i class="far fa-calendar-alt me-1"></i> 10/10/2023</span>
+                                <span class="news-author"><i class="far fa-user me-1"></i> Lê Văn C</span>
+                            </div>
+                            <h3 class="news-title">5 mẹo đầu tư bất động sản an toàn và hiệu quả cho người mới</h3>
+                            <p class="news-excerpt">Đầu tư bất động sản luôn tiềm ẩn rủi ro, đặc biệt với người mới bắt đầu. Bài viết chia sẻ 5 mẹo giúp bạn đầu tư an toàn và đạt hiệu quả cao...</p>
+                            <a href="#" class="news-link">Đọc tiếp <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-outline-primary btn-lg">Xem tất cả tin tức <i class="fas fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="about-img-wrapper">
+                        <div class="about-img-main">
+                            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Về Nhà Đẹp" class="img-fluid rounded">
+                        </div>
+                        <div class="about-img-secondary">
+                            <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Đội ngũ chuyên nghiệp" class="img-fluid rounded">
+                        </div>
+                        <div class="experience-badge">
+                            <div class="experience-years">10+</div>
+                            <div class="experience-text">Năm kinh nghiệm</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-title">Về Nhà Đẹp</h2>
+                    <p class="mb-4">Với hơn <strong>10 năm kinh nghiệm</strong> trong lĩnh vực bất động sản, <strong class="text-primary">Nhà Đẹp</strong> tự hào là đơn vị tư vấn và phân phối bất động sản uy tín hàng đầu tại Việt Nam.</p>
+                    <p class="mb-4">Chúng tôi chuyên tư vấn, môi giới và phân phối các dự án căn hộ, nhà phố, biệt thự cao cấp tại các thành phố lớn. Đội ngũ nhân viên chuyên nghiệp, am hiểu thị trường sẽ mang đến cho khách hàng những giải pháp đầu tư hiệu quả nhất.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="feature-item">
+                                <div class="d-flex align-items-start">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Tư vấn chuyên sâu</h5>
+                                        <p>Đội ngũ chuyên gia giàu kinh nghiệm</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="d-flex align-items-start">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Hỗ trợ pháp lý</h5>
+                                        <p>Đảm bảo an toàn pháp lý cho giao dịch</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="d-flex align-items-start">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Đánh giá thị trường</h5>
+                                        <p>Phân tích và đánh giá thị trường chính xác</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-item">
+                                <div class="d-flex align-items-start">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Đa dạng dự án</h5>
+                                        <p>Hàng trăm dự án từ bình dân đến cao cấp</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="d-flex align-items-start">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Chăm sóc 24/7</h5>
+                                        <p>Hỗ trợ khách hàng 24 giờ mỗi ngày</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="d-flex align-items-start">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Bảo mật thông tin</h5>
+                                        <p>Cam kết bảo mật thông tin khách hàng</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-container mt-5">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="stat-number">2,580+</div>
+                                <div class="stat-label">Dự án</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-number">15,230+</div>
+                                <div class="stat-label">Khách hàng</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Hài lòng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section" id="newsletter">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-title center">Đăng ký nhận tin</h2>
+                    <p class="mb-4">Nhận thông tin mới nhất về dự án bất động sản, tin tức thị trường và ưu đãi đặc biệt từ Nhà Đẹp</p>
+                    
+                    <div class="newsletter-form animate-on-scroll">
+                        <form id="subscribeForm" class="row g-3 justify-content-center">
+                            <div class="col-md-5">
+                                <input type="text" class="form-control form-control-lg" placeholder="Họ và tên của bạn" required>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="email" class="form-control form-control-lg" placeholder="Địa chỉ email" required>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary btn-lg w-100 px-2">Đăng ký</button>
+                            </div>
+                        </form>
+                        
+                        <!-- <div class="form-check mt-4">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" checked>
+                            <label class="form-check-label" for="agreeTerms">
+                                Tôi đồng ý nhận thông tin qua email và có thể hủy đăng ký bất cứ lúc nào
+                            </label>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Đăng nhập tài khoản</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email hoặc số điện thoại</label>
+                            <input type="text" class="form-control" id="loginEmail" placeholder="Nhập email hoặc số điện thoại" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Nhập mật khẩu" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+                            <a href="#" class="float-end">Quên mật khẩu?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Chưa có tài khoản? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Đăng ký ngay</a></p>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p>Hoặc đăng nhập bằng</p>
+                        <button class="btn btn-outline-primary me-2"><i class="fab fa-facebook-f"></i> Facebook</button>
+                        <button class="btn btn-outline-danger"><i class="fab fa-google"></i> Google</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Đăng ký tài khoản mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">Họ và tên đệm</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Nhập họ và tên đệm" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Tên</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Nhập tên" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" placeholder="Nhập email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPhone" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="registerPhone" placeholder="Nhập số điện thoại" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Nhập mật khẩu" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                            <label class="form-check-label" for="acceptTerms">Tôi đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Đăng ký tài khoản</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Đã có tài khoản? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Đăng nhập ngay</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Listing Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Đăng tin mua bán mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="postForm">
+                        <div class="mb-3">
+                            <label for="postTitle" class="form-label">Tiêu đề tin đăng <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="postTitle" placeholder="Ví dụ: Cần bán căn hộ chung cư 70m² tại Sunshine City" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="propertyType" class="form-label">Loại bất động sản <span class="text-danger">*</span></label>
+                                <select class="form-select" id="propertyType" required>
+                                    <option value="">Chọn loại bất động sản</option>
+                                    <option value="apartment">Căn hộ chung cư</option>
+                                    <option value="house">Nhà phố</option>
+                                    <option value="villa">Biệt thự</option>
+                                    <option value="land">Đất nền</option>
+                                    <option value="office">Văn phòng</option>
+                                    <option value="shop">Mặt bằng kinh doanh</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="transactionType" class="form-label">Hình thức <span class="text-danger">*</span></label>
+                                <select class="form-select" id="transactionType" required>
+                                    <option value="">Chọn hình thức</option>
+                                    <option value="sale">Cần bán</option>
+                                    <option value="rent">Cho thuê</option>
+                                    <option value="buy">Cần mua</option>
+                                    <option value="rental">Cần thuê</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">Giá <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="price" placeholder="Nhập giá" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="area" class="form-label">Diện tích (m²) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="area" placeholder="Nhập diện tích" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="location" placeholder="Nhập địa chỉ chi tiết" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Mô tả chi tiết <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="description" rows="4" placeholder="Mô tả chi tiết về bất động sản: số phòng, hướng nhà, tiện ích, nội thất..." required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Hình ảnh</label>
+                            <input type="file" class="form-control" id="images" multiple accept="image/*">
+                            <div class="form-text">Tối đa 10 hình ảnh, dung lượng mỗi hình dưới 5MB</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactName" class="form-label">Tên liên hệ <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="contactName" placeholder="Nhập tên người liên hệ" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contactPhone" class="form-label">Số điện thoại liên hệ <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="contactPhone" placeholder="Nhập số điện thoại" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Đăng tin ngay</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <h5>Nhà Đẹp</h5>
+                    <p class="mb-4">Kênh bất động sản số 1 Việt Nam, kết nối người mua và người bán, cung cấp thông tin dự án chính xác và đầy đủ nhất.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5>Liên kết</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home">Trang chủ</a></li>
+                        <li><a href="#projects">Dự án</a></li>
+                        <li><a href="#listings">Mua bán</a></li>
+                        <li><a href="#news">Tin tức</a></li>
+                        <li><a href="#about">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Dịch vụ</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Đăng tin miễn phí</a></li>
+                        <li><a href="#">Tư vấn bất động sản</a></li>
+                        <li><a href="#">Định giá bất động sản</a></li>
+                        <li><a href="#">Pháp lý bất động sản</a></li>
+                        <li><a href="#">Tin tức thị trường</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Liên hệ</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Nguyễn Văn Linh, Quận 7, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i> (028) 1234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@nhadep.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Thứ 2 - CN: 8:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="copyright">
+                        <p>&copy; 2023 Nhà Đẹp. Tất cả các quyền được bảo lưu. | <a href="#" class="text-white-50">Chính sách bảo mật</a> | <a href="#" class="text-white-50">Điều khoản sử dụng</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile navbar after click
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if(navbarCollapse.classList.contains('show')) {
+                        const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                        bsCollapse.hide();
+                    }
+                }
+            });
+        });
+        
+        // Back to top functionality
+        document.getElementById('backToTop').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Add active class to current nav item
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Tab switching
+        const projectsTab = document.getElementById('pills-projects-tab');
+        const listingsTab = document.getElementById('pills-listings-tab');
+        
+        // Check URL hash on page load
+        window.addEventListener('load', function() {
+            if(window.location.hash === '#listings') {
+                listingsTab.click();
+            }
+        });
+        
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        
+        const animateOnScroll = function() {
+            animateElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if(elementPosition < screenPosition) {
+                    element.classList.add('animated');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        
+        // Form submissions
+        document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Đăng nhập thành công!');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            modal.hide();
+        });
+        
+        document.getElementById('registerForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Đăng ký tài khoản thành công! Vui lòng kiểm tra email để xác nhận.');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            modal.hide();
+        });
+        
+        document.getElementById('postForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Tin đăng của bạn đã được gửi thành công! Tin sẽ được duyệt trong vòng 24 giờ.');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('postModal'));
+            modal.hide();
+        });
+        
+        // Xử lý form đăng ký nhận tin
+        document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Lấy giá trị từ form
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            if (!agreeTerms) {
+                alert('Vui lòng đồng ý với điều khoản nhận thông tin');
+                return;
+            }
+            
+            // Hiệu ứng loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
+            submitBtn.disabled = true;
+            
+            // Giả lập gửi dữ liệu
+            setTimeout(() => {
+                // Hiển thị thông báo thành công
+                const successMessage = document.createElement('div');
+                successMessage.className = 'alert alert-success mt-3';
+                successMessage.innerHTML = `
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Đăng ký thành công!</strong> Cảm ơn ${name} đã đăng ký nhận tin từ Nhà Đẹp. 
+                    Chúng tôi sẽ gửi thông tin mới nhất đến email ${email}.
+                `;
+                
+                this.parentNode.insertBefore(successMessage, this.nextSibling);
+                
+                // Reset form
+                this.reset();
+                document.getElementById('agreeTerms').checked = true;
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Ẩn thông báo sau 5 giây
+                setTimeout(() => {
+                    successMessage.remove();
+                }, 5000);
+            }, 1500);
+        });
+        
+        // Tab click to scroll to section
+        projectsTab.addEventListener('click', function() {
+            setTimeout(() => {
+                document.getElementById('section-tabs').scrollIntoView({behavior: 'smooth', block: 'start'});
+            }, 100);
+        });
+        
+        listingsTab.addEventListener('click', function() {
+            setTimeout(() => {
+                document.getElementById('section-tabs').scrollIntoView({behavior: 'smooth', block: 'start'});
+            }, 100);
+        });
+    </script>
+</body>
+</html>

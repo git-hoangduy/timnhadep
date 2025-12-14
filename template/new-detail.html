@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Nhà Đẹp - Xu hướng thị trường bất động sản 2023: Cơ hội cho nhà đầu tư</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS từ trang chủ -->
+    <link rel="stylesheet" href="style.css">
+    <!-- CSS riêng cho trang tin tức -->
+    <style>
+        /* CSS riêng cho trang chi tiết tin tức */
+        .breadcrumb-section {
+            padding: 25px 0;
+            background: linear-gradient(135deg, rgba(235, 93, 30, 0.05) 0%, rgba(42, 59, 143, 0.05) 100%);
+            margin-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breadcrumb-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(235, 93, 30, 0.08);
+            border-radius: 50%;
+        }
+
+        .breadcrumb-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(42, 59, 143, 0.08);
+            border-radius: 50%;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-item {
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--primary-dark);
+            background-color: rgba(235, 93, 30, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .breadcrumb-item a i {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-item.active {
+            color: var(--gray-color);
+            font-weight: 500;
+            padding: 6px 12px;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            color: var(--gray-color);
+            font-weight: 600;
+            content: "\f054";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            padding: 0 10px;
+            font-size: 12px;
+        }
+
+        /* Main content */
+        .news-detail-page {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+
+        .news-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .news-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            color: var(--gray-color);
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .news-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .news-meta-item i {
+            color: var(--primary-color);
+        }
+
+        .news-featured-image {
+            margin-bottom: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-featured-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .news-content h2 {
+            font-size: 28px;
+            color: var(--dark-color);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .news-content h3 {
+            font-size: 22px;
+            color: var(--dark-color);
+            margin: 30px 0 15px;
+        }
+
+        .news-content p {
+            margin-bottom: 20px;
+        }
+
+        .news-content ul, .news-content ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .news-content li {
+            margin-bottom: 10px;
+        }
+
+        .news-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: var(--gray-color);
+            font-size: 18px;
+        }
+
+        .news-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .news-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 40px 0;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .news-tag {
+            background: rgba(235, 93, 30, 0.1);
+            color: var(--primary-color);
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .news-tag:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .news-author {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .author-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .author-info p {
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+
+        /* Related news */
+        .related-news {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .related-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .related-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .related-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .related-card-body {
+            padding: 20px;
+        }
+
+        .related-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            line-height: 1.4;
+        }
+
+        .related-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        .related-card-category {
+            background: rgba(235, 93, 30, 0.1);
+            color: var(--primary-color);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .related-card-excerpt {
+            color: var(--gray-color);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .news-title {
+                font-size: 32px;
+            }
+            
+            .news-featured-image img {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .news-detail-page {
+                padding: 40px 0;
+            }
+            
+            .news-title {
+                font-size: 28px;
+            }
+            
+            .news-meta {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .news-featured-image img {
+                height: 300px;
+            }
+            
+            .news-content {
+                font-size: 15px;
+            }
+            
+            .news-content h2 {
+                font-size: 24px;
+            }
+            
+            .news-content h3 {
+                font-size: 20px;
+            }
+            
+            .news-author {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .author-avatar {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .news-title {
+                font-size: 24px;
+            }
+            
+            .news-featured-image img {
+                height: 250px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <span>Tìm</span>NhàĐẹp
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#projects">Dự án</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="listing-detail.html">Mua bán</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="news-detail.html">Tin tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#about">Về chúng tôi</a>
+                        </li>
+                    </ul>
+                    <div class="user-actions">
+                        <button class="btn btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                        </button>
+                        <button class="btn btn-primary btn-register" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            <i class="fas fa-user-plus me-2"></i>Đăng ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb-section">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="index.html#news">Tin tức</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Phân tích thị trường
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- News Detail -->
+    <section class="news-detail-page">
+        <div class="container">
+            <div class="news-header">
+                <span class="news-category">Phân tích</span>
+                <h1 class="news-title">Xu hướng thị trường bất động sản 2023: Cơ hội cho nhà đầu tư</h1>
+                
+                <!-- <div class="news-meta">
+                    <div class="news-meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>15/10/2023</span>
+                    </div>
+                    <div class="news-meta-item">
+                        <i class="far fa-user"></i>
+                        <span>Nguyễn Văn A</span>
+                    </div>
+                    <div class="news-meta-item">
+                        <i class="far fa-clock"></i>
+                        <span>5 phút đọc</span>
+                    </div>
+                    <div class="news-meta-item">
+                        <i class="far fa-eye"></i>
+                        <span>1,245 lượt xem</span>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="news-featured-image">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Thị trường bất động sản 2023">
+            </div>
+
+            <div class="news-content">
+                <p><strong>Thị trường bất động sản Việt Nam năm 2023 đang chứng kiến nhiều biến động đáng chú ý. Sau giai đoạn bùng nổ và điều chỉnh, đây được xem là thời điểm vàng cho các nhà đầu tư thông minh tìm kiếm cơ hội.</strong></p>
+
+                <h2>Tổng quan thị trường 2023</h2>
+                
+                <p>Năm 2023, thị trường bất động sản Việt Nam tiếp tục đối mặt với nhiều thách thức từ bối cảnh kinh tế vĩ mô. Tuy nhiên, đây cũng là năm đánh dấu sự điều chỉnh tích cực và hình thành xu hướng mới.</p>
+                
+                <p>Theo báo cáo của Bộ Xây dựng, tổng cung bất động sản trong 9 tháng đầu năm giảm khoảng 30% so với cùng kỳ năm ngoái. Tuy nhiên, thanh khoản thị trường đang có dấu hiệu phục hồi từ quý III/2023.</p>
+
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Phân tích thị trường">
+
+                <h2>Xu hướng nổi bật</h2>
+                
+                <h3>1. Phân khúc căn hộ chung cư trung và cao cấp</h3>
+                <p>Phân khúc căn hộ chung cư tiếp tục dẫn đầu thị trường với sức hút từ các dự án có vị trí đắc địa và tiện ích đồng bộ. Các dự án tại Quận 2, Quận 7 TP.HCM và khu vực phía Tây Hà Nội đang thu hút sự quan tâm lớn.</p>
+                
+                <h3>2. Bất động sản công nghiệp</h3>
+                <p>Lĩnh vực bất động sản công nghiệp tiếp tục tăng trưởng mạnh nhờ làn sóng đầu tư FDI. Các khu công nghiệp tại Bình Dương, Đồng Nai, Long An là điểm nóng thu hút nhà đầu tư.</p>
+                
+                <h3>3. Bất động sản nghỉ dưỡng</h3>
+                <p>Sau đại dịch, nhu cầu về bất động sản nghỉ dưỡng tăng mạnh. Các tỉnh ven biển như Khánh Hòa, Bà Rịa - Vũng Tàu, Quảng Ninh tiếp tục là thị trường tiềm năng.</p>
+
+                <blockquote>
+                    "Năm 2023 được xem là thời điểm tốt để đầu tư dài hạn vào bất động sản. Nhà đầu tư cần tìm hiểu kỹ và lựa chọn sản phẩm có tiềm năng tăng trưởng thực."
+                </blockquote>
+
+                <h2>Cơ hội cho nhà đầu tư</h2>
+                
+                <p><strong>1. Giá điều chỉnh, cơ hội mua vào tốt</strong><br>
+                Sau giai đoạn tăng nóng, nhiều phân khúc đã điều chỉnh giá từ 10-20%. Đây là cơ hội để nhà đầu tư mua vào với mức giá hợp lý.</p>
+                
+                <p><strong>2. Chính sách hỗ trợ từ Chính phủ</strong><br>
+                Gói tín dụng 120.000 tỷ đồng cho nhà ở xã hội và các chính sách hỗ trợ khác đang tạo động lực cho thị trường.</p>
+                
+                <p><strong>3. Xu hướng phát triển bền vững</strong><br>
+                Các dự án xanh, thân thiện với môi trường đang trở thành xu hướng và có tiềm năng tăng trưởng tốt.</p>
+
+                <h2>Lời khuyên cho nhà đầu tư</h2>
+                
+                <ul>
+                    <li><strong>Nghiên cứu kỹ thị trường:</strong> Hiểu rõ phân khúc, vị trí và tiềm năng phát triển</li>
+                    <li><strong>Đầu tư dài hạn:</strong> Bất động sản là kênh đầu tư dài hạn, cần kiên nhẫn</li>
+                    <li><strong>Chú trọng pháp lý:</strong> Đảm bảo tính pháp lý minh bạch trước khi quyết định</li>
+                    <li><strong>Đa dạng hóa danh mục:</strong> Phân bổ vốn vào nhiều phân khúc để giảm rủi ro</li>
+                    <li><strong>Lựa chọn đối tác uy tín:</strong> Làm việc với các chủ đầu tư và môi giới có uy tín</li>
+                </ul>
+
+                <div class="news-tags">
+                    <a href="#" class="news-tag">Bất động sản 2023</a>
+                    <a href="#" class="news-tag">Đầu tư bất động sản</a>
+                    <a href="#" class="news-tag">Thị trường nhà đất</a>
+                    <a href="#" class="news-tag">Xu hướng đầu tư</a>
+                    <a href="#" class="news-tag">Phân tích thị trường</a>
+                </div>
+
+                <div class="news-author">
+                    <div class="author-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Nguyễn Văn A">
+                    </div>
+                    <div class="author-info">
+                        <h4>Nguyễn Văn A</h4>
+                        <p>Chuyên gia phân tích thị trường bất động sản với hơn 10 năm kinh nghiệm. Ông đã tư vấn cho nhiều dự án lớn tại Việt Nam và có nhiều bài viết chuyên sâu về thị trường bất động sản.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related News -->
+    <section class="related-news">
+        <div class="container">
+            <h2 class="section-title">Tin tức liên quan</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="related-card">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chính sách mới">
+                        <div class="related-card-body">
+                            <div class="related-card-meta">
+                                <span class="related-card-category">Chính sách</span>
+                                <span>12/10/2023</span>
+                            </div>
+                            <h3 class="related-card-title">Chính sách mới về thuế đất và nhà ở: Những điểm cần lưu ý</h3>
+                            <p class="related-card-excerpt">Bộ Tài chính vừa ban hành thông tư mới về thuế sử dụng đất và nhà ở, có hiệu lực từ đầu năm 2024.</p>
+                            <a href="#" class="btn btn-sm btn-primary">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="related-card">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mẹo đầu tư">
+                        <div class="related-card-body">
+                            <div class="related-card-meta">
+                                <span class="related-card-category">Đầu tư</span>
+                                <span>10/10/2023</span>
+                            </div>
+                            <h3 class="related-card-title">5 mẹo đầu tư bất động sản an toàn và hiệu quả cho người mới</h3>
+                            <p class="related-card-excerpt">Đầu tư bất động sản luôn tiềm ẩn rủi ro, đặc biệt với người mới bắt đầu. Bài viết chia sẻ 5 mẹo giúp bạn đầu tư an toàn.</p>
+                            <a href="#" class="btn btn-sm btn-primary">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="related-card">
+                        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Công nghệ PropTech">
+                        <div class="related-card-body">
+                            <div class="related-card-meta">
+                                <span class="related-card-category">Công nghệ</span>
+                                <span>08/10/2023</span>
+                            </div>
+                            <h3 class="related-card-title">PropTech: Xu hướng công nghệ thay đổi ngành bất động sản</h3>
+                            <p class="related-card-excerpt">Công nghệ bất động sản (PropTech) đang làm thay đổi cách mua bán, quản lý và trải nghiệm bất động sản.</p>
+                            <a href="#" class="btn btn-sm btn-primary">Đọc tiếp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <h5>Tìm Nhà Đẹp</h5>
+                    <p class="mb-4">Kênh bất động sản số 1 Việt Nam, kết nối người mua và người bán, cung cấp thông tin dự án chính xác và đầy đủ nhất.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5>Liên kết</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="index.html#projects">Dự án</a></li>
+                        <li><a href="listing-detail.html">Mua bán</a></li>
+                        <li><a href="news-detail.html">Tin tức</a></li>
+                        <li><a href="index.html#about">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Dịch vụ</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Đăng tin miễn phí</a></li>
+                        <li><a href="#">Tư vấn bất động sản</a></li>
+                        <li><a href="#">Định giá bất động sản</a></li>
+                        <li><a href="#">Pháp lý bất động sản</a></li>
+                        <li><a href="#">Tin tức thị trường</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Liên hệ</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Nguyễn Văn Linh, Quận 7, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i> (028) 1234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@timnhadep.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Thứ 2 - CN: 8:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="copyright">
+                        <p>&copy; 2023 Tìm Nhà Đẹp. Tất cả các quyền được bảo lưu. | <a href="#" class="text-white-50">Chính sách bảo mật</a> | <a href="#" class="text-white-50">Điều khoản sử dụng</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

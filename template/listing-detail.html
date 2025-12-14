@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Nhà Đẹp - Cần bán căn hộ chung cư 70m² tại Sunshine City</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS từ trang chủ -->
+    <link rel="stylesheet" href="style.css">
+    <!-- CSS riêng cho trang chi tiết -->
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <span>Tìm</span>NhàĐẹp
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#projects">Dự án</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="listing-detail.html">Mua bán</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="news-detail.html">Tin tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#about">Về chúng tôi</a>
+                        </li>
+                    </ul>
+                    <div class="user-actions">
+                        <button class="btn btn-login" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                        </button>
+                        <button class="btn btn-primary btn-register" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            <i class="fas fa-user-plus me-2"></i>Đăng ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section class="breadcrumb-section">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="index.html#listings">Mua bán</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Chi tiết tin đăng
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Listing Detail -->
+    <section class="listing-detail-page">
+        <div class="container">
+            <div class="row">
+                <!-- Left Column: Images and Details -->
+                <div class="col-lg-8">
+                    <!-- Images -->
+                    <div class="listing-images">
+                        <div class="main-image">
+                            <img id="mainImage" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Căn hộ Sunshine City">
+                        </div>
+                        <div class="thumbnail-images">
+                            <div class="thumbnail active" onclick="changeImage(this)">
+                                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Phòng khách">
+                            </div>
+                            <div class="thumbnail" onclick="changeImage(this)">
+                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Phòng ngủ">
+                            </div>
+                            <div class="thumbnail" onclick="changeImage(this)">
+                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Nhà bếp">
+                            </div>
+                            <div class="thumbnail" onclick="changeImage(this)">
+                                <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="View căn hộ">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing Info -->
+                    <div class="listing-info">
+                        <h1 class="listing-title">Cần bán căn hộ chung cư 70m² tại Sunshine City</h1>
+                        
+                        <div class="listing-meta">
+                            <div class="listing-price">8.2 tỷ VNĐ</div>
+                            <span class="listing-type">Căn hộ chung cư</span>
+                            <span class="listing-date"><i class="far fa-clock me-1"></i> Đăng: 15/10/2023</span>
+                        </div>
+
+                        <!-- <div class="listing-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-ruler-combined"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <span class="feature-value">70m²</span><br>
+                                    Diện tích
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bed"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <span class="feature-value">2</span><br>
+                                    Phòng ngủ
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-bath"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <span class="feature-value">2</span><br>
+                                    Phòng tắm
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-car"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <span class="feature-value">1</span><br>
+                                    Chỗ để xe
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <span class="feature-value">Tầng 15</span><br>
+                                    Vị trí
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-compass"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <span class="feature-value">Đông Nam</span><br>
+                                    Hướng nhà
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="listing-description">
+                            <h3 class="description-title">Mô tả chi tiết</h3>
+                            <div class="description-content">
+                                <p>Cần bán gấp căn hộ chung cư cao cấp tại dự án Sunshine City, Quận 7, TP.HCM. Căn hộ có diện tích 70m², thiết kế 2 phòng ngủ, 2 phòng tắm, đầy đủ nội thất cao cấp.</p>
+                                
+                                <p><strong>Thông tin căn hộ:</strong></p>
+                                <ul>
+                                    <li>Diện tích: 70m² (2 phòng ngủ, 2 toilet)</li>
+                                    <li>Tầng: 15, view thành phố, thoáng mát</li>
+                                    <li>Hướng: Đông Nam, đón nắng sáng, mát mẻ</li>
+                                    <li>Tình trạng: Full nội thất cao cấp (tủ bếp, máy lạnh, máy giặt, tủ quần áo)</li>
+                                    <li>Năm xây dựng: 2020</li>
+                                </ul>
+                                
+                                <p><strong>Tiện ích dự án:</strong></p>
+                                <ul>
+                                    <li>Hồ bơi vô cực, phòng gym cao cấp</li>
+                                    <li>Khu vui chơi trẻ em, công viên cây xanh</li>
+                                    <li>Trung tâm thương mại, siêu thị, nhà hàng</li>
+                                    <li>Trường học quốc tế, bệnh viện trong khu vực</li>
+                                    <li>Hệ thống an ninh 24/7, thang máy cao tốc</li>
+                                </ul>
+                                
+                                <p><strong>Vị trí đắc địa:</strong></p>
+                                <ul>
+                                    <li>Gần trung tâm thành phố, thuận tiện di chuyển</li>
+                                    <li>Cách sân bay Tân Sơn Nhất 15 phút</li>
+                                    <li>Gần trường đại học, bệnh viện quốc tế</li>
+                                    <li>Khu vực an ninh, văn minh, hiện đại</li>
+                                </ul>
+                                
+                                <p>Giá: <strong>8.2 tỷ VNĐ</strong> (có thương lượng cho khách thiện chí)</p>
+                                <p>Liên hệ: <strong>0908 123 456</strong> - Anh Tuấn để xem nhà và thương lượng giá.</p>
+                            </div>
+                        </div>
+
+                        <div class="listing-location">
+                            <h3 class="location-title">Vị trí</h3>
+                            <div class="location-details">
+                                <p><i class="fas fa-map-marker-alt text-primary me-2"></i> <strong>Địa chỉ:</strong> Sunshine City, Đường Nguyễn Văn Linh, Phường Tân Phong, Quận 7, TP.HCM</p>
+                            </div>
+                            <div class="map-container">
+                                <div class="text-center">
+                                    <i class="fas fa-map-marked-alt fa-3x mb-3" style="color: #6c757d;"></i>
+                                    <p>Bản đồ vị trí căn hộ</p>
+                                    <small>(Bản đồ thực tế sẽ hiển thị tại đây)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Seller Info -->
+                <div class="col-lg-4">
+                    <div class="seller-info sticky-top" style="top: 100px;">
+                        <div class="seller-header">
+                            <div class="seller-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Nguyễn Văn An">
+                            </div>
+                            <div class="seller-details">
+                                <h4>Nguyễn Văn An</h4>
+                                <div class="seller-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-muted ms-1">(4.5/5)</span>
+                                </div>
+                                <small class="text-muted">Thành viên từ 2021</small>
+                            </div>
+                        </div>
+
+                        <div class="seller-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Tin đăng</div>
+                            </div>
+                            <!-- <div class="stat-item">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Phản hồi</div>
+                            </div> -->
+                            <div class="stat-item">
+                                <div class="stat-number">24h</div>
+                                <div class="stat-label">Phản hồi nhanh</div>
+                            </div>
+                        </div>
+
+                        <div class="contact-actions">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">
+                                <i class="fas fa-phone-alt me-2"></i>Gọi ngay: 0908 123 456
+                            </button>
+                            <!-- <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#messageModal">
+                                <i class="fas fa-envelope me-2"></i>Nhắn tin cho người bán
+                            </button> -->
+                            <!-- <button class="btn btn-outline-secondary">
+                                <i class="far fa-heart me-2"></i>Thêm vào yêu thích
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="reportListing()">
+                                <i class="fas fa-flag me-2"></i>Báo cáo tin đăng
+                            </button> -->
+                        </div>
+
+                        <div class="mt-4">
+                            <h5 class="mb-3">Thông tin liên hệ</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-phone text-primary me-2"></i> 0908 123 456</li>
+                                <li class="mb-2"><i class="fas fa-envelope text-primary me-2"></i> nguyenvana@email.com</li>
+                                <li><i class="fas fa-clock text-primary me-2"></i> Liên hệ: 8:00 - 22:00 hàng ngày</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Similar Listings -->
+    <section class="similar-listings">
+        <div class="container">
+            <h2 class="section-title">Tin đăng tương tự</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="similar-card">
+                        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Căn hộ Quận 1">
+                        <div class="similar-card-body">
+                            <h3 class="similar-card-title">Căn hộ 85m² Quận 1</h3>
+                            <div class="similar-card-price">12.5 tỷ VNĐ</div>
+                            <div class="similar-card-location">
+                                <i class="fas fa-map-marker-alt me-1"></i> Quận 1, TP.HCM
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary invisible">3 PN</span>
+                                <a href="#" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="similar-card">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nhà phố Quận 3">
+                        <div class="similar-card-body">
+                            <h3 class="similar-card-title">Nhà phố 100m² Quận 3</h3>
+                            <div class="similar-card-price">25 tỷ VNĐ</div>
+                            <div class="similar-card-location">
+                                <i class="fas fa-map-marker-alt me-1"></i> Quận 3, TP.HCM
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary invisible">4 PN</span>
+                                <a href="#" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="similar-card">
+                        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Căn hộ Quận 2">
+                        <div class="similar-card-body">
+                            <h3 class="similar-card-title">Căn hộ 65m² Quận 2</h3>
+                            <div class="similar-card-price">7.8 tỷ VNĐ</div>
+                            <div class="similar-card-location">
+                                <i class="fas fa-map-marker-alt me-1"></i> Quận 2, TP.HCM
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary invisible">2 PN</span>
+                                <a href="#" class="btn btn-sm btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <h5>Nhà Đẹp</h5>
+                    <p class="mb-4">Kênh bất động sản số 1 Việt Nam, kết nối người mua và người bán, cung cấp thông tin dự án chính xác và đầy đủ nhất.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5>Liên kết</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="index.html#projects">Dự án</a></li>
+                        <li><a href="listing-detail.html">Mua bán</a></li>
+                        <li><a href="news-detail.html">Tin tức</a></li>
+                        <li><a href="index.html#about">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Dịch vụ</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Đăng tin miễn phí</a></li>
+                        <li><a href="#">Tư vấn bất động sản</a></li>
+                        <li><a href="#">Định giá bất động sản</a></li>
+                        <li><a href="#">Pháp lý bất động sản</a></li>
+                        <li><a href="#">Tin tức thị trường</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Liên hệ</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Nguyễn Văn Linh, Quận 7, TP.HCM</li>
+                        <li><i class="fas fa-phone me-2"></i> (028) 1234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@nhadep.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Thứ 2 - CN: 8:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="copyright">
+                        <p>&copy; 2023 Nhà Đẹp. Tất cả các quyền được bảo lưu. | <a href="#" class="text-white-50">Chính sách bảo mật</a> | <a href="#" class="text-white-50">Điều khoản sử dụng</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Liên hệ người bán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-phone fa-3x text-primary mb-3"></i>
+                        <h4>0908 123 456</h4>
+                        <p class="text-muted">Nguyễn Văn An - Chủ sở hữu</p>
+                    </div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Vui lòng gọi trong giờ hành chính (8:00 - 22:00) để được tư vấn tốt nhất.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Nhắn tin cho người bán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="messageForm">
+                        <div class="mb-3">
+                            <label for="messageName" class="form-label">Họ tên *</label>
+                            <input type="text" class="form-control" id="messageName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="messagePhone" class="form-label">Số điện thoại *</label>
+                            <input type="tel" class="form-control" id="messagePhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="messageEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="messageEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="messageContent" class="form-label">Nội dung tin nhắn *</label>
+                            <textarea class="form-control" id="messageContent" rows="4" required></textarea>
+                            <small class="text-muted">Bạn quan tâm: "Cần bán căn hộ chung cư 70m² tại Sunshine City"</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Gửi tin nhắn</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Thay đổi hình ảnh chính khi click thumbnail
+        function changeImage(element) {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            element.classList.add('active');
+            
+            const mainImage = document.getElementById('mainImage');
+            const imgSrc = element.querySelector('img').src;
+            mainImage.src = imgSrc;
+        }
+        
+        // Báo cáo tin đăng
+        function reportListing() {
+            if (confirm('Bạn có chắc muốn báo cáo tin đăng này?')) {
+                alert('Cảm ơn bạn đã báo cáo. Chúng tôi sẽ xem xét tin đăng này trong thời gian sớm nhất.');
+            }
+        }
+        
+        // Xử lý form gửi tin nhắn
+        document.getElementById('messageForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Tin nhắn của bạn đã được gửi thành công! Người bán sẽ liên hệ với bạn trong thời gian sớm nhất.');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('messageModal'));
+            modal.hide();
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
