@@ -42,11 +42,6 @@
                     
                     @include('admin.includes.notification')
 
-                    <h6 class="card-title text-secondary">
-                        <p class="mb-2">Bài mua bán sẽ được sắp sắp theo thứ tự bài nổi bật và mới nhất.</p>
-                        <p class="mb-3">Sử dụng mã <b>[FEATURED-POSTS]</b> đễ nhúng bài biết nỗi bật vào các trang</p>
-                    </h6>
-
                     @if ($listings->count())
                     <table class="table">
                         <thead>
@@ -55,7 +50,6 @@
                                 <th scope="col">Tên danh mục</th>
                                 <th scope="col">Tên bài mua bán</th>
                                 <th scope="col" class="text-center">Trạng thái</th>
-                                <th scope="col">Nổi bật</th>
                                 <th scope="col">Ngày cập nhật</th>
                                 <th scope="col">Thời gian đăng</th>
                                 <th scope="col">Thao tác</th>
@@ -77,14 +71,6 @@
                                         <div class="form-check d-inline-block form-switch">
                                             <input class="form-check-input status-switch" type="checkbox" {{ $item->status == 1 ? 'checked' : '' }}>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input is_highlight" type="checkbox" value="" id="is_highlight_{{ $item->id }}" data-id="{{ $item->id }}" {{ $item->is_highlight == 1 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="is_highlight_{{ $item->id }}">
-                                              Nổi bật
-                                            </label>
-                                          </div>
                                     </td>
                                     <td>{{ $item->updated_at }}</td>
                                     <td>{{ $item->public_at }}</td>
@@ -140,37 +126,5 @@
             },
         });
     });
-
-    $('.is_highlight').change(function() {
-
-        let _this = $(this);
-        let status = _this.is(':checked') ? '1' : '0';
-        let id = _this.attr('data-id');
-
-        $.ajax({
-            url: '{{ route("listing.isHighlight") }}',
-            type: 'POST',
-            data: {
-                status: status, 
-                id: id
-            },
-            beforeSend: function() {
-                _this.hide();
-                _this.closest('.form-check').css('padding-left', 0);
-                _this.after('<i class="fa-solid fa-spinner fa-spin"></i>');
-            },
-            success: function(res){
-                if(res && res.success) {
-                    console.log(res);
-                }
-            },
-            complete: function() {
-                _this.show();
-                _this.closest('.form-check').css('padding-left', '1.5em');
-                _this.next('i').remove();
-            },
-        });
-    })
-
 </script>
 @endpush

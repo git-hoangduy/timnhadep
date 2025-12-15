@@ -4,9 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <a href="{{ route('page.create') }}" class="btn btn-success">Thêm mới</a>
-            </div>
+            </div> -->
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     Trang tĩnh
@@ -30,22 +30,22 @@
                                 <tr data-id="{{ $item->id }}">
                                     <td>
                                         {{ $item->category->name ?? '' }}
-                                        @if(in_array($item->id, [1,2]))
+                                        @if(in_array($item->id, [1,2,3]))
                                             <small class="text-secondary fw-bold">(Trang mặc định)</small>
                                         @endif
                                     </td>
                                     <td>{{ $item->name }}</td>
                                     <td class="text-center">
                                         @if($item->id != 1)
-                                            <div class="form-check d-inline-block form-switch">
+                                            <!-- <div class="form-check d-inline-block form-switch">
                                                 <input class="form-check-input status-switch" type="checkbox" {{ $item->status == 1 ? 'checked' : '' }}>
-                                            </div>
+                                            </div> -->
                                         @endif
                                     </td>
                                     <td>{{ $item->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('page.edit', $item->id) }}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
-                                        @if(!in_array($item->id, [1,2]))
+                                        @if(!in_array($item->id, [1,2,3]))
                                             <form action="{{ route('page.destroy', $item->id) }}" method="POST" class="d-inline-block">
                                                 @csrf
                                                 @method("DELETE")

@@ -1,73 +1,67 @@
 {{-- Contact form any page --}}
 @include('website.partials.form-contact')
 
-{{-- Footer --}}
-<div class="footer">
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+</a>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
     <div class="container">
-        <div class="footer-logo"></div>
         <div class="row">
-            @foreach($footers as $footer)
-                <div class="col-12 col-sm-6 col-md-3 mt-md-0 mt-sm-3 mt-3">
-                    <h5 class="footer-name">{{ $footer->name }}</h5>
-                    <div class="footer-content">{!! renderContent($footer->content) !!}</div>
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <h5>{{ setting('info.name') }}</h5>
+                <p class="mb-4">{{ setting('info.description') }}</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-            @endforeach
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h5>Liên kết</h5>
+                <ul class="footer-links">
+                    <li><a href="{{ url('/') }}">Trang chủ</a></li>
+                    <li><a href="{{ route('project') }}">Dự án</a></li>
+                    <li><a href="{{ route('listing') }}">Mua bán</a></li>
+                    <li><a href="{{ route('post') }}">Tin tức</a></li>
+                    <li><a href="{{ route('about') }}">Về chúng tôi</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h5>Dịch vụ</h5>
+                <ul class="footer-links">
+                    <li><a href="#">Đăng tin miễn phí</a></li>
+                    <li><a href="#">Tư vấn bất động sản</a></li>
+                    <li><a href="#">Định giá bất động sản</a></li>
+                    <li><a href="#">Pháp lý bất động sản</a></li>
+                    <li><a href="#">Tin tức thị trường</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h5>Liên hệ</h5>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt me-2"></i> {{ setting('info.address') }}</li>
+                    <li><i class="fas fa-phone me-2"></i> {{ setting('info.hotline') }}</li>
+                    <li><i class="fas fa-envelope me-2"></i> {{ setting('info.email') }}</li>
+                    <li><i class="fas fa-clock me-2"></i> {{ setting('info.time') }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="copyright">
+                    <p>{{ setting('info.copyright') }} | <a href="#" class="text-white-50">Chính sách bảo mật</a> | <a href="#" class="text-white-50">Điều khoản sử dụng</a></p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="footer-copyright">
-    {{ setting('info.copyright') }}
-</div>
-
-{{-- Contact icon --}}
-<div class="footer-icons">
-    @if (setting('info.hotline') != '')
-    <a href="{{ setting('info.hotline') }}" target="_blank">
-        <div class="hotline">
-            <i class="bi bi-telephone-fill"></i>
-        </div>
-    </a>
-    @endif
-    @if (setting('social.facebook') != '')
-        <a href="{{ setting('social.facebook') }}" target="_blank" class="mt-2">
-            <div class="messenger">
-                <i class="bi bi-messenger"></i>
-            </div>
-        </a>
-    @endif
-    @if (setting('social.zalo') != '')
-        <a href="https://zalo.me/{{ setting('social.zalo') }}" target="_blank" class="mt-2">
-            <div class="zalo">
-                <span>Zalo</span>
-            </div>
-        </a>
-    @endif
-</div>
-
-{{-- Scroll to top --}}
-<button onclick="topFunction()" id="scrollToTop" title="Lên đầu trang"><i class="bi bi-arrow-up"></i></button>
-
+</footer>
 @push('scripts')
 <script>
 
-    let scrollToTop = document.getElementById("scrollToTop");
-
-    window.onscroll = function() {
-        scrollFunction()
-    };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            scrollToTop.style.display = "block";
-        } else {
-            scrollToTop.style.display = "none";
-        }
-    }
-
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
-    
 </script>
 @endpush

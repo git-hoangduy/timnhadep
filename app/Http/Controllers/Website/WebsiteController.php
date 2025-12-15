@@ -10,8 +10,10 @@ use Artesaos\SEOTools\Facades\OpenGraph;
 
 use App\Models\Contact;
 use App\Models\Page;
+use App\Models\Project;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\ProjectCategory;
 use App\Models\Album;
 
 class WebsiteController extends Controller
@@ -24,11 +26,13 @@ class WebsiteController extends Controller
 
     public function index() {
         $page = Page::find(1);
+        $projects = Project::where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
+        $posts = Post::where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
         SEOMeta::setTitle('Trang chủ');
         OpenGraph::setUrl(url()->current());
         OpenGraph::setDescription(setting('seo.meta_description'));
         OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
-        return view('website.index', compact('page'));
+        return view('website.index', compact('page', 'projects', 'posts'));
     }
 
 
@@ -67,6 +71,32 @@ class WebsiteController extends Controller
         OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
 
         return view('website.post', compact('posts', 'category'));
+    }
+
+    public function project(Request $request, $slug = '') {
+        $category = ProjectCategory::where(['slug' => $slug])->first();
+
+        $query = Project::query();
+        $query->where('status', 1);
+        
+        if (!empty($category)) {
+            $cateIds = $category->childrenIds();
+            $query->whereIn('category_id', $cateIds)->where('status', 1);
+        }
+
+        $projects = $query->orderBy('id', 'desc')->paginate(12);
+
+        if (!empty($category)) {
+            SEOMeta::setTitle($category->name);
+            OpenGraph::setTitle($category->name);
+        } else {
+            SEOMeta::setTitle('Tất cả dự án');
+            OpenGraph::setTitle('Tất cả dự án');
+        }
+        
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
+
+        return view('website.project', compact('projects', 'category'));
     }
 
     public function postDetail(Request $request, $slug = '') {

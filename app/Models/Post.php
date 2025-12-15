@@ -14,8 +14,11 @@ class Post extends Model
         return $this->belongsTo(PostCategory::class);
     }
 
-    public function avatar() {
-        return $this->belongsTo(PostImage::class, 'id', 'post_id')->orderBy('is_avatar', 'desc');
+    public function avatar()
+    {
+        return $this->hasOne(PostImage::class, 'post_id')
+            ->orderByDesc('is_avatar')
+            ->orderBy('id');
     }
 
     public function images() {

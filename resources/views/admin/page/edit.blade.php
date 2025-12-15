@@ -14,8 +14,8 @@
                         @csrf
                         @method('PATCH')
                         <div class="mb-3">
-                            <label class="{{ !in_array($page->id, [1,2]) ? 'required' : ''  }}">Danh mục</label>
-                            <select class="form-control select2" name="category_id" {{ !in_array($page->id, [1,2]) ? 'required' : ''  }}>
+                            <label class="">Danh mục</label>
+                            <select class="form-control select2" name="category_id">
                                 <option value="">- Không có -</option>
                                 @foreach($categories as $key => $item)
                                     @include('admin.page-category.includes.option', ['category' => $item, 'selected' => $page->category_id, 'full' => 1])

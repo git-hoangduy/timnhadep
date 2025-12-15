@@ -14,8 +14,12 @@
                     <form action="{{ route('setting.info') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label>Tên trường học</label>
+                            <label>Tên website</label>
                             <input type="text" class="form-control" name="name" value="{{ setting('info.name') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label>Giới thiệu ngắn</label>
+                            <textarea name="description" rows="4" class="form-control">{{ setting('info.description') }}</textarea>
                         </div>
                         <div class="mb-3 row">
                             <div class="col-md-4">
@@ -34,6 +38,10 @@
                         <div class="mb-3">
                             <label>Địa chỉ</label>
                             <input class="form-control" type="text" name="address" value="{{ setting('info.address') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label>Thời gian làm việc</label>
+                            <input class="form-control" type="text" name="time" value="{{ setting('info.time') }}">
                         </div>
                         <div class="mb-3">
                             <label>Iframe (Google map)</label>

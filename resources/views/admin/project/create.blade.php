@@ -13,7 +13,7 @@
                     <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label class="required">Danh mục</label>
+                            <label class="">Danh mục</label>
                             <select class="form-control select2" name="category_id">
                                 <option value="">- Không có -</option>
                                 @foreach($categories as $key => $item)
@@ -24,6 +24,18 @@
                         <div class="mb-3">
                             <label class="required">Tên dự án</label>
                             <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label>Giá</label>
+                            <input type="text" class="form-control" name="price" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label>Vị trí</label>
+                            <input type="text" class="form-control" name="position" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label>Mô tả ngắn</label>
+                            <textarea name="excerpt" rows="4" class="form-control" id=""></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Hình ảnh (có thể chọn nhiều)</label>
@@ -79,9 +91,9 @@
         
         $("form").validate({
             rules: {
-                "category_id": {
-                    required: true,
-                },
+                // "category_id": {
+                //     required: true,
+                // },
                 "name": {
                     required: true,
                 },

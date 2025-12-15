@@ -53,6 +53,9 @@ class ProjectController extends Controller
         $data = [
             'category_id' => $request->category_id,
             'name' => $request->name,
+            'price' => $request->price,
+            'position' => $request->position,
+            'excerpt' => $request->excerpt,
             'status' => $request->status,
         ];
         $slug  = Str::slug($data['name']);
@@ -136,6 +139,9 @@ class ProjectController extends Controller
         $data = [
             'category_id' => $request->category_id,
             'name' => $request->name,
+            'price' => $request->price,
+            'position' => $request->position,
+            'excerpt' => $request->excerpt,
             'status' => $request->status,
         ];
         

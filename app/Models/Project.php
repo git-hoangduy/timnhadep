@@ -18,8 +18,11 @@ class Project extends Model
         return $this->hasMany(ProjectBlock::class);
     }
 
-    public function avatar() {
-        return $this->belongsTo(ProjectImage::class, 'id', 'project_id')->where('is_avatar', 1);
+    public function avatar()
+    {
+        return $this->hasOne(ProjectImage::class, 'project_id')
+            ->orderByDesc('is_avatar')
+            ->orderBy('id');
     }
 
     public function images() {

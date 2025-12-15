@@ -102,3 +102,7 @@ Route::get('/gioi-thieu', [WebsiteController::class, 'about'])->name('about');
 Route::get('/trang/{slug}', [WebsiteController::class, 'page'])->name('page');
 Route::get('/danh-muc-bai-viet/{slug?}', [WebsiteController::class, 'post'])->name('post');
 Route::get('/bai-viet/{slug?}', [WebsiteController::class, 'postDetail'])->name('post.detail');
+Route::get('/danh-muc-du-an', [WebsiteController::class, 'project'])->name('project');
+Route::get('/du-an/{slug?}', [WebsiteController::class, 'projectDetail'])->name('project.detail');
+Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('listing');
+Route::get('/mua-ban/{slug?}', [WebsiteController::class, 'listingDetail'])->name('listing.detail');

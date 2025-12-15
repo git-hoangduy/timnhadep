@@ -14,8 +14,8 @@
                         @csrf
                         @method('PATCH')
                         <div class="mb-3">
-                            <label class="required">Danh mục</label>
-                            <select class="form-control select2" name="category_id" required>
+                            <label class="">Danh mục</label>
+                            <select class="form-control select2" name="category_id">
                                 <option value="">- Không có -</option>
                                 @foreach($categories as $key => $item)
                                     @include('admin.project-category.includes.option', ['category' => $item, 'selected' => $project->category_id, 'full' => 1])
@@ -25,6 +25,18 @@
                         <div class="mb-3">
                             <label class="required">Tên dự án</label>
                             <input type="text" class="form-control" name="name" value="{{ $project->name }}">
+                        </div>
+                        <div class="mb-3">
+                            <label>Giá</label>
+                            <input type="text" class="form-control" name="price" value="{{ $project->price }}">
+                        </div>
+                        <div class="mb-3">
+                            <label>Vị trí</label>
+                            <input type="text" class="form-control" name="position" value="{{ $project->position }}">
+                        </div>
+                        <div class="mb-3">
+                            <label>Mô tả ngắn</label>
+                            <textarea name="excerpt" rows="4" class="form-control" id="">{{ $project->excerpt }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Hình ảnh (tối đa 10 hình)</label>

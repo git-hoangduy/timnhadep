@@ -13,7 +13,7 @@
                     <form action="{{ route('page.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label class="required">Danh mục</label>
+                            <label class="">Danh mục</label>
                             <select class="form-control select2" name="category_id">
                                 <option value="">- Không có -</option>
                                 @foreach($categories as $key => $item)
@@ -79,9 +79,9 @@
         
         $("form").validate({
             rules: {
-                "category_id": {
-                    required: true,
-                },
+                // "category_id": {
+                //     required: true,
+                // },
                 "name": {
                     required: true,
                 },
