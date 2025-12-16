@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Nhà Đẹp - Kênh bất động sản số 1 Việt Nam</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -69,15 +70,9 @@
                 </div>
                 <div class="modal-body">
                     <form id="registerForm">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName" class="form-label">Họ và tên đệm</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="Nhập họ và tên đệm" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName" class="form-label">Tên</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Nhập tên" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="registerName" placeholder="Nhập họ và tên đệm" required>
                         </div>
                         <div class="mb-3">
                             <label for="registerEmail" class="form-label">Email</label>
@@ -192,7 +187,16 @@
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
+
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
@@ -295,19 +299,181 @@
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
         
-        // Form submissions
         document.getElementById('loginForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Đăng nhập thành công!');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-            modal.hide();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Hiệu ứng loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng nhập...';
+            submitBtn.disabled = true;
+            
+            // Gửi request Ajax
+            $.ajax({
+                url: '{{ route("user.login") }}',
+                method: 'POST',
+                data: {
+                    email: email,
+                    password: password,
+                    remember: rememberMe
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Hiển thị thông báo thành công trong modal
+                        const modalBody = document.querySelector('#loginModal .modal-body');
+                        const successMessage = document.createElement('div');
+                        successMessage.className = 'alert alert-success';
+                        successMessage.innerHTML = `
+                            <i class="fas fa-check-circle me-2"></i>
+                            ${response.message}
+                        `;
+                        
+                        modalBody.insertBefore(successMessage, modalBody.firstChild);
+                        
+                        // Reload trang sau 1.5 giây để cập nhật trạng thái đăng nhập
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                },
+                error: function(xhr) {
+                    const response = xhr.responseJSON;
+                    
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Hiển thị lỗi
+                    const modalBody = document.querySelector('#loginModal .modal-body');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'alert alert-danger';
+                    errorDiv.innerHTML = `
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        ${response.message || 'Đăng nhập thất bại. Vui lòng thử lại!'}
+                    `;
+                    
+                    // Xóa thông báo lỗi cũ nếu có
+                    const oldAlert = modalBody.querySelector('.alert');
+                    if (oldAlert) oldAlert.remove();
+                    
+                    modalBody.insertBefore(errorDiv, modalBody.firstChild);
+                    
+                    // Tự động ẩn thông báo lỗi sau 5 giây
+                    setTimeout(() => {
+                        errorDiv.remove();
+                    }, 5000);
+                }
+            });
         });
-        
+            
         document.getElementById('registerForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Đăng ký tài khoản thành công! Vui lòng kiểm tra email để xác nhận.');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-            modal.hide();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Kiểm tra mật khẩu khớp
+            if (password !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+            
+            // Hiệu ứng loading
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
+            submitBtn.disabled = true;
+            
+            // Gửi request Ajax
+            $.ajax({
+                url: '{{ route("user.register") }}',
+                method: 'POST',
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    password_confirmation: confirmPassword
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Hiển thị thông báo thành công
+                        const modalBody = document.querySelector('#registerModal .modal-body');
+                        const successMessage = document.createElement('div');
+                        successMessage.className = 'alert alert-success';
+                        successMessage.innerHTML = `
+                            <i class="fas fa-check-circle me-2"></i>
+                            ${response.message}
+                        `;
+                        
+                        modalBody.insertBefore(successMessage, modalBody.firstChild);
+                        
+                        // Reset form
+                        document.getElementById('registerForm').reset();
+                        
+                        // Tự động chuyển sang modal login sau 2 giây
+                        setTimeout(() => {
+                            const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                            registerModal.hide();
+                            
+                            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                            loginModal.show();
+                            
+                            // Điền email vào form login
+                            document.getElementById('loginEmail').value = email;
+                            
+                            // Xóa thông báo thành công
+                            successMessage.remove();
+                        }, 2000);
+                    }
+                    
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                },
+                error: function(xhr) {
+                    const response = xhr.responseJSON;
+                    
+                    // Reset button
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Hiển thị lỗi validation
+                    const modalBody = document.querySelector('#registerModal .modal-body');
+                    let errorHtml = '<div class="alert alert-danger">';
+                    errorHtml += '<i class="fas fa-exclamation-circle me-2"></i>';
+                    
+                    if (response.errors) {
+                        // Hiển thị tất cả lỗi validation
+                        for (const field in response.errors) {
+                            errorHtml += `<div>${response.errors[field][0]}</div>`;
+                        }
+                    } else {
+                        errorHtml += response.message || 'Đăng ký thất bại. Vui lòng thử lại!';
+                    }
+                    
+                    errorHtml += '</div>';
+                    
+                    // Xóa thông báo lỗi cũ nếu có
+                    const oldAlert = modalBody.querySelector('.alert');
+                    if (oldAlert) oldAlert.remove();
+                    
+                    modalBody.insertBefore(document.createRange().createContextualFragment(errorHtml), modalBody.firstChild);
+                    
+                    // Tự động ẩn thông báo lỗi sau 5 giây
+                    setTimeout(() => {
+                        const errorDiv = modalBody.querySelector('.alert-danger');
+                        if (errorDiv) errorDiv.remove();
+                    }, 5000);
+                }
+            });
         });
         
         document.getElementById('postForm')?.addEventListener('submit', function(e) {

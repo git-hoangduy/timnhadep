@@ -1,65 +1,88 @@
 @extends('website.master')
 @section('content')
 
-<div class="main pb-5">
-	<div class="container">
-		<div class="row mt-4 justify-content-center">
-			<!-- <div class="col-md-3">
-				<p class="mb-2">Ngày đăng: <b>{{ $post->created_at->format('d/m/Y') }}</b></p>
-				<p class="mb-2">Người đăng: <b>Admin</b></p>
-			</div> -->
-			<div class="col-md-9">
-				<div class="post-detail d-block">
-					<div class="post-detail-title">
-						<h4>{{ $post->name }}</h4>
-					</div>
-	                <div class="post-detail-content">
-	                    <!-- <img src="{{ asset($post->image) }}" alt="{{ $post->name }}" class="w-100 mb-4"> -->
-						<p class="post-detail-excerpt">{{ $post->excerpt }}</p>
-						{!! renderContent($post->content) !!}
-					</div>
-					<p class="mt-5 pe-2 text-end">Người đăng: <b>Admin</b></p>
-				</div>
-			</div>
-		</div>
+<!-- Breadcrumb -->
+<section class="breadcrumb-section">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="index.html#news">Trang</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ $post->name }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+</section>
 
-		@if ($recentPosts->count())
-			<div class="recent-posts-title">
-				<h4>Bài viết khác</h4>
-			</div>
-			<div class="recent-posts">
-				@foreach($recentPosts as $post)
-					<div class="col-md-3 mb-4 px-2">
-						<div class="card post-item">
-							<a href="{{ route('post.detail', $post->slug) }}" class="post-image">
-								<img src="{{ asset($post->image ?? '') }}" class="card-img-top" alt="{{ $post->name }}">
-							</a>
-							<div class="card-body">
-								<p class="post-category">{{ $post->category->name }}</p>
-								<a href="{{ route('post.detail', $post->slug) }}">
-									<h2 class="post-title-small">{{ $post->name }}</h2>
-								</a>
-							</div>
-						</div>
-					</div>
-				@endforeach
-			</div>
-		@endif
-	</div>
-</div>
+<!-- News Detail -->
+<section class="news-detail-page">
+    <div class="container">
+        <div class="news-header">
+            <span class="news-category">{{ $post->category->name }}</span>
+            <h1 class="news-title">{{ $post->name }}</h1>
+            
+            <!-- <div class="news-meta">
+                <div class="news-meta-item">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>15/10/2023</span>
+                </div>
+                <div class="news-meta-item">
+                    <i class="far fa-user"></i>
+                    <span>Nguyễn Văn A</span>
+                </div>
+                <div class="news-meta-item">
+                    <i class="far fa-clock"></i>
+                    <span>5 phút đọc</span>
+                </div>
+                <div class="news-meta-item">
+                    <i class="far fa-eye"></i>
+                    <span>1,245 lượt xem</span>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="news-featured-image">
+            <img src="{{ asset($post->image) }}" alt="{{ $post->name }}">
+        </div>
+
+        <div class="news-content">
+
+            {!! renderContent($post->content) !!}
+
+            <div class="news-tags">
+                <a href="#" class="news-tag">Bất động sản 2023</a>
+                <a href="#" class="news-tag">Đầu tư bất động sản</a>
+                <a href="#" class="news-tag">Thị trường nhà đất</a>
+                <a href="#" class="news-tag">Xu hướng đầu tư</a>
+                <a href="#" class="news-tag">Phân tích thị trường</a>
+            </div>
+
+            {{-- <div class="news-author">
+                <div class="author-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Nguyễn Văn A">
+                </div>
+                <div class="author-info">
+                    <h4>Nguyễn Văn A</h4>
+                    <p>Chuyên gia phân tích thị trường bất động sản với hơn 10 năm kinh nghiệm. Ông đã tư vấn cho nhiều dự án lớn tại Việt Nam và có nhiều bài viết chuyên sâu về thị trường bất động sản.</p>
+                </div>
+            </div> --}}
+        </div>
+    </div>
+</section>
 
 @endsection
 
 @push('scripts')
 <script>
 
-	if ($('.recent-posts').length > 0) {
-		$('.recent-posts').flickity({
-			cellAlign: 'left',
-			contain: true,
-			pageDots: false,
-			prevNextButtons: true
-		});
-	}
 </script>
 @endpush

@@ -2,7 +2,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ url('/') }}">
                 <span>Tìm</span>NhàĐẹp
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -23,7 +23,7 @@
                         <a class="nav-link" href="{{ route('post') }}">Tin tức</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('about') }}">Về chúng tôi</a>
+                        <a class="nav-link" href="{{ route('page', $pages->filter(function ($item) { return $item->id == 1; })->first()->slug) }}">Về chúng tôi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('contact') }}">Liên hệ</a>

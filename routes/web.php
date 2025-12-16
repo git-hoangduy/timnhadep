@@ -33,7 +33,7 @@ use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\VideoController;
 
 use App\Http\Controllers\Website\WebsiteController;
-// use App\Http\Controllers\Website\UserController;
+use App\Http\Controllers\Website\UserController as WebsiteUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,3 +106,7 @@ Route::get('/danh-muc-du-an', [WebsiteController::class, 'project'])->name('proj
 Route::get('/du-an/{slug?}', [WebsiteController::class, 'projectDetail'])->name('project.detail');
 Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('listing');
 Route::get('/mua-ban/{slug?}', [WebsiteController::class, 'listingDetail'])->name('listing.detail');
+
+Route::match(['get', 'post'], '/user/login', [WebsiteUserController::class, 'login'])->name('user.login');
+Route::match(['get', 'post'], '/user/register', [WebsiteUserController::class, 'register'])->name('user.register');
+Route::get('user/logout', [WebsiteUserController::class, 'logout'])->name('user.logout');

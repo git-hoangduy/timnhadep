@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\View;
 
 use App\Models\PageCategory;
 use App\Models\PostCategory;
+use App\Models\Page;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -32,13 +33,17 @@ class ViewServiceProvider extends ServiceProvider
             'website/*', 
         ], function ($view) {
 
-            $pageCategories = PageCategory::where(['level' => 1, 'status' => 1])->get();
-            $postCategories = PostCategory::where(['level' => 1, 'status' => 1])->get();
-            $footers = Footer::where('status', 1)->get();
+            $pages = Page::where('status', 1)->get();
+
+            // $pageCategories = PageCategory::where(['level' => 1, 'status' => 1])->get();
+            // $postCategories = PostCategory::where(['level' => 1, 'status' => 1])->get();
+            // $footers = Footer::where('status', 1)->get();
          
-            $view->with('pageCategories', $pageCategories);
-            $view->with('postCategories', $postCategories);
-            $view->with('footers', $footers);
+            // $view->with('pageCategories', $pageCategories);
+            // $view->with('postCategories', $postCategories);
+            // $view->with('footers', $footers);
+
+            $view->with('pages', $pages);
         });
     }
 }

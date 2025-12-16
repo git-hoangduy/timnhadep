@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="copyright">
-                    <p>{{ setting('info.copyright') }} | <a href="#" class="text-white-50">Chính sách bảo mật</a> | <a href="#" class="text-white-50">Điều khoản sử dụng</a></p>
+                    <p>{{ setting('info.copyright') }} | <a href="{{ route('page', $pages->filter(function ($item) { return $item->id == 2; })->first()->slug) }}" class="text-white-50">Chính sách bảo mật</a> | <a href="{{ route('page', $pages->filter(function ($item) { return $item->id == 3; })->first()->slug) }}" class="text-white-50">Điều khoản sử dụng</a></p>
                 </div>
             </div>
         </div>
