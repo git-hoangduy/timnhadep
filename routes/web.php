@@ -110,3 +110,14 @@ Route::get('/mua-ban/{slug?}', [WebsiteController::class, 'listingDetail'])->nam
 Route::match(['get', 'post'], '/user/login', [WebsiteUserController::class, 'login'])->name('user.login');
 Route::match(['get', 'post'], '/user/register', [WebsiteUserController::class, 'register'])->name('user.register');
 Route::get('user/logout', [WebsiteUserController::class, 'logout'])->name('user.logout');
+Route::middleware(['auth:customer'])->group(function () {
+
+    Route::match(['get', 'post'], '/user/profile', [WebsiteUserController::class, 'profile'])->name('user.profile');
+    Route::match(['get', 'post'], '/user/password', [WebsiteUserController::class, 'password'])->name('user.password');
+    Route::get('/user/history', [WebsiteUserController::class, 'history'])->name('user.history');
+    Route::get('/user/order', [WebsiteUserController::class, 'order'])->name('user.order');
+
+    Route::post('/user/listings/store', [WebsiteUserController::class, 'storeListing'])->name('user.listings.store');
+    Route::get('/user/my-listings', [WebsiteUserController::class, 'myListings'])->name('user.my-listings');
+    Route::delete('/user/listings/{id}', [WebsiteUserController::class, 'destroyListing'])->name('user.listings.destroy');
+});

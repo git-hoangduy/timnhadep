@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,9 @@ use Laravel\Socialite\Facades\Socialite;
 use Hash;
 
 use App\Models\Customer;
+use App\Models\Listing;
+use App\Models\ListingImage;
+use App\Models\ListingCategory;
 
 class UserController extends Controller
 {
@@ -227,61 +232,144 @@ class UserController extends Controller
         return redirect()->route('home');
     }
 
-    public function profile(Request $request) {
-
+    public function profile(Request $request)
+    {
         $user = Auth::guard('customer')->user();
-
+        
+        // Thống kê tin đăng
+        $totalListings = Listing::where('customer_id', $user->id)->count();
+        $approvedListings = Listing::where('customer_id', $user->id)->where('status', 1)->count();
+        $pendingListings = Listing::where('customer_id', $user->id)->where('status', 0)->count();
+        
+        // Xử lý POST request (cập nhật thông tin)
         if ($request->isMethod('post')) {
-            $this->validate($request, [
-                'name'    => 'required',
-                'phone'   => 'required',
-                'address' => 'required',
-            ],
-            [
-                'name.required'    => 'Họ tên không được để trống',
-                'phone.required'   => 'Số điện thoại không được để trống',
-                'address.required' => 'Địa chỉ không được để trống',
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'phone' => 'required|string|max:20',
+                'address' => 'nullable|string|max:500',
+                'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ], [
+                'name.required' => 'Họ tên không được để trống',
+                'phone.required' => 'Số điện thoại không được để trống',
+                'avatar.image' => 'File phải là hình ảnh',
+                'avatar.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif',
+                'avatar.max' => 'Ảnh không được vượt quá 2MB',
             ]);
-
-            $data = $request->except('email');
-            $status = Customer::find($user->id)->update($data);
-
-            if($status){
-                return redirect()->route('user.profile')->with('success', 'Cập nhật thông tin thành công');
+            
+            if ($validator->fails()) {
+                return redirect()->route('user.profile')
+                    ->withErrors($validator)
+                    ->withInput();
             }
-            else{
-                return redirect()->route('user.profile')->with('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
+            
+            try {
+                $data = [
+                    'name' => $request->name,
+                    'phone' => $request->phone,
+                    'address' => $request->address,
+                ];
+                
+                // Xử lý upload avatar
+                if ($request->hasFile('avatar')) {
+                    $avatar = $request->file('avatar');
+                    $extension = $avatar->getClientOriginalExtension();
+                    $fileName = 'avatar_' . $user->id . '_' . time() . '.' . $extension;
+                    
+                    // Thư mục lưu avatar
+                    $folderPath = 'uploads/avatars';
+                    $fullPath = public_path($folderPath);
+                    
+                    if (!file_exists($fullPath)) {
+                        mkdir($fullPath, 0775, true);
+                    }
+                    
+                    // Xóa avatar cũ nếu có
+                    if ($user->avatar && file_exists(public_path($user->avatar))) {
+                        unlink(public_path($user->avatar));
+                    }
+                    
+                    // Lưu avatar mới
+                    $avatar->move($fullPath, $fileName);
+                    $data['avatar'] = $folderPath . '/' . $fileName;
+                }
+                
+                // Cập nhật thông tin user
+                $status = $user->update($data);
+                
+                if ($status) {
+                    return redirect()->route('user.profile')
+                        ->with('success', 'Cập nhật thông tin thành công!');
+                } else {
+                    return redirect()->route('user.profile')
+                        ->with('error', 'Cập nhật thông tin thất bại!');
+                }
+                
+            } catch (\Exception $e) {
+                \Log::error('Error updating profile: ' . $e->getMessage());
+                return redirect()->route('user.profile')
+                    ->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
             }
         }
-
         
-        return view('website.user.profile', compact('user'));
+        return view('website.user.profile', compact(
+            'user', 
+            'totalListings', 
+            'approvedListings', 
+            'pendingListings'
+        ));
     }
 
-    public function password(Request $request) {
-
+    public function password(Request $request)
+    {
+        $user = Auth::guard('customer')->user();
+        
+        // Xử lý POST request (đổi mật khẩu)
         if ($request->isMethod('post')) {
-            $this->validate($request, [
-                'password'=>'required|min:6|confirmed',
+            $validator = Validator::make($request->all(), [
+                'current_password' => 'required',
+                'password' => 'required|min:6|confirmed',
             ], [
-                'password.required' => 'Mật khẩu không được để trống',
+                'current_password.required' => 'Vui lòng nhập mật khẩu hiện tại',
+                'password.required' => 'Vui lòng nhập mật khẩu mới',
                 'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự',
-                'password.confirmed' => 'Xác nhận mật khẩu không trùng khớp',
+                'password.confirmed' => 'Xác nhận mật khẩu không khớp',
             ]);
-
-            $user = Auth::guard('customer')->user();
-            $data['password'] = Hash::make($request->password);
-            $status = $user->update($data);
-
-            if($status){
-                return redirect()->route('user.password')->with('success', 'Cập nhật thông tin thành công');
+            
+            // Kiểm tra mật khẩu hiện tại
+            if (!Hash::check($request->current_password, $user->password)) {
+                $validator->errors()->add('current_password', 'Mật khẩu hiện tại không đúng');
+                return redirect()->route('user.password')
+                    ->withErrors($validator)
+                    ->withInput();
             }
-            else{
-                return redirect()->route('user.password')->with('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
+            
+            if ($validator->fails()) {
+                return redirect()->route('user.password')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            
+            try {
+                // Cập nhật mật khẩu mới
+                $user->password = Hash::make($request->password);
+                $status = $user->save();
+                
+                if ($status) {
+                    return redirect()->route('user.password')
+                        ->with('success', 'Đổi mật khẩu thành công!');
+                } else {
+                    return redirect()->route('user.password')
+                        ->with('error', 'Đổi mật khẩu thất bại!');
+                }
+                
+            } catch (\Exception $e) {
+                \Log::error('Error changing password: ' . $e->getMessage());
+                return redirect()->route('user.password')
+                    ->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
             }
         }
-
-        return view('website.user.password');
+        
+        return view('website.user.password', compact('user'));
     }
 
     public function history(Request $request) {
@@ -290,5 +378,233 @@ class UserController extends Controller
 
     public function order(Request $request) {
         return view('user.order');
+    }
+
+     // Hàm đăng tin mới
+     public function storeListing(Request $request)
+    {
+        // Kiểm tra đăng nhập
+        if (!Auth::guard('customer')->check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bạn cần đăng nhập để đăng tin'
+            ], 401);
+        }
+
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:listing_categories,id',
+            'type' => 'required|in:sale,rent,buy,rental',
+            'price' => 'required|string|max:100',
+            'area' => 'required|string|max:50',
+            'location' => 'required|string|max:500',
+            'description' => 'required|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+        ], [
+            'title.required' => 'Tiêu đề không được để trống',
+            'category_id.required' => 'Vui lòng chọn loại bất động sản',
+            'type.required' => 'Vui lòng chọn hình thức',
+            'price.required' => 'Giá không được để trống',
+            'area.required' => 'Diện tích không được để trống',
+            'location.required' => 'Địa chỉ không được để trống',
+            'description.required' => 'Mô tả không được để trống',
+            'images.*.image' => 'File phải là hình ảnh',
+            'images.*.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif, webp',
+            'images.*.max' => 'Hình ảnh không được vượt quá 5MB',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            // Tạo slug từ tiêu đề
+            $slug = Str::slug($request->title);
+            $originalSlug = $slug;
+            $counter = 1;
+            
+            // Kiểm tra slug trùng
+            while (Listing::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
+
+            // Tạo excerpt từ description (lấy 200 ký tự đầu)
+            $excerpt = Str::limit(strip_tags($request->description), 200);
+
+            // Lấy user hiện tại
+            $user = Auth::guard('customer')->user();
+
+            // Tạo listing
+            $listing = Listing::create([
+                'category_id' => $request->category_id,
+                'type' => $request->type,
+                'name' => $request->title,
+                'slug' => $slug,
+                'excerpt' => $excerpt,
+                'content' => $request->description,
+                'status' => 0, // 0 = chờ duyệt
+                'is_highlight' => 0,
+                'price' => $request->price,
+                'area' => $request->area,
+                'location' => $request->location,
+                'meta_keywords' => $request->title,
+                'meta_description' => $excerpt,
+                'customer_id' => $user->id,
+                'customer_name' => $user->name ?? '',
+                'customer_phone' => $user->phone ?? '',
+                'customer_email' => $user->email ?? '',
+            ]);
+
+            // Xử lý upload ảnh
+            if ($request->hasFile('images')) {
+                // Tạo thư mục dựa trên slug
+                $folderPath = 'uploads/listings/' . $slug;
+                $fullPath = public_path($folderPath);
+                
+                // Tạo thư mục nếu chưa tồn tại
+                if (!file_exists($fullPath)) {
+                    mkdir($fullPath, 0775, true);
+                }
+                
+                foreach ($request->file('images') as $key => $image) {
+                    // Tạo tên file đơn giản
+                    $extension = $image->getClientOriginalExtension();
+                    $fileName = ($key + 1) . '.' . $extension; // 1.jpg, 2.jpg, ...
+                    
+                    // Lưu ảnh
+                    $image->move($fullPath, $fileName);
+                    
+                    // Lưu vào database
+                    $listingImage = ListingImage::create([
+                        'listing_id' => $listing->id,
+                        'image' => $folderPath . '/' . $fileName,
+                        'name' => $image->getClientOriginalName(),
+                        'is_avatar' => $key === 0 ? 1 : 0,
+                    ]);
+                    
+                    // Nếu là ảnh đầu tiên, cập nhật làm ảnh đại diện cho listing
+                    if ($key === 0) {
+                        $listing->update(['image' => $folderPath . '/' . $fileName]);
+                    }
+                }
+            } else {
+                // Nếu không có ảnh, đặt ảnh mặc định
+                $listing->update(['image' => 'uploads/no-image.jpg']);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Tin đăng của bạn đã được gửi thành công! Tin sẽ được duyệt trong vòng 24 giờ.',
+                'listing_id' => $listing->id,
+                'redirect' => route('user.order')
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error creating listing: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra trong quá trình đăng tin. Vui lòng thử lại!'
+            ], 500);
+        }
+    }
+ 
+    public function myListings(Request $request)
+    {
+        if (!Auth::guard('customer')->check()) {
+            return redirect()->route('user.login');
+        }
+
+        $userId = Auth::guard('customer')->id();
+        
+        // Lấy danh sách tin đăng
+        $listings = Listing::where('customer_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        
+        // Thống kê
+        $totalCount = $listings->total();
+        $approvedCount = Listing::where('customer_id', $userId)
+            ->where('status', 1)
+            ->count();
+        $pendingCount = Listing::where('customer_id', $userId)
+            ->where('status', 0)
+            ->count();
+
+        return view('website.user.my-listings', compact(
+            'listings', 
+            'totalCount',
+            'approvedCount', 
+            'pendingCount'
+        ));
+    }
+
+    public function destroyListing($id)
+    {
+        if (!Auth::guard('customer')->check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bạn cần đăng nhập để thực hiện thao tác này'
+            ], 401);
+        }
+
+        $listing = Listing::where('id', $id)
+            ->where('customer_id', Auth::guard('customer')->id())
+            ->first();
+
+        if (!$listing) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tin đăng không tồn tại hoặc bạn không có quyền xóa'
+            ], 404);
+        }
+
+        try {
+            $listingSlug = $listing->slug;
+            
+            // 1. Xóa tất cả ảnh từ database
+            foreach ($listing->images as $image) {
+                // Xóa file ảnh nếu tồn tại
+                if (file_exists(public_path($image->image))) {
+                    unlink(public_path($image->image));
+                }
+                $image->delete();
+            }
+            
+            // 2. Xóa thư mục ảnh của listing
+            $folderPath = public_path('uploads/listings/' . $listingSlug);
+            if (file_exists($folderPath) && is_dir($folderPath)) {
+                // Xóa tất cả file trong thư mục
+                $files = glob($folderPath . '/*');
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        unlink($file);
+                    }
+                }
+                // Xóa thư mục rỗng
+                rmdir($folderPath);
+            }
+            
+            // 3. Xóa bản ghi listing
+            $listing->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Tin đăng đã được xóa thành công!'
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error deleting listing: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra khi xóa tin đăng: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

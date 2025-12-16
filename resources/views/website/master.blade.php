@@ -50,11 +50,11 @@
                     <div class="text-center mt-3">
                         <p>Chưa có tài khoản? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Đăng ký ngay</a></p>
                     </div>
-                    <div class="text-center mt-3">
+                    <!-- <div class="text-center mt-3">
                         <p>Hoặc đăng nhập bằng</p>
                         <button class="btn btn-outline-primary me-2"><i class="fab fa-facebook-f"></i> Facebook</button>
                         <button class="btn btn-outline-danger"><i class="fab fa-google"></i> Google</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -113,70 +113,89 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="postForm">
-                        <div class="mb-3">
-                            <label for="postTitle" class="form-label">Tiêu đề tin đăng <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="postTitle" placeholder="Ví dụ: Cần bán căn hộ chung cư 70m² tại Sunshine City" required>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="propertyType" class="form-label">Loại bất động sản <span class="text-danger">*</span></label>
-                                <select class="form-select" id="propertyType" required>
-                                    <option value="">Chọn loại bất động sản</option>
-                                    <option value="apartment">Căn hộ chung cư</option>
-                                    <option value="house">Nhà phố</option>
-                                    <option value="villa">Biệt thự</option>
-                                    <option value="land">Đất nền</option>
-                                    <option value="office">Văn phòng</option>
-                                    <option value="shop">Mặt bằng kinh doanh</option>
-                                </select>
+                    @if(Auth::guard('customer')->check())
+                        <form id="postForm" enctype="multipart/form-data">
+                            <input type="hidden" name="customer_id" value="{{ Auth::guard('customer')->id() }}">
+                            
+                            <div class="mb-3">
+                                <label for="postTitle" class="form-label">Tiêu đề tin đăng <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="postTitle" name="title" placeholder="Ví dụ: Cần bán căn hộ chung cư 70m² tại Sunshine City" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="transactionType" class="form-label">Hình thức <span class="text-danger">*</span></label>
-                                <select class="form-select" id="transactionType" required>
-                                    <option value="">Chọn hình thức</option>
-                                    <option value="sale">Cần bán</option>
-                                    <option value="rent">Cho thuê</option>
-                                    <option value="buy">Cần mua</option>
-                                    <option value="rental">Cần thuê</option>
-                                </select>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="propertyType" class="form-label">Loại bất động sản <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="propertyType" name="category_id" required>
+                                        <option value="">Chọn loại bất động sản</option>
+                                        @foreach($listingCategories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="transactionType" class="form-label">Hình thức <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="transactionType" name="type" required>
+                                        <option value="">Chọn hình thức</option>
+                                        <option value="sale">Cần bán</option>
+                                        <option value="rent">Cho thuê</option>
+                                        <option value="buy">Cần mua</option>
+                                        <option value="rental">Cần thuê</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="price" class="form-label">Giá <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="price" placeholder="Nhập giá" required>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="price" class="form-label">Giá <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="price" name="price" placeholder="Ví dụ: 2 tỷ, 15 triệu/tháng" required>
+                                    <small class="form-text text-muted">Nhập giá bằng chữ (ví dụ: 2 tỷ, 15 triệu/tháng)</small>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="area" class="form-label">Diện tích (m²) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="area" name="area" placeholder="Ví dụ: 70, 80-100" required>
+                                    <small class="form-text text-muted">Nhập diện tích bằng số (ví dụ: 70 hoặc 80-100)</small>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="area" class="form-label">Diện tích (m²) <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="area" placeholder="Nhập diện tích" required>
+                            
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="location" name="location" placeholder="Nhập địa chỉ chi tiết" required>
                             </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Mô tả chi tiết <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Mô tả chi tiết về bất động sản: số phòng, hướng nhà, tiện ích, nội thất..." required></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="images" class="form-label">Hình ảnh</label>
+                                <input type="file" class="form-control" id="images" name="images[]" multiple accept="image/*">
+                                <div class="form-text">Tối đa 10 hình ảnh, dung lượng mỗi hình dưới 5MB. Ảnh đầu tiên sẽ là ảnh đại diện.</div>
+                                <div id="imagePreview" class="mt-2 row"></div>
+                            </div>
+                            
+                            <input type="hidden" name="customer_name" value="{{ Auth::guard('customer')->user()->name }}">
+                            <input type="hidden" name="customer_phone" value="{{ Auth::guard('customer')->user()->phone }}">
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Đăng tin ngay</button>
+                            </div>
+                        </form>
+                    @else
+                        <div class="text-center py-5">
+                            <div class="mb-4">
+                                <i class="fas fa-lock fa-4x text-warning"></i>
+                            </div>
+                            <h4>Vui lòng đăng nhập để đăng tin</h4>
+                            <p class="text-muted mb-4">Bạn cần đăng nhập tài khoản để có thể đăng tin bất động sản.</p>
+                            <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
+                                <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                            </button>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">
+                                <i class="fas fa-user-plus me-2"></i>Đăng ký
+                            </button>
                         </div>
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Địa chỉ <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="location" placeholder="Nhập địa chỉ chi tiết" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Mô tả chi tiết <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="description" rows="4" placeholder="Mô tả chi tiết về bất động sản: số phòng, hướng nhà, tiện ích, nội thất..." required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="images" class="form-label">Hình ảnh</label>
-                            <input type="file" class="form-control" id="images" multiple accept="image/*">
-                            <div class="form-text">Tối đa 10 hình ảnh, dung lượng mỗi hình dưới 5MB</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contactName" class="form-label">Tên liên hệ <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="contactName" placeholder="Nhập tên người liên hệ" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="contactPhone" class="form-label">Số điện thoại liên hệ <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" id="contactPhone" placeholder="Nhập số điện thoại" required>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">Đăng tin ngay</button>
-                        </div>
-                    </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -476,11 +495,100 @@
             });
         });
         
-        document.getElementById('postForm')?.addEventListener('submit', function(e) {
+        // Sửa URL trong xử lý form đăng tin
+        $('#postForm').on('submit', function(e) {
             e.preventDefault();
-            alert('Tin đăng của bạn đã được gửi thành công! Tin sẽ được duyệt trong vòng 24 giờ.');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('postModal'));
-            modal.hide();
+            
+            const formData = new FormData(this);
+            
+            // Hiệu ứng loading
+            const submitBtn = $(this).find('button[type="submit"]');
+            const originalText = submitBtn.html();
+            submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Đang đăng tin...');
+            submitBtn.prop('disabled', true);
+            
+            // Gửi request Ajax - sửa URL thành route mới
+            $.ajax({
+                url: '{{ route("user.listings.store") }}', // Đổi thành route mới
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        // Hiển thị thông báo thành công
+                        const modalBody = $('#postModal .modal-body');
+                        $('.alert', modalBody).remove();
+                        
+                        const successMessage = `
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                ${response.message}
+                                <div class="mt-2">
+                                    <a href="${response.redirect || '#'}" class="btn btn-sm btn-outline-success">
+                                        Xem tin đã đăng
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        
+                        $(successMessage).prependTo(modalBody);
+                        
+                        // Reset form
+                        $('#postForm')[0].reset();
+                        $('#imagePreview').empty();
+                        
+                        // Đóng modal sau 3 giây
+                        // setTimeout(() => {
+                        //     const postModal = bootstrap.Modal.getInstance(document.getElementById('postModal'));
+                        //     if (postModal) postModal.hide();
+                            
+                        //     // Chuyển hướng nếu có
+                        //     if (response.redirect) {
+                        //         window.location.href = response.redirect;
+                        //     }
+                        // }, 3000);
+                    }
+                    
+                    // Reset button
+                    submitBtn.html(originalText);
+                    submitBtn.prop('disabled', false);
+                },
+                error: function(xhr) {
+                    const response = xhr.responseJSON;
+                    
+                    // Reset button
+                    submitBtn.html(originalText);
+                    submitBtn.prop('disabled', false);
+                    
+                    // Hiển thị lỗi
+                    const modalBody = $('#postModal .modal-body');
+                    $('.alert', modalBody).remove();
+                    
+                    let errorHtml = '<div class="alert alert-danger">';
+                    errorHtml += '<i class="fas fa-exclamation-circle me-2"></i>';
+                    
+                    if (response.errors) {
+                        // Hiển thị tất cả lỗi validation
+                        errorHtml += '<strong>Vui lòng kiểm tra các lỗi sau:</strong><ul class="mb-0 mt-2">';
+                        for (const field in response.errors) {
+                            errorHtml += `<li>${response.errors[field][0]}</li>`;
+                        }
+                        errorHtml += '</ul>';
+                    } else {
+                        errorHtml += response.message || 'Đăng tin thất bại. Vui lòng thử lại!';
+                    }
+                    
+                    errorHtml += '</div>';
+                    
+                    $(errorHtml).prependTo(modalBody);
+                    
+                    // Tự động ẩn thông báo lỗi sau 5 giây
+                    setTimeout(() => {
+                        $('.alert-danger', modalBody).remove();
+                    }, 5000);
+                }
+            });
         });
         
         // Xử lý form đăng ký nhận tin
@@ -544,5 +652,6 @@
             }, 100);
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

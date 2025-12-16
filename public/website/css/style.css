@@ -1,11 +1,3 @@
-/* *{
-  opacity: 0.8;
-} */
-.hero-section{
-  display: none;
-}
-
-
 :root {
   --primary-color: #eb5d1e;
   --primary-dark: #c94d17;

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\PageCategory;
 use App\Models\PostCategory;
 use App\Models\Page;
+use App\Models\ListingCategory;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,7 @@ class ViewServiceProvider extends ServiceProvider
         ], function ($view) {
 
             $pages = Page::where('status', 1)->get();
+            $listingCategories = ListingCategory::where('status', 1)->get();
 
             // $pageCategories = PageCategory::where(['level' => 1, 'status' => 1])->get();
             // $postCategories = PostCategory::where(['level' => 1, 'status' => 1])->get();
@@ -44,6 +46,7 @@ class ViewServiceProvider extends ServiceProvider
             // $view->with('footers', $footers);
 
             $view->with('pages', $pages);
+            $view->with('listingCategories', $listingCategories);
         });
     }
 }
