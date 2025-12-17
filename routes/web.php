@@ -105,6 +105,7 @@ Route::get('/bai-viet/{slug?}', [WebsiteController::class, 'postDetail'])->name(
 Route::get('/danh-muc-du-an', [WebsiteController::class, 'project'])->name('project');
 Route::get('/du-an/{slug?}', [WebsiteController::class, 'projectDetail'])->name('project.detail');
 Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('listing');
+Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('listing');
 Route::get('/mua-ban/{slug?}', [WebsiteController::class, 'listingDetail'])->name('listing.detail');
 
 Route::match(['get', 'post'], '/user/login', [WebsiteUserController::class, 'login'])->name('user.login');

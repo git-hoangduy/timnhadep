@@ -15,6 +15,8 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\ProjectCategory;
 use App\Models\Album;
+use App\Models\Listing;
+use App\Models\ListingCategory;
 
 class WebsiteController extends Controller
 {
@@ -28,11 +30,16 @@ class WebsiteController extends Controller
         $page = Page::find(1);
         $projects = Project::where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
         $posts = Post::where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
+        $listings = Listing::with(['category', 'customer'])
+            ->where('status', 1)
+            ->orderBy('created_at', 'desc')
+            ->limit(8)
+            ->get();
         SEOMeta::setTitle('Trang chủ');
         OpenGraph::setUrl(url()->current());
         OpenGraph::setDescription(setting('seo.meta_description'));
         OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
-        return view('website.index', compact('page', 'projects', 'posts'));
+        return view('website.index', compact('page', 'projects', 'posts', 'listings'));
     }
 
 
@@ -109,6 +116,16 @@ class WebsiteController extends Controller
         OpenGraph::setTitle($post->name);
         OpenGraph::addImage(asset($post->image), ['height' => 300, 'width' => 300]);
         return view('website.post-detail', compact('post', 'recentPosts'));
+    }
+
+    public function listingDetail(Request $request, $slug = '') {
+
+        $listing = Listing::where('slug', $slug)->first();
+
+        SEOMeta::setTitle($listing->name);
+        OpenGraph::setTitle($listing->name);
+        OpenGraph::addImage(asset($listing->image), ['height' => 300, 'width' => 300]);
+        return view('website.listing-detail', compact('listing'));
     }
 
     public function contact(Request $request) {

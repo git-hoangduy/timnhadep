@@ -150,83 +150,48 @@
                             <p class="text-center text-muted mb-5">Khám phá những tin đăng mua bán mới nhất từ cộng đồng</p>
                             
                             <div class="row">
+                                @foreach($listings as $listing)
                                 <div class="col-lg-6">
                                     <div class="listing-card animate-on-scroll">
                                         <div class="listing-header">
                                             <div class="listing-user">
                                                 <div class="user-avatar">
-                                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Nguyễn Văn An">
+                                                    <img src="{{asset($listing->customer->avatar)}}" alt="{{ $listing->customer->name }}">
                                                 </div>
                                                 <div>
-                                                    <div class="user-name">Nguyễn Văn An</div>
-                                                    <div class="user-rating">
+                                                    <div class="user-name">{{ $listing->customer->name }}</div>
+                                                    <!-- <div class="user-rating">
                                                         <i class="fas fa-star text-warning"></i>
                                                         <i class="fas fa-star text-warning"></i>
                                                         <i class="fas fa-star text-warning"></i>
                                                         <i class="fas fa-star text-warning"></i>
                                                         <i class="fas fa-star-half-alt text-warning"></i>
                                                         <span class="ms-1">4.5</span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
-                                            <div class="listing-date">2 giờ trước</div>
+                                            <div class="listing-date">{{ $listing->created_at->diffForHumans() }}</div>
                                         </div>
                                         <div class="listing-content">
-                                            <h3 class="listing-title">Cần bán căn hộ chung cư 70m² tại Sunshine City</h3>
-                                            <span class="listing-type">Căn hộ chung cư</span>
-                                            <p class="listing-description">Căn hộ 2 phòng ngủ, 2 toilet, full nội thất cao cấp, view thành phố. Vị trí đẹp, gần trung tâm thương mại, trường học và bệnh viện.</p>
-                                            <div class="listing-price">8.2 tỷ VNĐ</div>
+                                            <h3 class="listing-title">{{ $listing->name }}</h3>
+                                            <span class="listing-type">{{ $listing->category->name }}</span>
+                                            <p class="listing-description">{{ $listing->excerpt }}</p>
+                                            <div class="listing-price">{{ $listing->price }} VND</div>
                                         </div>
                                         <div class="listing-footer">
                                             <div class="listing-location">
                                                 <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                                Quận 7, TP.HCM
+                                                {{ $listing->position }}
                                             </div>
-                                            <a href="#" class="btn btn-outline-primary btn-sm">Liên hệ ngay</a>
+                                            <a href="{{route('listing.detail', ['slug' => $listing->slug])}}" class="btn btn-outline-primary btn-sm">Liên hệ ngay</a>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="col-lg-6">
-                                    <div class="listing-card animate-on-scroll">
-                                        <div class="listing-header">
-                                            <div class="listing-user">
-                                                <div class="user-avatar">
-                                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Trần Thị Bích">
-                                                </div>
-                                                <div>
-                                                    <div class="user-name">Trần Thị Bích</div>
-                                                    <div class="user-rating">
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <span class="ms-1">5.0</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="listing-date">5 giờ trước</div>
-                                        </div>
-                                        <div class="listing-content">
-                                            <h3 class="listing-title">Cho thuê biệt thự 4 phòng ngủ tại Quận 2</h3>
-                                            <span class="listing-type">Biệt thự</span>
-                                            <p class="listing-description">Biệt thự 4 phòng ngủ, 1 phòng khách, 1 phòng bếp, 1 phòng ăn, 4 toilet, hồ bơi riêng, sân vườn 200m². Nội thất cao cấp, an ninh 24/7.</p>
-                                            <div class="listing-price">45 triệu/tháng</div>
-                                        </div>
-                                        <div class="listing-footer">
-                                            <div class="listing-location">
-                                                <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                                Quận 2, TP.HCM
-                                            </div>
-                                            <a href="#" class="btn btn-outline-primary btn-sm">Liên hệ ngay</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                             
                             <div class="text-center mt-5">
-                                <a href="#" class="btn btn-outline-primary btn-lg">Xem tất cả tin đăng <i class="fas fa-arrow-right ms-2"></i></a>
+                                <a href="{{route('listing')}}" class="btn btn-outline-primary btn-lg">Xem tất cả tin đăng <i class="fas fa-arrow-right ms-2"></i></a>
                             </div>
                         </div>
                     </div>
