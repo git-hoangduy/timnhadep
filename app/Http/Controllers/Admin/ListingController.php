@@ -212,4 +212,27 @@ class ListingController extends Controller
 
         return response()->json($result);
     }
+
+    public function approve(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:listings,id'
+        ]);
+
+        $listing = Listing::findOrFail($request->id);
+        
+        $listing->status = Listing::STATUS_ACTIVE;
+        
+        if (!$listing->public_at) {
+            $listing->public_at = now();
+        }
+        
+        $listing->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Đã duyệt tin đăng thành công!',
+            'listing' => $listing
+        ]);
+    }
 }

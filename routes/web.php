@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () 
     Route::resourceExtend('project', ProjectController::class);
     Route::resourceExtend('project-category', ProjectCategoryController::class);
     Route::resourceExtend('listing', ListingController::class);
+    Route::post('listing/approve', [ListingController::class, 'approve'])->name('listing.approve');
     Route::resourceExtend('listing-category', ListingCategoryController::class);
     Route::resourceExtend('feature', FeatureController::class);
     Route::resourceExtend('album', AlbumController::class);
