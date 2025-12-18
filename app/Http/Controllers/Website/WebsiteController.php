@@ -118,6 +118,24 @@ class WebsiteController extends Controller
         return view('website.post-detail', compact('post', 'recentPosts'));
     }
 
+    public function listing(Request $request, $slug = '') {
+
+        $query = Listing::where('status', 'active');
+    
+        // Apply filters
+        if ($request->category) {
+            $query->where('category_id', $request->category);
+        }
+        
+        if ($request->price_range) {
+            // Add price range logic
+        }
+        
+        $listings = $query->paginate(12);
+        
+        return view('website.listing', compact('listings'));
+    }
+
     public function listingDetail(Request $request, $slug = '') {
 
         $listing = Listing::where('slug', $slug)->first();
@@ -132,10 +150,9 @@ class WebsiteController extends Controller
 
         if ($request->isMethod('post')) {
             $this->validate($request, [
-                'parent_name'    => 'required',
-                'parent_phone'   => 'required',
-                'age'   => 'required',
-                'branch' => 'required',
+                'name'    => 'required',
+                'phone'   => 'required',
+                'message'   => 'required',
             ],);
 
             $data = $request->all();
