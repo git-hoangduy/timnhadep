@@ -95,6 +95,7 @@ class ProjectController extends Controller
                     $projectBlock = ProjectBlock::create([
                         'project_id' => $project->id,
                         'block_content' => $block_content,
+                        'block_name' => $request->block_name[$key],
                     ]);
     
                     if (!empty($projectBlock)) {
@@ -212,6 +213,7 @@ class ProjectController extends Controller
                         $projectBlock = ProjectBlock::create([
                             'project_id' => $project->id,
                             'block_content' => $block_content,
+                            'block_name' => $request->block_name[$key],
                         ]);
 
                     }

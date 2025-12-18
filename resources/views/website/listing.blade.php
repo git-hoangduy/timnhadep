@@ -14,7 +14,7 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    Tin đăng mua bán
+                    Mua bán
                 </li>
             </ol>
         </nav>

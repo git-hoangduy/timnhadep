@@ -73,6 +73,10 @@
                                     <input type="hidden" name="block_id[]" value="{{ $block->id }}">
                                     <span class="delete-page-block"></span>
                                     <div class="mb-3">
+                                        <label class="form-label">Tên khối</label>
+                                        <input class="form-control" type="text" name="block_name[]" value="{{ $block->block_name }}">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="formFile" class="form-label">Hình nền khối</label>
                                         <input class="form-control" type="file" id="formFile" name="block_image[]" accept="image/*">
                                         <img class="preview-image w-25 mt-2 rounded d-none">
@@ -104,6 +108,10 @@
     <div class="page-block-item border rounded mt-3 p-3">
         <input type="hidden" name="block_id[]">
         <span class="delete-page-block"></span>
+        <div class="mb-3">
+            <label class="form-label">Tên khối</label>
+            <input class="form-control" type="text" name="block_name[]">
+        </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Hình nền khối</label>
             <input class="form-control" type="file" id="formFile" name="block_image[]" accept="image/*">

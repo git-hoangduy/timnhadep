@@ -106,6 +106,17 @@ class WebsiteController extends Controller
         return view('website.project', compact('projects', 'category'));
     }
 
+    public function projectDetail(Request $request, $slug = '') {
+
+        $project = Project::where('slug', $slug)->first();
+        $recentPosts = Post::where('status', 1)->where('public_at', '<=' , date('Y-m-d H:i:s'))->limit(3)->get();
+
+        SEOMeta::setTitle($project->name);
+        OpenGraph::setTitle($project->name);
+        OpenGraph::addImage(asset($project->image), ['height' => 300, 'width' => 300]);
+        return view('website.project-detail', compact('project', 'recentPosts'));
+    }
+
     public function postDetail(Request $request, $slug = '') {
 
         $post = Post::where('slug', $slug)->first();
@@ -120,7 +131,7 @@ class WebsiteController extends Controller
 
     public function listing(Request $request, $slug = '') {
 
-        $query = Listing::where('status', 'active');
+        $query = Listing::where('status', 1);
     
         // Apply filters
         if ($request->category) {

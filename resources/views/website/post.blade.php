@@ -20,7 +20,7 @@
 </section>
 <div class="projects-section" id="posts">
         <div class="container">
-            <p class="text-center text-muted mb-5">Cập nhật tin tức mới nhất về thị trường bất động sản, chính sách và xu hướng đầu tư</p>
+            <p class="text-center text-muted mb-5 d-none">Cập nhật tin tức mới nhất về thị trường bất động sản, chính sách và xu hướng đầu tư</p>
             
             <div class="row">
                 @foreach($posts as $key => $item)

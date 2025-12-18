@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="project-price">{{$item->price}}</div>
                                 <p class="mb-3">{{$item->excerpt}}</p>
-                                <a href="{{route('project.detail', ['id' => $item->id])}}" class="btn btn-primary w-100 mt-3">Xem chi tiết</a>
+                                <a href="{{route('project.detail', ['slug' => $item->slug])}}" class="btn btn-primary w-100 mt-3">Xem chi tiết</a>
                             </div>
                         </div>
                     </div>
