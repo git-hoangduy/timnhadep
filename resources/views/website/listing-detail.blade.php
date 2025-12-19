@@ -14,12 +14,12 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="#listings">
+                    <a href="{{ route('listing') }}">
                         {{ $listing->type_text }}
                     </a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    Chi tiết tin đăng
+                    {{ $listing->name }}
                 </li>
             </ol>
         </nav>
