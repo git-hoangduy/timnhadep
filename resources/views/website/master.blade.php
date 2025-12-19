@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />>
     <title>Nhà Đẹp - Kênh bất động sản số 1 Việt Nam</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -139,8 +139,8 @@
                                         <option value="">Chọn hình thức</option>
                                         <option value="sale">Cần bán</option>
                                         <option value="rent">Cho thuê</option>
-                                        <option value="buy">Cần mua</option>
-                                        <option value="rental">Cần thuê</option>
+                                        <!-- <option value="buy">Cần mua</option>
+                                        <option value="rental">Cần thuê</option> -->
                                     </select>
                                 </div>
                             </div>

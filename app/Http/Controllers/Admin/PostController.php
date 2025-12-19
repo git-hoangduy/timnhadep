@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\PostImage;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -88,6 +89,8 @@ class PostController extends Controller
         $post = Post::create($data);
         if ($post) {
 
+            $this->syncTags($post, $request->tags);
+
             if (!empty($request->is_avatar)) {
                 PostImage::where(['post_id' => $post->id, 'name' => $request->is_avatar])->update(['is_avatar' => 1]);
             }
@@ -104,7 +107,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $categories = PostCategory::where(['status' => 1, 'level' => 1])->get();
-        $post = Post::find($id);
+        $post = Post::with('tags')->find($id);
         return view('admin.post.edit', compact('post', 'categories'));
     }
 
@@ -157,6 +160,8 @@ class PostController extends Controller
         }
 
         if($post->fill($data)->save()){
+
+            $this->syncTags($post, $request->tags);
             
             request()->session()->flash('success', 'Cập nhật bài viết thành công');
         }
@@ -211,5 +216,74 @@ class PostController extends Controller
         }
 
         return response()->json($result);
+    }
+
+    private function syncTags($post, $tagsString)
+    {
+        if (empty($tagsString)) {
+            // Xóa tất cả tags của bài viết này
+            Tag::where('post_id', $post->id)
+               ->where('type', 'post')
+               ->delete();
+            return;
+        }
+
+        // Tách tags bằng dấu phẩy
+        $tagsArray = explode(',', $tagsString);
+        $tagsArray = array_map('trim', $tagsArray);
+        $tagsArray = array_filter($tagsArray); // Loại bỏ giá trị rỗng
+        $tagsArray = array_unique($tagsArray); // Loại bỏ trùng lặp
+
+        // Xóa tags cũ của bài viết này
+        Tag::where('post_id', $post->id)
+           ->where('type', 'post')
+           ->delete();
+        
+        // Thêm tags mới
+        foreach ($tagsArray as $tagName) {
+            if (empty($tagName)) continue;
+            
+            // Tạo slug từ tag name
+            $tagSlug = Str::slug($tagName);
+            
+            // Tạo tag mới
+            Tag::create([
+                'name' => $tagName,
+                'slug' => $tagSlug,
+                'type' => 'post',
+                'post_id' => $post->id,
+                'project_id' => null,
+            ]);
+        }
+    }
+
+    // THÊM PHƯƠNG THỨC LẤY BÀI VIẾT LIÊN QUAN
+    public function getRelatedPosts($postId, $limit = 5)
+    {
+        $post = Post::with('tags')->find($postId);
+        
+        if (!$post || $post->tags->isEmpty()) {
+            return collect();
+        }
+        
+        // Lấy tất cả tag names của bài viết
+        $tagNames = $post->tags->pluck('name')->toArray();
+        
+        // Lấy các tag IDs từ tag names
+        $tagIds = Tag::whereIn('name', $tagNames)
+                     ->where('type', 'post')
+                     ->where('post_id', '!=', $postId)
+                     ->pluck('post_id')
+                     ->toArray();
+        
+        // Lấy bài viết có chung tag (trừ bài viết hiện tại)
+        $relatedPosts = Post::whereIn('id', $tagIds)
+            ->where('status', 1)
+            ->where('id', '!=', $postId)
+            ->orderBy('public_at', 'desc')
+            ->limit($limit)
+            ->get();
+        
+        return $relatedPosts;
     }
 }

@@ -157,9 +157,9 @@ class Listing extends Model
     // Method để lấy ảnh đại diện (fallback)
     public function getAvatarImageAttribute()
     {
-        if ($this->image) {
-            return $this->image;
-        }
+        // if ($this->image) {
+        //     return $this->image;
+        // }
         
         if ($this->avatar) {
             return $this->avatar->image;

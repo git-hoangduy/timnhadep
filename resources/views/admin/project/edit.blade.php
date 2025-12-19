@@ -27,6 +27,10 @@
                             <input type="text" class="form-control" name="name" value="{{ $project->name }}">
                         </div>
                         <div class="mb-3">
+                            <label>Slogan</label>
+                            <input type="text" class="form-control" name="slogan" value="{{ $project->slogan }}">
+                        </div>
+                        <div class="mb-3">
                             <label>Giá</label>
                             <input type="text" class="form-control" name="price" value="{{ $project->price }}">
                         </div>
@@ -37,6 +41,13 @@
                         <div class="mb-3">
                             <label>Mô tả ngắn</label>
                             <textarea name="excerpt" rows="4" class="form-control" id="">{{ $project->excerpt }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label>Logo dự án</label>
+                            <input type="file" class="form-control" name="logo">
+                            @if($project->logo)
+                                <img src="{{ asset($project->logo) }}" height="80" class="mt-2 rounded">
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Hình ảnh (tối đa 10 hình)</label>

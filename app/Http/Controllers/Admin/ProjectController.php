@@ -53,6 +53,7 @@ class ProjectController extends Controller
         $data = [
             'category_id' => $request->category_id,
             'name' => $request->name,
+            'slogan' => $request->slogan,
             'price' => $request->price,
             'position' => $request->position,
             'excerpt' => $request->excerpt,
@@ -68,6 +69,17 @@ class ProjectController extends Controller
         $project = Project::create($data);
 
         if($project){
+
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $ext = $file->getClientOriginalExtension();
+                $fileName = md5(time() . $project->id) . '.' . $ext;
+            
+                $file->move($this->PATH_IMAGE, $fileName);
+            
+                $project->logo = $this->PATH_IMAGE . $fileName;
+                $project->save();
+            }
 
             if($request->hasFile('images')) {
 
@@ -140,6 +152,7 @@ class ProjectController extends Controller
         $data = [
             'category_id' => $request->category_id,
             'name' => $request->name,
+            'slogan' => $request->slogan,
             'price' => $request->price,
             'position' => $request->position,
             'excerpt' => $request->excerpt,
@@ -154,6 +167,23 @@ class ProjectController extends Controller
         $data['slug'] = $slug;
 
         if($project->fill($data)->save()){
+
+            if ($request->hasFile('logo')) {
+
+                // Xóa logo cũ nếu có
+                if ($project->logo && File::exists($project->logo)) {
+                    File::delete($project->logo);
+                }
+            
+                $file = $request->file('logo');
+                $ext = $file->getClientOriginalExtension();
+                $fileName = md5(time() . $project->id) . '.' . $ext;
+            
+                $file->move($this->PATH_IMAGE, $fileName);
+            
+                $project->logo = $this->PATH_IMAGE . $fileName;
+                $project->save();
+            }            
 
             if (!empty($request->removeImages)) {
                 $removeImages = array_filter(explode(',', $request->removeImages));

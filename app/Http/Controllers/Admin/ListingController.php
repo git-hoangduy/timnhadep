@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use File;
 use Carbon\Carbon;
 
@@ -46,59 +47,72 @@ class ListingController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name'   => 'required',
-            'status' => 'required',
+        // Validation (tương tự user nhưng có thể thêm fields)
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:listing_categories,id',
+            'type' => 'required|in:sale,rent,buy,rental',
+            'price' => 'required|string|max:100',
+            'area' => 'required|string|max:50',
+            'location' => 'required|string|max:500',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'status' => 'required|in:0,1,2,3',
+            'is_highlight' => 'nullable|boolean',
+        ]);
+        
+        // Xử lý lưu (tương tự user nhưng không có customer_id)
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $counter = 1;
+        
+        while (Listing::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+        
+        $excerpt = $request->excerpt ?: Str::limit(strip_tags($request->content), 200);
+        
+        // Tạo listing - KHÔNG có customer_id vì admin đăng
+        $listing = Listing::create([
+            'category_id' => $request->category_id,
+            'type' => $request->type,
+            'name' => $request->name,
+            'slug' => $slug,
+            'excerpt' => $excerpt,
+            'content' => $request->content,
+            'status' => $request->status,
+            'is_highlight' => $request->is_highlight ?? 0,
+            'price' => $request->price,
+            'area' => $request->area,
+            'location' => $request->location,
+            'meta_keywords' => $request->meta_keywords,
+            'meta_description' => $request->meta_description,
+            // KHÔNG có customer_id, customer_name, customer_phone, customer_email
+            'public_at' => $request->public_at ? Carbon::createFromFormat('d/m/Y H:i:s', $request->public_at) : now(),
         ]);
 
-        $data = [
-            "category_id" => $request->category_id,
-            "name" => $request->name,
-            "excerpt" => $request->excerpt,
-            "content" => $request->content,
-            "meta_keywords" => $request->meta_keywords,
-            "meta_description" => $request->meta_description,
-            "status" => $request->status
-        ];
+        if($request->hasFile('images')) {
 
-        $slug  = Str::slug($data['name']);
-        $check = Listing::where('slug', $slug)->first();
-        if(!empty($check)){
-            $slug = $slug.'-'.time();
-        }
-        $data['slug'] = $slug;
-
-        if($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileExtension = $file->getClientOriginalExtension();
-            $fileName = md5(time().$data['slug']).'.'.$fileExtension;
-            $file->move($this->PATH_IMAGE, $fileName);
-            $data['image'] = $this->PATH_IMAGE.$fileName;
-        } else {
-            $data['image'] = null;
-        }
-
-        if (!empty($request->public_at)) {
-            $date = Carbon::createFromFormat('d/m/Y H:i:s', $request->public_at);
-            $data['public_at'] = $date->format('Y-m-d H:i:s');
-        } else {
-            $data['public_at'] = date('Y-m-d H:i:s');
-        }
-
-        $listing = Listing::create($data);
-        if ($listing) {
+            foreach($request->file('images') as $key => $file){
+                $fileExtension = $file->getClientOriginalExtension();
+                $fileName = $file->getClientOriginalName();
+                $fileNameHash = md5(time().$slug.$key).'.'.$fileExtension;
+                $file->move($this->PATH_IMAGE, $fileNameHash);
+                ListingImage::create([
+                    'listing_id' => $listing->id,
+                    'image' => $this->PATH_IMAGE.$fileNameHash,
+                    'name' => $fileName,
+                ]);
+            }
 
             if (!empty($request->is_avatar)) {
                 ListingImage::where(['listing_id' => $listing->id, 'name' => $request->is_avatar])->update(['is_avatar' => 1]);
             }
-
-            request()->session()->flash('success', 'Thêm tin mua bán thành công');
         }
-        else{
-            request()->session()->flash('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
-        }
-        return redirect()->route('listing.index');
-
+        
+        return redirect()->route('listing.index')->with('success', 'Đã tạo tin đăng thành công!');
     }
 
     public function edit($id)
@@ -111,59 +125,111 @@ class ListingController extends Controller
     public function update(Request $request, $id)
     {
         $listing = Listing::findOrFail($id);
-
-        $this->validate($request, [
-            'name'   => 'required',
-            'status' => 'required',
-        ]);
-
-        $data = [
-            "category_id" => $request->category_id,
-            "name" => $request->name,
-            "excerpt" => $request->excerpt,
-            "content" => $request->content,
-            "meta_keywords" => $request->meta_keywords,
-            "meta_description" => $request->meta_description,
-            "status" => $request->status
-        ];
         
-        $slug  = Str::slug($data['name']);
-        $check = Listing::where('slug', $slug)->where('id', '!=', $id)->first();
-        if(!empty($check)){
-            $slug = $slug.'-'.time();
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:listing_categories,id',
+            'type' => 'required|in:sale,rent,buy,rental',
+            'price' => 'required|string|max:100',
+            'area' => 'required|string|max:50',
+            'location' => 'required|string|max:500',
+            'content' => 'required|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'status' => 'required|in:0,1,2,3',
+            'is_highlight' => 'nullable|boolean',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
-        $data['slug'] = $slug;
-
-        if($request->hasFile('image')) {
-
-            if ($listing->image != '') {
-                if(File::exists($listing->image)){
-                    File::delete($listing->image);
-                }
-            }
-
-            $file = $request->file('image');
-            $fileExtension = $file->getClientOriginalExtension();
-            $fileName = md5(time().$data['slug']).'.'.$fileExtension;
-            $file->move($this->PATH_IMAGE, $fileName);
-            $data['image'] = $this->PATH_IMAGE.$fileName;
-        }
-
-        if (!empty($request->public_at)) {
-            $date = Carbon::createFromFormat('d/m/Y H:i:s', $request->public_at);
-            $data['public_at'] = $date->format('Y-m-d H:i:s');
-        } else {
-            $data['public_at'] = date('Y-m-d H:i:s');
-        }
-
-        if($listing->fill($data)->save()){
+        
+        // Cập nhật slug nếu tiêu đề thay đổi
+        $slug = $listing->slug;
+        if ($listing->name != $request->name) {
+            $slug = Str::slug($request->name);
+            $originalSlug = $slug;
+            $counter = 1;
             
-            request()->session()->flash('success', 'Cập nhật tin mua bán thành công');
+            while (Listing::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+                $slug = $originalSlug . '-' . $counter;
+                $counter++;
+            }
         }
-        else{
-            request()->session()->flash('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
+        
+        $excerpt = $request->excerpt ?: Str::limit(strip_tags($request->content), 200);
+        
+        // Cập nhật listing
+        $listing->update([
+            'category_id' => $request->category_id,
+            'type' => $request->type,
+            'name' => $request->name,
+            'slug' => $slug,
+            'excerpt' => $excerpt,
+            'content' => $request->content,
+            'status' => $request->status,
+            'is_highlight' => $request->is_highlight ?? 0,
+            'price' => $request->price,
+            'area' => $request->area,
+            'location' => $request->location,
+            'meta_keywords' => $request->meta_keywords,
+            'meta_description' => $request->meta_description,
+            'public_at' => $request->public_at ? Carbon::createFromFormat('d/m/Y H:i:s', $request->public_at) : $listing->public_at,
+        ]);
+        
+        // Xử lý xóa ảnh nếu có
+        if (!empty($request->removeImages)) {
+            $removeImages = array_filter(explode(',', $request->removeImages));
+            $imagesToDelete = ListingImage::whereIn('id', $removeImages)->get();
+            
+            foreach($imagesToDelete as $image) {
+                // Xóa file vật lý
+                if(File::exists(public_path($image->image))) {
+                    File::delete(public_path($image->image));
+                }
+                $image->delete();
+            }
         }
-        return redirect()->route('listing.index');
+        
+        // Xử lý upload ảnh mới
+        if($request->hasFile('images')) {
+            foreach($request->file('images') as $key => $file) {
+                $fileExtension = $file->getClientOriginalExtension();
+                $fileName = $file->getClientOriginalName();
+                $fileNameHash = md5(time().$slug.$key).'.'.$fileExtension;
+                $file->move($this->PATH_IMAGE, $fileNameHash);
+                
+                ListingImage::create([
+                    'listing_id' => $listing->id,
+                    'image' => $this->PATH_IMAGE.$fileNameHash,
+                    'name' => $fileName,
+                    'is_avatar' => 0,
+                ]);
+            }
+        }
+        
+        // Cập nhật ảnh đại diện
+        if (!empty($request->is_avatar)) {
+            // Reset tất cả ảnh về không phải đại diện
+            ListingImage::where('listing_id', $listing->id)->update(['is_avatar' => 0]);
+            
+            // Set ảnh đại diện mới
+            $avatarImage = ListingImage::where([
+                'listing_id' => $listing->id,
+                'name' => $request->is_avatar
+            ])->first();
+            
+            if ($avatarImage) {
+                $avatarImage->update(['is_avatar' => 1]);
+                // Cập nhật ảnh đại diện cho listing
+                $listing->update(['image' => $avatarImage->image]);
+            }
+        }
+        
+        return redirect()->route('listing.index')
+            ->with('success', 'Cập nhật tin đăng thành công!');
     }
 
     public function destroy($id)

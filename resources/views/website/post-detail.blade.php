@@ -385,11 +385,9 @@
             {!! renderContent($post->content) !!}
 
             <div class="news-tags">
-                <a href="#" class="news-tag">Bất động sản 2023</a>
-                <a href="#" class="news-tag">Đầu tư bất động sản</a>
-                <a href="#" class="news-tag">Thị trường nhà đất</a>
-                <a href="#" class="news-tag">Xu hướng đầu tư</a>
-                <a href="#" class="news-tag">Phân tích thị trường</a>
+                @foreach ($post->tags as $tag)
+                    <a href="#" class="news-tag">{{ $tag->name }}</a>
+                @endforeach
             </div>
 
             {{-- <div class="news-author">

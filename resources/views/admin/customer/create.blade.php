@@ -5,15 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header d-flex justify-content-between">
+                <!-- <div class="card-header d-flex justify-content-between">
                     Thêm khách hàng
-                </div>
+                </div> -->
                 <div class="card-body">
                     @include('admin.includes.notification')
                     <form action="{{ route('customer.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label class="required">Tên khách hàng</label>
+                            <label class="required">Tên người đăng ký</label>
                             <input type="text" class="form-control" name="name">
                         </div>
                         <div class="mb-3 row">

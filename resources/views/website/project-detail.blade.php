@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $project->name }}</title>
+    <title>{{ $project->name }} - {{ $project->slogan }}</title>
     
     <!-- CSS Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,12 +18,17 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-transparent fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="index.html">{{ $project->name }}</a>
+                <a class="navbar-brand" href="{{route('project.detail', ['slug' => $project->slug])}}">
+                    {{ $project->name }}
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/') }}">TRANG CHỦ</a>
+                        </li>
                         @foreach ($project->blocks as $key => $block)
                             <li class="nav-item">
                                 <a class="nav-link {{ $key == 0 ? 'active' : '' }}" href="#block_{{ $block->id }}">{{ $block->block_name }}</a>
@@ -52,7 +57,11 @@
         <div class="hero-overlay"></div>
         
         <div class="hero-content-center">
-            <h1 class="project-title-main animate__animated animate__fadeInUp">{{ $project->name }}</h1>
+            @if ($project->logo)
+                <img src="{{ asset($project->logo) }}" alt="{{ $project->name }}" class="logo" width="180">
+            @else
+                <h1 class="project-title-main animate__animated animate__fadeInUp">{{ $project->name }}</h1>
+            @endif
             <p class="project-subtitle animate__animated animate__fadeInUp animate__delay-1s">{{ $project->excerpt }}</p>
         </div>
         
@@ -138,28 +147,42 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 text-center">
-                        <h2 class="section-title center">Đăng ký nhận tin</h2>
-                        <p class="mb-4">Nhận thông tin mới nhất về dự án bất động sản, tin tức thị trường và ưu đãi đặc biệt từ Nhà Đẹp</p>
+                        <h2 class="section-title center">Đăng ký nhận tin & Tư vấn dự án</h2>
+                        <p class="mb-4">Nhận thông tin mới nhất về dự án <strong>{{ $project->name }}</strong>, tin tức thị trường và ưu đãi đặc biệt</p>
                         
                         <div class="newsletter-form animate-on-scroll">
-                            <form id="subscribeForm" class="row g-3 justify-content-center">
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control form-control-lg" placeholder="Họ và tên của bạn" required>
+                            <form id="subscribeForm" method="POST" action="{{ route('contact') }}" class="row g-3 justify-content-center">
+                                @csrf
+                                <!-- Hidden field for project name -->
+                                <input type="hidden" name="message" value="Tư vấn dự án {{ $project->name }}">
+                                
+                                <div class="col-md-4">
+                                    <input type="text" name="name" class="form-control form-control-lg" placeholder="Họ và tên của bạn" required>
                                 </div>
-                                <div class="col-md-5">
-                                    <input type="email" class="form-control form-control-lg" placeholder="Địa chỉ email" required>
+                                <div class="col-md-4">
+                                    <input type="tel" name="phone" class="form-control form-control-lg" placeholder="Số điện thoại" required>
                                 </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary btn-lg w-100 px-2">Đăng ký</button>
+                                <div class="col-md-4">
+                                    <input type="email" name="email" class="form-control form-control-lg" placeholder="Địa chỉ email" required>
+                                </div>
+                                <div class="col-12 mt-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="agreeTerms" name="agree_terms" value="1" checked required>
+                                        <label class="form-check-label" for="agreeTerms">
+                                            Tôi đồng ý nhận thông tin qua email và có thể hủy đăng ký bất cứ lúc nào
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-paper-plane me-2"></i>Gửi yêu cầu tư vấn
+                                    </button>
                                 </div>
                             </form>
                             
-                            <!-- <div class="form-check mt-4">
-                                <input type="checkbox" class="form-check-input" id="agreeTerms" checked>
-                                <label class="form-check-label" for="agreeTerms">
-                                    Tôi đồng ý nhận thông tin qua email và có thể hủy đăng ký bất cứ lúc nào
-                                </label>
-                            </div> -->
+                            <div class="mt-4 text-muted small">
+                                <p><i class="fas fa-info-circle me-1"></i> Chúng tôi sẽ liên hệ lại trong vòng 24h để tư vấn chi tiết về dự án {{ $project->name }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -172,24 +195,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                    <h5>Nhà Đẹp</h5>
-                    <p class="mb-4">Kênh bất động sản số 1 Việt Nam, kết nối người mua và người bán, cung cấp thông tin dự án chính xác và đầy đủ nhất.</p>
+                    <h5>{{ setting('info.name', 'Nhà Đẹp') }}</h5>
+                    <p class="mb-4">{{ setting('info.description', 'Kênh bất động sản số 1 Việt Nam, kết nối người mua và người bán, cung cấp thông tin dự án chính xác và đầy đủ nhất.') }}</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{{ setting('social.facebook', '#') }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{{ setting('social.tiktok', '#') }}" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="{{ setting('social.instagram', '#') }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="{{ setting('social.youtube', '#') }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <!-- <a href="{{ setting('social.linkedin', '#') }}" target="_blank"><i class="fab fa-linkedin-in"></i></a> -->
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
                     <h5>Liên kết</h5>
                     <ul class="footer-links">
-                        <li><a href="index.html#home">Trang chủ</a></li>
-                        <li><a href="index.html#projects">Dự án</a></li>
-                        <li><a href="index.html#listings">Mua bán</a></li>
-                        <li><a href="index.html#news">Tin tức</a></li>
-                        <li><a href="index.html#about">Về chúng tôi</a></li>
+                        <li><a href="{{ url('/') }}">Trang chủ</a></li>
+                        <li><a href="{{ route('project') }}">Dự án</a></li>
+                        <li><a href="{{ route('listing') }}">Mua bán</a></li>
+                        <li><a href="{{ route('post') }}">Tin tức</a></li>
+                        <li><a href="{{ route('page', $pages->where('id', 1)->first()->slug ?? '#') }}">Về chúng tôi</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
@@ -205,17 +228,19 @@
                 <div class="col-lg-3 col-md-6">
                     <h5>Liên hệ</h5>
                     <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Nguyễn Văn Linh, Quận 7, TP.HCM</li>
-                        <li><i class="fas fa-phone me-2"></i> (028) 1234 5678</li>
-                        <li><i class="fas fa-envelope me-2"></i> info@nhadep.com</li>
-                        <li><i class="fas fa-clock me-2"></i> Thứ 2 - CN: 8:00 - 20:00</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> {{ setting('info.address', '123 Nguyễn Văn Linh, Quận 7, TP.HCM') }}</li>
+                        <li><i class="fas fa-phone me-2"></i> {{ setting('info.hotline', '(028) 1234 5678') }}</li>
+                        <li><i class="fas fa-envelope me-2"></i> {{ setting('info.email', 'info@nhadep.com') }}</li>
+                        <li><i class="fas fa-clock me-2"></i> {{ setting('info.time', 'Thứ 2 - CN: 8:00 - 20:00') }}</li>
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="copyright">
-                        <p>&copy; 2023 Nhà Đẹp. Tất cả các quyền được bảo lưu. | <a href="#" class="text-white-50">Chính sách bảo mật</a> | <a href="#" class="text-white-50">Điều khoản sử dụng</a></p>
+                        <p>{{ setting('info.copyright', '© 2023 Nhà Đẹp. Tất cả các quyền được bảo lưu.') }} | 
+                        <a href="{{ route('page', $pages->where('id', 2)->first()->slug ?? '#') }}" class="text-white-50">Chính sách bảo mật</a> | 
+                        <a href="{{ route('page', $pages->where('id', 3)->first()->slug ?? '#') }}" class="text-white-50">Điều khoản sử dụng</a></p>
                     </div>
                 </div>
             </div>
@@ -476,48 +501,119 @@
         document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
+            // Validate form
+            const name = this.querySelector('input[name="name"]').value;
+            const phone = this.querySelector('input[name="phone"]').value;
+            const email = this.querySelector('input[name="email"]').value;
             const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            if (!name || !phone || !email) {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return;
+            }
             
             if (!agreeTerms) {
                 alert('Vui lòng đồng ý với điều khoản nhận thông tin');
                 return;
             }
             
+            // Phone validation (Vietnamese phone number)
+            const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+            if (!phoneRegex.test(phone)) {
+                alert('Vui lòng nhập số điện thoại hợp lệ');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Vui lòng nhập email hợp lệ');
+                return;
+            }
+            
             // Loading effect
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
             submitBtn.disabled = true;
             
-            // Simulate form submission
-            setTimeout(() => {
-                // Success message
-                const successMessage = document.createElement('div');
-                successMessage.className = 'alert alert-success mt-3';
-                successMessage.innerHTML = `
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Đăng ký thành công!</strong> Cảm ơn ${name} đã đăng ký nhận tin từ Nhà Đẹp. 
-                    Chúng tôi sẽ gửi thông tin mới nhất đến email ${email}.
-                `;
-                
-                this.parentNode.insertBefore(successMessage, this.nextSibling);
-                
-                // Reset form
-                this.reset();
-                document.getElementById('agreeTerms').checked = true;
-                
+            // Submit form via AJAX
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    // If redirected (Laravel's redirect back)
+                    return response.text().then(html => {
+                        // Create a temporary div to parse the HTML
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = html;
+                        
+                        // Look for success/error messages in the response
+                        const successMsg = tempDiv.querySelector('.alert-success');
+                        const errorMsg = tempDiv.querySelector('.alert-error') || tempDiv.querySelector('.alert-danger');
+                        
+                        if (successMsg) {
+                            showMessage('success', successMsg.textContent.trim());
+                        } else if (errorMsg) {
+                            showMessage('error', errorMsg.textContent.trim());
+                        } else {
+                            showMessage('success', 'Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ lại sớm.');
+                        }
+                        
+                        // Reset form
+                        this.reset();
+                        document.getElementById('agreeTerms').checked = true;
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.message) {
+                    showMessage('success', data.message);
+                    this.reset();
+                    document.getElementById('agreeTerms').checked = true;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
+            })
+            .finally(() => {
                 // Reset button
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
+            });
+            
+            function showMessage(type, text) {
+                // Remove existing messages
+                const existingMsg = document.querySelector('.form-message');
+                if (existingMsg) existingMsg.remove();
                 
-                // Remove message after 5 seconds
+                // Create message element
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} mt-3 form-message`;
+                messageDiv.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+                    ${text}
+                `;
+                
+                // Insert after form
+                const form = document.getElementById('subscribeForm');
+                form.parentNode.insertBefore(messageDiv, form.nextSibling);
+                
+                // Auto remove after 5 seconds
                 setTimeout(() => {
-                    successMessage.remove();
+                    messageDiv.remove();
                 }, 5000);
-            }, 1500);
+            }
         });
     </script>
 </body>

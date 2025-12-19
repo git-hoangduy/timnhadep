@@ -42,10 +42,10 @@
                     
                     @include('admin.includes.notification')
 
-                    <h6 class="card-title text-secondary">
+                    <!-- <h6 class="card-title text-secondary">
                         <p class="mb-2">Bài viết sẽ được sắp sắp theo thứ tự bài nổi bật và mới nhất.</p>
                         <p class="mb-3">Sử dụng mã <b>[FEATURED-POSTS]</b> đễ nhúng bài biết nỗi bật vào các trang</p>
-                    </h6>
+                    </h6> -->
 
                     @if ($posts->count())
                     <table class="table">
@@ -55,7 +55,7 @@
                                 <th scope="col">Tên danh mục</th>
                                 <th scope="col">Tên bài viết</th>
                                 <th scope="col" class="text-center">Trạng thái</th>
-                                <th scope="col">Nổi bật</th>
+                                <!-- <th scope="col">Nổi bật</th> -->
                                 <th scope="col">Ngày cập nhật</th>
                                 <th scope="col">Thời gian đăng</th>
                                 <th scope="col">Thao tác</th>
@@ -78,14 +78,14 @@
                                             <input class="form-check-input status-switch" type="checkbox" {{ $item->status == 1 ? 'checked' : '' }}>
                                         </div>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <div class="form-check">
                                             <input class="form-check-input is_highlight" type="checkbox" value="" id="is_highlight_{{ $item->id }}" data-id="{{ $item->id }}" {{ $item->is_highlight == 1 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="is_highlight_{{ $item->id }}">
                                               Nổi bật
                                             </label>
                                           </div>
-                                    </td>
+                                    </td> -->
                                     <td>{{ $item->updated_at }}</td>
                                     <td>{{ $item->public_at }}</td>
                                     <td>

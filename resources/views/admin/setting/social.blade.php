@@ -29,10 +29,10 @@
                             <label>Instagram - <b>[INSTAGRAM]</b></label>
                             <input type="text" class="form-control" name="instagram" value="{{ setting('social.instagram') }}">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label>Zalo - <b>[ZALO]</b></label>
                             <input type="text" class="form-control" name="zalo" value="{{ setting('social.zalo') }}">
-                        </div>
+                        </div> -->
                         <div class="mt-5 text-center">
                             <button class="btn btn-success" type="submit">Cập nhật</button>
                         </div>

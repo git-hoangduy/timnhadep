@@ -106,14 +106,79 @@ class WebsiteController extends Controller
         return view('website.project', compact('projects', 'category'));
     }
 
+    // public function projectDetail(Request $request, $slug = '') {
+
+    //     $project = Project::where('slug', $slug)->first();
+    //     $recentPosts = Post::where('status', 1)->where('public_at', '<=' , date('Y-m-d H:i:s'))->limit(3)->get();
+
+    //     SEOMeta::setTitle($project->name);
+    //     OpenGraph::setTitle($project->name);
+    //     OpenGraph::addImage(asset($project->image), ['height' => 300, 'width' => 300]);
+    //     return view('website.project-detail', compact('project', 'recentPosts'));
+    // }
+
     public function projectDetail(Request $request, $slug = '') {
-
         $project = Project::where('slug', $slug)->first();
-        $recentPosts = Post::where('status', 1)->where('public_at', '<=' , date('Y-m-d H:i:s'))->limit(3)->get();
-
-        SEOMeta::setTitle($project->name);
-        OpenGraph::setTitle($project->name);
-        OpenGraph::addImage(asset($project->image), ['height' => 300, 'width' => 300]);
+        
+        if (!$project) {
+            abort(404);
+        }
+    
+        // Lấy nội dung project để so sánh
+        $projectText = '';
+        if (!empty($project->name)) $projectText .= ' ' . $project->name;
+        // if (!empty($project->slogan)) $projectText .= ' ' . $project->slogan;
+        // if (!empty($project->excerpt)) $projectText .= ' ' . $project->excerpt;
+        
+        // Lấy tất cả tags có name trùng với nội dung project
+        $matchedTags = \App\Models\Tag::where(function($query) use ($projectText) {
+            // Tìm tag có trong nội dung project
+            $query->whereRaw('? LIKE CONCAT("%", name, "%")', [$projectText]);
+        })->pluck('name')->toArray();
+        
+        // Nếu có tags trùng
+        if (!empty($matchedTags)) {
+            // Lấy bài viết có chứa các tags này
+            $recentPosts = Post::where('status', 1)
+                              ->where('public_at', '<=', date('Y-m-d H:i:s'))
+                              ->whereHas('tags', function($query) use ($matchedTags) {
+                                  $query->whereIn('name', $matchedTags);
+                              })
+                              ->orderBy('public_at', 'desc')
+                              ->limit(3)
+                              ->get();
+        } else {
+            // Không có tag trùng, lấy từ khóa từ nội dung project
+            $words = explode(' ', $projectText);
+            $keywords = [];
+            foreach ($words as $word) {
+                $word = trim($word);
+                if (strlen($word) >= 3) {
+                    $keywords[] = $word;
+                }
+            }
+            $keywords = array_unique($keywords);
+            
+            $recentPosts = Post::where('status', 1)
+                              ->where('public_at', '<=', date('Y-m-d H:i:s'))
+                              ->where(function($query) use ($keywords) {
+                                  foreach ($keywords as $keyword) {
+                                      $query->orWhere('name', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('excerpt', 'LIKE', '%' . $keyword . '%')
+                                            ->orWhere('meta_keywords', 'LIKE', '%' . $keyword . '%');
+                                  }
+                              })
+                              ->orderBy('public_at', 'desc')
+                              ->limit(3)
+                              ->get();
+        }
+    
+        SEOMeta::setTitle($project->name ?: $project->slogan);
+        OpenGraph::setTitle($project->name ?: $project->slogan);
+        if ($project->image) {
+            OpenGraph::addImage(asset($project->image), ['height' => 300, 'width' => 300]);
+        }
+        
         return view('website.project-detail', compact('project', 'recentPosts'));
     }
 

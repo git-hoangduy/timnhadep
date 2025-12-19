@@ -24,4 +24,10 @@ class Post extends Model
     public function images() {
         return $this->hasMany(PostImage::class);
     }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class, 'post_id')
+                    ->where('type', 'post');
+    }
 }

@@ -14,11 +14,11 @@
                 <h5>{{ setting('info.name') }}</h5>
                 <p class="mb-4">{{ setting('info.description') }}</p>
                 <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="{{ setting('social.facebook') }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ setting('social.tiktok') }}" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="{{ setting('social.instagram') }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="{{ setting('social.youtube') }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <!-- <a href="#"><i class="fab fa-linkedin-in"></i></a> -->
                 </div>
             </div>
             <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
@@ -28,7 +28,7 @@
                     <li><a href="{{ route('project') }}">Dự án</a></li>
                     <li><a href="{{ route('listing') }}">Mua bán</a></li>
                     <li><a href="{{ route('post') }}">Tin tức</a></li>
-                    <li><a href="{{ route('about') }}">Về chúng tôi</a></li>
+                    <li><a href="{{ route('page', $pages->filter(function ($item) { return $item->id == 1; })->first()->slug) }}">Về chúng tôi</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">

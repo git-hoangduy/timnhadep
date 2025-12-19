@@ -23,6 +23,14 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label>Tags (Mỗi tag cách nhau bởi dấu phẩy)</label>
+                            <input type="text" 
+                                class="form-control" 
+                                name="tags" 
+                                value="{{ $post->tags->pluck('name')->implode(', ') }}"
+                                placeholder="Ví dụ: Golden house, Sunshine City">
+                        </div>
+                        <div class="mb-3">
                             <label class="required">Tên bài viết</label>
                             <input type="text" class="form-control" name="name" value="{{ $post->name }}">
                         </div>

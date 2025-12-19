@@ -34,10 +34,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Họ tên phụ huynh</th>
+                                <th scope="col">Họ tên</th>
                                 <th scope="col">Số điện thoại</th>
-                                <th scope="col">Độ tuổi của bé</th>
-                                <th scope="col">Chi nhánh</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Tin nhắn</th>
                                 <th scope="col" class="text-center">Đã phản hồi</th>
                                 <th scope="col">Ngày tạo</th>
                                 <th scope="col">Thao tác</th>
@@ -46,10 +46,10 @@
                         <tbody>
                                 @foreach($contacts as $item)
                                 <tr data-id="{{ $item->id }}">
-                                    <td>{{ $item->parent_name }}</td>
-                                    <td>{{ $item->parent_phone }}</td>
-                                    <td>{{ $item->age }}</td>
-                                    <td>{{ $item->branch }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->message }}</td>
                                     <td class="text-center">
                                         <div class="form-check d-inline-block form-switch">
                                             <input class="form-check-input status-switch" type="checkbox" {{ $item->status == 1 ? 'checked' : '' }}>

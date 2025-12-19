@@ -30,8 +30,8 @@
                                     <option value="">- Tất cả trạng thái -</option>
                                     <option value="0" {{ request()->status === '0' ? 'selected' : '' }}>Chờ duyệt</option>
                                     <option value="1" {{ request()->status === '1' ? 'selected' : '' }}>Đã duyệt</option>
-                                    <option value="2" {{ request()->status === '2' ? 'selected' : '' }}>Từ chối</option>
-                                    <option value="3" {{ request()->status === '3' ? 'selected' : '' }}>Hết hạn</option>
+                                    <!-- <option value="2" {{ request()->status === '2' ? 'selected' : '' }}>Từ chối</option>
+                                    <option value="3" {{ request()->status === '3' ? 'selected' : '' }}>Hết hạn</option> -->
                                 </select>
                             </div>
                             <div class="col-md-3">

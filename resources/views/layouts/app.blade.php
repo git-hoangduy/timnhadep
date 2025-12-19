@@ -85,10 +85,10 @@
                                         <div class="col">
                                             <!-- <a class="dropdown-item" href="{{ route('customer.create') }}">
                                                 Thêm khách hàng
-                                            </a>
-                                            <a class="dropdown-item" href="{{ route('customer.index') }}">
-                                                Danh sách khách hàng
                                             </a> -->
+                                            <a class="dropdown-item" href="{{ route('customer.index') }}">
+                                                Người đăng ký
+                                            </a>
                                             <a class="dropdown-item" href="{{ route('contact.index') }}">
                                                 Danh sách liên hệ
                                             </a>
@@ -195,15 +195,15 @@
                                             <a class="dropdown-item" href="{{ route('album.index') }}">
                                                 Album
                                             </a>
-                                            <a class="dropdown-item" href="{{ route('review.index') }}">
+                                            <!-- <a class="dropdown-item" href="{{ route('review.index') }}">
                                                 Đánh giá
-                                            </a>
+                                            </a> -->
                                             {{-- <a class="dropdown-item" href="{{ route('video.index') }}">
                                                 Video
                                             </a> --}}
-                                            <a class="dropdown-item" href="{{ route('footer.index') }}">
+                                            <!-- <a class="dropdown-item" href="{{ route('footer.index') }}">
                                                 Footer
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </div>
                                 </div>
