@@ -109,11 +109,11 @@
 
                     <div class="seller-header">
                         <div class="seller-avatar">
-                            <img src="{{ asset('images/default-avatar.png') }}"
-                                 alt="{{ $listing->customer_name }}">
+                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                                 alt="{{ $listing->customer_name ?? 'Tìm nhà đẹp' }}">
                         </div>
                         <div class="seller-details">
-                            <h4>{{ $listing->customer_name }}</h4>
+                            <h4>{{ $listing->customer_name ?? 'Tìm nhà đẹp' }}</h4>
                             <small class="text-muted">
                                 Thành viên từ {{ $listing->created_at->format('Y') }}
                             </small>

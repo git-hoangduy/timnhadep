@@ -74,7 +74,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="project-card animate-on-scroll">
                                         <div class="project-img">
-                                            <img src="{{ asset($item->avatar->image) }}" alt="{{$item->name}}">
+                                            <img src="{{ $item->avatar != '' ? asset($item->avatar->image) : asset('uploads/default.png') }}" alt="{{$item->name}}">
                                             @if($key == 0)
                                                 <div class="project-badge">
                                                     <span class="badge bg-primary">Mới</span>
@@ -156,10 +156,10 @@
                                         <div class="listing-header">
                                             <div class="listing-user">
                                                 <div class="user-avatar">
-                                                    <img src="{{asset($listing->customer->avatar)}}" alt="{{ $listing->customer->name }}">
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="{{ $listing->customer->name ?? 'Tìm nhà đẹp' }}">
                                                 </div>
                                                 <div>
-                                                    <div class="user-name">{{ $listing->customer->name }}</div>
+                                                    <div class="user-name">{{ $listing->customer->name ?? 'Tìm nhà đẹp' }}</div>
                                                     <!-- <div class="user-rating">
                                                         <i class="fas fa-star text-warning"></i>
                                                         <i class="fas fa-star text-warning"></i>

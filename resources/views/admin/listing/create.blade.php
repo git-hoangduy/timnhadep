@@ -72,21 +72,21 @@
                                 
                                 {{-- Mô tả --}}
                                 <div class="mb-3">
-                                    <label class="form-label required">Nội dung ngắn</label>
+                                    <label class="form-label">Nội dung ngắn</label>
                                     <textarea name="excerpt" rows="3" class="form-control" 
                                               placeholder="Mô tả ngắn gọn về bất động sản...">{{ old('excerpt') }}</textarea>
                                 </div>
 
                                 {{-- Hình ảnh (tham khảo từ Page) --}}
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label required">Hình ảnh (có thể chọn nhiều)</label>
+                                    <label for="formFile" class="form-label">Hình ảnh (có thể chọn nhiều)</label>
                                     <input class="form-control upload-images" type="file" id="formFile" accept="image/*" multiple>
                                     <div class="preview-images mt-3" style="display: none;"></div>
                                     <input type="hidden" name="is_avatar">
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label required">Mô tả chi tiết</label>
+                                    <label class="form-label">Mô tả chi tiết</label>
                                     <textarea name="content" rows="6" class="form-control tinymce" 
                                               placeholder="Mô tả chi tiết về bất động sản: số phòng, hướng nhà, tiện ích, nội thất...">{{ old('content') }}</textarea>
                                 </div>
