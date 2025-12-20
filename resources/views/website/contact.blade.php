@@ -56,7 +56,7 @@
                         </div>
                         <div class="info-content">
                             <h5>Địa chỉ</h5>
-                            <p>{{ setting('contact.address', 'Số 123, Đường ABC, Quận XYZ, TP. Hồ Chí Minh') }}</p>
+                            <p>{{ setting('info.address', 'Số 123, Đường ABC, Quận XYZ, TP. Hồ Chí Minh') }}</p>
                         </div>
                     </div>
                     
@@ -66,7 +66,7 @@
                         </div>
                         <div class="info-content">
                             <h5>Điện thoại</h5>
-                            <p>{{ setting('contact.phone', '0901 234 567') }}</p>
+                            <p>{{ setting('info.phone', '0901 234 567') }}</p>
                         </div>
                     </div>
                     
@@ -76,7 +76,7 @@
                         </div>
                         <div class="info-content">
                             <h5>Email</h5>
-                            <p>{{ setting('contact.email', 'contact@nhadep.com') }}</p>
+                            <p>{{ setting('info.email', 'contact@nhadep.com') }}</p>
                         </div>
                     </div>
                     
@@ -86,7 +86,7 @@
                         </div>
                         <div class="info-content">
                             <h5>Giờ làm việc</h5>
-                            <p>{{ setting('contact.working_hours', 'Thứ 2 - Thứ 7: 8:00 - 17:30<br>Chủ nhật: 8:00 - 12:00') }}</p>
+                            <p>Thứ 2 - Thứ 7: 8:00 - 17:30</p>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                                 @enderror
                             </div>
                             
-                            <div class="col-md-6 mb-3">
+                            <!-- <div class="col-md-6 mb-3">
                                 <label for="subject" class="form-label">Chủ đề</label>
                                 <select class="form-select @error('subject') is-invalid @enderror" 
                                         id="subject" 
@@ -155,7 +155,7 @@
                                 @error('subject')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> -->
                             
                             <div class="col-12 mb-3">
                                 <label for="message" class="form-label">Nội dung <span class="text-danger">*</span></label>

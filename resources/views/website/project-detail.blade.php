@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $project->name }} - {{ $project->slogan }}</title>
-    
+    <link rel="icon" type="image/x-icon" href="{{ asset(setting('info.shortcut')) }}">
     <!-- CSS Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -39,9 +39,9 @@
                         </li>
                     </ul>
                     <div class="user-actions">
-                        <button class="btn btn-contact" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <a class="btn btn-contact" href="tel:{{ setting('info.hotline') }}">
                             <i class="fas fa-phone-alt me-2"></i>Liên hệ ngay
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         <h2 class="section-title">{{ $block->block_name }}</h2>
                         
                         <div class="tinymce-content">
-                            {!! $block->block_content !!}
+                            {!! renderContent($block->block_content) !!}
                         </div>
                     </div>
                 </div>
@@ -166,9 +166,17 @@
                                     <input type="email" name="email" class="form-control form-control-lg" placeholder="Địa chỉ email" required>
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="agreeTerms" name="agree_terms" value="1" checked required>
-                                        <label class="form-check-label" for="agreeTerms">
+                                    <div class="form-check d-flex align-items-center justify-content-center gap-2">
+                                        <input
+                                            type="checkbox"
+                                            class="form-check-input mt-0"
+                                            id="agreeTerms"
+                                            name="agree_terms"
+                                            value="1"
+                                            checked
+                                            required
+                                        >
+                                        <label class="form-check-label mb-0" for="agreeTerms">
                                             Tôi đồng ý nhận thông tin qua email và có thể hủy đăng ký bất cứ lúc nào
                                         </label>
                                     </div>
@@ -180,9 +188,9 @@
                                 </div>
                             </form>
                             
-                            <div class="mt-4 text-muted small">
+                            <!-- <div class="mt-4 text-muted small">
                                 <p><i class="fas fa-info-circle me-1"></i> Chúng tôi sẽ liên hệ lại trong vòng 24h để tư vấn chi tiết về dự án {{ $project->name }}</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -265,74 +273,63 @@
         });
 
         // ========== GALLERY FUNCTIONALITY ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simple Gallery
-            const mainImage = document.getElementById('mainGalleryImage');
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            const prevBtn = document.querySelector('.gallery-prev');
-            const nextBtn = document.querySelector('.gallery-next');
-            const currentImageSpan = document.getElementById('currentImage');
-            const totalImagesSpan = document.getElementById('totalImages');
-            
-            let currentIndex = 0;
-            totalImagesSpan.textContent = thumbnails.length;
-            
-            // Thumbnail click
-            thumbnails.forEach((thumbnail, index) => {
-                thumbnail.addEventListener('click', function() {
-                    updateGallery(index);
-                });
-            });
-            
-            // Previous button
-            prevBtn.addEventListener('click', function() {
-                currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-                updateGallery(currentIndex);
-            });
-            
-            // Next button
-            nextBtn.addEventListener('click', function() {
-                currentIndex = (currentIndex + 1) % thumbnails.length;
-                updateGallery(currentIndex);
-            });
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowLeft') {
-                    prevBtn.click();
-                } else if (e.key === 'ArrowRight') {
-                    nextBtn.click();
+        document.addEventListener('DOMContentLoaded', function () {
+
+            function initGallery(gallery) {
+
+                const mainImage = gallery.querySelector('.main-gallery-image');
+                const thumbnails = gallery.querySelectorAll('.thumbnail');
+                const prevBtn = gallery.querySelector('.gallery-prev');
+                const nextBtn = gallery.querySelector('.gallery-next');
+                const currentSpan = gallery.querySelector('.currentImage');
+
+                if (!mainImage || thumbnails.length === 0) return;
+
+                let currentIndex = [...thumbnails].findIndex(t => t.classList.contains('active'));
+                if (currentIndex < 0) currentIndex = 0;
+
+                function update(index) {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    thumbnails[index].classList.add('active');
+
+                    mainImage.style.opacity = '0.6';
+
+                    setTimeout(() => {
+                        mainImage.src = thumbnails[index].dataset.image;
+                        mainImage.style.opacity = '1';
+                    }, 200);
+
+                    currentIndex = index;
+                    if (currentSpan) currentSpan.textContent = index + 1;
                 }
-            });
-            
-            function updateGallery(index) {
-                // Update active thumbnail
-                thumbnails.forEach(t => t.classList.remove('active'));
-                thumbnails[index].classList.add('active');
-                
-                // Update main image
-                const imageUrl = thumbnails[index].getAttribute('data-image');
-                mainImage.style.opacity = '0.7';
-                
-                setTimeout(() => {
-                    mainImage.src = imageUrl;
-                    mainImage.style.opacity = '1';
-                }, 200);
-                
-                // Update current index
-                currentImageSpan.textContent = index + 1;
-                currentIndex = index;
+
+                thumbnails.forEach((thumb, index) => {
+                    thumb.addEventListener('click', () => update(index));
+                });
+
+                prevBtn?.addEventListener('click', () => {
+                    update((currentIndex - 1 + thumbnails.length) % thumbnails.length);
+                });
+
+                nextBtn?.addEventListener('click', () => {
+                    update((currentIndex + 1) % thumbnails.length);
+                });
+
+                // Hover zoom
+                mainImage.addEventListener('mouseenter', () => {
+                    mainImage.style.transform = 'scale(1.02)';
+                });
+
+                mainImage.addEventListener('mouseleave', () => {
+                    mainImage.style.transform = 'scale(1)';
+                });
             }
-            
-            // Hover effect on main image
-            mainImage.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.02)';
-            });
-            
-            mainImage.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
+
+            // Init all galleries
+            document.querySelectorAll('.gallery').forEach(initGallery);
+
         });
+
 
         // ========== PARALLAX EFFECT ==========
         function initParallax() {

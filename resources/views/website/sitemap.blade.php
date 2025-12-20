@@ -16,4 +16,12 @@
             <priority>0.8</priority>
         </url>
     @endforeach
+    @foreach ($projects as $project)
+        <url>
+            <loc>{{ route('project.detail', $project->slug) }}</loc>
+            <lastmod>{{ $project->created_at->tz('UTC')->toAtomString() }}</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>0.8</priority>
+        </url>
+    @endforeach
 </urlset>

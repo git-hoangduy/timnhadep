@@ -53,7 +53,7 @@ Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.log
 
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () {
 
-    Route::get('/', [ProjectController::class, 'index']);
+    Route::get('/', [ContactController::class, 'index']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
     Route::resourceExtend('order', OrderController::class);

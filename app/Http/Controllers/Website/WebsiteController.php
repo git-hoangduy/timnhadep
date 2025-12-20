@@ -253,10 +253,12 @@ class WebsiteController extends Controller
     {
         $posts = Post::latest()->where('status', 1)->where('public_at', '<=' , date('Y-m-d H:i:s'))->get();
         $pages = Page::latest()->where('status', 1)->get();
+        $projects = Project::latest()->where('status', 1)->get();
 
         return response()->view('website.sitemap', [
             'posts' => $posts,
             'pages' => $pages,
+            'projects' => $projects
         ])->header('Content-Type', 'text/xml');
     }
 }

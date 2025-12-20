@@ -19,12 +19,18 @@
                             </div>
                         </form>
                         
-                        <div class="form-check mt-4">
-                            <input type="checkbox" class="form-check-input" id="agreeTerms" checked>
-                            <label class="form-check-label" for="agreeTerms">
+                        <div class="form-check mt-4 d-flex align-items-center justify-content-center gap-2">
+                            <input
+                                type="checkbox"
+                                class="form-check-input mt-0"
+                                id="agreeTerms"
+                                checked
+                            >
+                            <label class="form-check-label mb-0" for="agreeTerms">
                                 Tôi đồng ý nhận thông tin qua email và có thể hủy đăng ký bất cứ lúc nào
                             </label>
                         </div>
+
                     </div>
                 </div>
             </div>
