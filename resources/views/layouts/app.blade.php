@@ -278,7 +278,12 @@
     <script src="{{ asset('admin/js/tinymce-template.js') }}"></script>
     <script src="{{ asset('admin/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('admin/js/messages_vi.min.js') }}"></script>
-    <script src="{{ asset('admin/js/custom.js') }}?v=20250225"></script>
+    @if(request()->is('admin/project/*'))
+        <script src="{{ asset('admin/js/custom2.js') }}"></script>
+    @else
+        <script src="{{ asset('admin/js/custom.js') }}"></script>
+    @endif
+
     @stack('scripts')
 
     <script>

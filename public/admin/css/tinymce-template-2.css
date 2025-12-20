@@ -27,6 +27,9 @@
 .mce-content-body .tinymce-content{
     padding: 0 !important;
 }
+.mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    left: 20px;
+}
 * {
     margin: 0; 
     padding: 0;
