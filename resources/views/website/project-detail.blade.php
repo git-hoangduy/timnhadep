@@ -125,8 +125,10 @@
 
         @foreach ($project->blocks as $key => $block)
             <section id="block_{{ $block->id }}" class="parallax-section">
+                @if ($block->block_image != '')
                 <img src="{{ asset($block->block_image) }}" 
                     alt="Overview Background" class="section-bg-parallax" data-speed="0.7">
+                @endif
                 <div class="section-overlay overlay-dark"></div>
                 
                 <div class="section-content">
