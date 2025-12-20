@@ -1666,6 +1666,113 @@ a {
     }
 }
 
+/* ========== HERO SECTION FIXED ========== */
+.hero-fullscreen {
+    height: 100vh;
+    min-height: 700px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+}
+
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.hero-slider .slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Dùng cover thay vì transform center */
+    will-change: transform, opacity;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    /* Đảm bảo ảnh không bị méo */
+    object-position: center center;
+}
+
+.hero-slider .slide-img.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Container cho parallax để tránh xung đột */
+.hero-parallax-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* Tăng chiều cao để parallax có không gian di chuyển */
+    overflow: hidden;
+    z-index: 0;
+}
+
+.hero-parallax-container .slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-parallax-container .slide-img.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Thêm overlay để blend tốt hơn */
+.hero-slider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(15, 15, 26, 0.2) 0%,
+        rgba(15, 15, 26, 0.4) 30%,
+        rgba(15, 15, 26, 0.6) 60%,
+        rgba(15, 15, 26, 0.8) 80%,
+        rgba(15, 15, 26, 0.95) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Override cho parallax-bg class */
+.parallax-bg {
+    filter: brightness(0.9);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .hero-parallax-container {
+        height: 110%; /* Giảm chiều cao parallax trên mobile */
+    }
+    
+    .hero-fullscreen {
+        min-height: 600px;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero-fullscreen {
+        min-height: 500px;
+    }
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {

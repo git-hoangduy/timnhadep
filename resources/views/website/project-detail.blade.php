@@ -49,9 +49,44 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-fullscreen" id="hero">
+    <!-- <section class="hero-fullscreen" id="hero">
         <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
              alt="Sunshine City Hero" class="parallax-bg" data-speed="0.5">
+        
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content-center">
+            @if ($project->logo)
+                <img src="{{ asset($project->logo) }}" alt="{{ $project->name }}" class="logo" width="180">
+            @else
+                <h1 class="project-title-main animate__animated animate__fadeInUp">{{ $project->name }}</h1>
+            @endif
+            <p class="project-subtitle animate__animated animate__fadeInUp animate__delay-1s">{{ $project->excerpt }}</p>
+        </div>
+        
+        <div class="scroll-indicator animate__animated animate__bounce animate__infinite">
+            <i class="fas fa-chevron-down fa-3x"></i>
+        </div>
+    </section> -->
+
+    <!-- Hero Section -->
+    <section class="hero-fullscreen" id="hero">
+        <!-- Simple image slider with parallax container -->
+        <div class="hero-parallax-container">
+            @if(isset($project->images) && count($project->images) > 0)
+                @foreach($project->images as $index => $image)
+                    <img src="{{ asset($image->image) }}" 
+                        alt="{{ $project->name }} - Image {{ $index + 1 }}" 
+                        class="parallax-bg slide-img {{ $index === 0 ? 'active' : '' }}"
+                        data-speed="0.5">
+                @endforeach
+            @else
+                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                    alt="{{ $project->name }}" 
+                    class="parallax-bg slide-img active"
+                    data-speed="0.5">
+            @endif
+        </div>
         
         <!-- Thêm overlay để xử lý khoảng đen khi scroll -->
         <div class="hero-overlay"></div>
@@ -611,6 +646,58 @@
                     messageDiv.remove();
                 }, 5000);
             }
+        });
+
+        // ========== PARALLAX EFFECT UPDATED ==========
+        function initParallax() {
+            const parallaxElements = document.querySelectorAll('.parallax-bg');
+            
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                
+                parallaxElements.forEach(element => {
+                    // Chỉ áp dụng parallax cho ảnh đang active
+                    if (element.classList.contains('active')) {
+                        const speed = element.getAttribute('data-speed') || 0.5;
+                        const yPos = -(scrolled * speed);
+                        element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+                    } else {
+                        // Ẩn ảnh không active
+                        element.style.transform = 'none';
+                    }
+                });
+            });
+        }
+
+        // ========== SIMPLE IMAGE SLIDER ==========
+        function initSimpleSlider() {
+            const slides = document.querySelectorAll('.hero-parallax-container .slide-img');
+            if (slides.length <= 1) return;
+            
+            let currentIndex = 0;
+            
+            function nextSlide() {
+                // Hide current slide
+                slides[currentIndex].classList.remove('active');
+                
+                // Move to next slide
+                currentIndex++;
+                if (currentIndex >= slides.length) {
+                    currentIndex = 0;
+                }
+                
+                // Show next slide
+                slides[currentIndex].classList.add('active');
+            }
+            
+            // Start auto slide every 3 seconds
+            setInterval(nextSlide, 3000);
+        }
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            initSimpleSlider();
+            initParallax();
         });
     </script>
 </body>

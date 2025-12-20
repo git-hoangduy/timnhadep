@@ -74,7 +74,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="project-card animate-on-scroll">
                                         <div class="project-img">
-                                            <img src="{{ asset($item->avatar->image) }}" alt="Sunshine City">
+                                            <img src="{{ asset($item->avatar->image) }}" alt="{{$item->name}}">
                                             @if($key == 0)
                                                 <div class="project-badge">
                                                     <span class="badge bg-primary">Mới</span>
