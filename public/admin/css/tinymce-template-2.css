@@ -320,6 +320,12 @@ a {
 
 /* ========== CONTENT COMPONENTS ========== */
 /* TinyMCE Content */
+.tinymce-content, 
+.tinymce-content * {
+    margin: initial;
+    padding: initial;
+    box-sizing: border-box;
+}
 .tinymce-content {
     font-size: 1.15rem;
     line-height: 1.9;
