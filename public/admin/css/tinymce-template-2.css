@@ -18,6 +18,11 @@
 }
 
 /* ========== BASE STYLES ========== */
+*:not(.tinymce-content):not(.tinymce-content *) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .tinymce-content {
     padding: 20px !important;
 }
@@ -30,11 +35,11 @@
 .mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
     left: 20px;
 }
-* {
+/* * {
     margin: 0; 
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -320,12 +325,6 @@ a {
 
 /* ========== CONTENT COMPONENTS ========== */
 /* TinyMCE Content */
-.tinymce-content, 
-.tinymce-content * {
-    margin: initial;
-    padding: initial;
-    box-sizing: border-box;
-}
 .tinymce-content {
     font-size: 1.15rem;
     line-height: 1.9;
