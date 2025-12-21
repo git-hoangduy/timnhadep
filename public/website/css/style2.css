@@ -382,7 +382,10 @@ a {
 .tinymce-content tbody,
 .tinymce-content tfoot,
 .tinymce-content tr {
-    all: revert !important;
+    border-width: initial !important;
+    border-style: initial !important;
+    border-color: initial !important;
+    border-collapse: initial !important;
 }
 
 /* Grid Layouts */
