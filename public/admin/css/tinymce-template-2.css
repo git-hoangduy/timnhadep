@@ -35,10 +35,9 @@
     padding: 0;
     box-sizing: border-box;
 } */
-.mce-content-body, 
-.mce-content-body * {
-    margin: initial;
-    padding: initial;
+*:not(.mce-content-body):not(.mce-content-body *) {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
