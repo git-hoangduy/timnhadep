@@ -356,7 +356,7 @@ function initTinymce(selector) {
             }
         ],
         content_style: "@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');",
-        content_css: '/admin/css/tinymce-template-2.css?v=20251221',
+        content_css: '/admin/css/tinymce-template-2.css?v=202512211',
         fontsize_formats: fontSizes,
         setup: function (editor) {
             editor.on('SetContent', function (e) {
