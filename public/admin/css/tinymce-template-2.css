@@ -30,15 +30,14 @@
 .mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
     left: 20px;
 }
-* {
+/* * {
     margin: 0; 
     padding: 0;
     box-sizing: border-box;
-}
-.mce-content-body, 
-.mce-content-body * {
-    margin: initial;
-    padding: initial;
+} */
+*:not(.tinymce-content *) {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
