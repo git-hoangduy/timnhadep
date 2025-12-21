@@ -17,7 +17,12 @@
 }
 
 /* ========== BASE STYLES ========== */
-* {
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+*:not(.tinymce-content *) {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -368,6 +373,18 @@ a {
     font-size: 6rem;
     color: rgba(255, 255, 255, 0.05);
     font-family: Georgia, serif;
+}
+
+.tinymce-content table,
+.tinymce-content th,
+.tinymce-content td,
+.tinymce-content thead,
+.tinymce-content tbody,
+.tinymce-content tfoot,
+.tinymce-content tr {
+    border-width: initial;
+    border-style: initial;
+    border-color: initial;
 }
 
 /* Grid Layouts */
