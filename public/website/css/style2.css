@@ -370,6 +370,28 @@ a {
     font-family: Georgia, serif;
 }
 
+.tinymce-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+  }
+  
+  .tinymce-content th,
+  .tinymce-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .tinymce-content th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  
+  .tinymce-content tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+
 /* Grid Layouts */
 .content-grid {
     display: grid;
