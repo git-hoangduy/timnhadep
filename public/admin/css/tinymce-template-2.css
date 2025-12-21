@@ -18,11 +18,6 @@
 }
 
 /* ========== BASE STYLES ========== */
-*:not(.tinymce-content):not(.tinymce-content *) {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 .tinymce-content {
     padding: 20px !important;
 }
@@ -40,6 +35,12 @@
     padding: 0;
     box-sizing: border-box;
 } */
+.mce-content-body, 
+.mce-content-body * {
+    margin: initial;
+    padding: initial;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Open Sans', sans-serif;
