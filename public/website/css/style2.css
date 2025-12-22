@@ -17,16 +17,16 @@
 }
 
 /* ========== BASE STYLES ========== */
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
-*:not(.tinymce-content *) {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+/* *:not(.tinymce-content *) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -384,6 +384,20 @@ a {
 .tinymce-content tr {
     border-width: 1px !important;
     border-style: solid !important;
+    border-color: #ddd !important;
+    border-collapse: collapse !important;
+}
+
+.tinymce-content table,
+.tinymce-content th,
+.tinymce-content td,
+.tinymce-content thead,
+.tinymce-content tbody,
+.tinymce-content tfoot,
+.tinymce-content tr {
+    padding: 10px;
+    border-width: 1px !important;
+    border-style: dotted !important;
     border-color: #ddd !important;
     border-collapse: collapse !important;
 }
