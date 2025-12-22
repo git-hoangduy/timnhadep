@@ -76,7 +76,7 @@
                                         <div class="project-img">
                                             <img src="{{ $item->avatar != '' ? asset($item->avatar->image) : asset('uploads/default.png') }}" alt="{{$item->name}}">
                                             @if($key == 0)
-                                                <div class="project-badge">
+                                                <div class="project-badge d-none">
                                                     <span class="badge bg-primary">Mới</span>
                                                 </div>
                                             @endif
