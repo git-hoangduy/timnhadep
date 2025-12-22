@@ -69,9 +69,9 @@
                         <h2 class="section-title center">Dự án nổi bật</h2>
                         <p class="text-center text-muted mb-5">Khám phá những dự án bất động sản cao cấp với vị trí đắc địa và tiện ích hoàn hảo</p>
                         
-                        <div class="row">
+                        <div class="row justify-content-center">
                             @foreach($projects as $key => $item)
-                                <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="project-card animate-on-scroll">
                                         <div class="project-img">
                                             <img src="{{ $item->avatar != '' ? asset($item->avatar->image) : asset('uploads/default.png') }}" alt="{{$item->name}}">
