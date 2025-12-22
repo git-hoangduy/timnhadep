@@ -237,6 +237,7 @@ class ProjectController extends Controller
 
                         $projectBlock = ProjectBlock::find($request->block_id[$key]);
                         $projectBlock->block_content = $block_content;
+                        $projectBlock->block_name = $request->block_name[$key];
                         $projectBlock->save();
 
                     } else {
