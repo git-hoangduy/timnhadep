@@ -375,33 +375,6 @@ a {
     font-family: Georgia, serif;
 }
 
-.tinymce-content table,
-.tinymce-content th,
-.tinymce-content td,
-.tinymce-content thead,
-.tinymce-content tbody,
-.tinymce-content tfoot,
-.tinymce-content tr {
-    border-width: 1px !important;
-    border-style: solid !important;
-    border-color: #ddd !important;
-    border-collapse: collapse !important;
-}
-
-.tinymce-content table,
-.tinymce-content th,
-.tinymce-content td,
-.tinymce-content thead,
-.tinymce-content tbody,
-.tinymce-content tfoot,
-.tinymce-content tr {
-    padding: 10px;
-    border-width: 1px !important;
-    border-style: dotted !important;
-    border-color: #ddd !important;
-    border-collapse: collapse !important;
-}
-
 /* Grid Layouts */
 .content-grid {
     display: grid;

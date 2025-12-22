@@ -701,6 +701,177 @@
             initSimpleSlider();
             initParallax();
         });
+
+        function parseBorderFromStyle(styleString) {
+            const result = {
+                width: '1px',
+                style: 'solid',
+                color: 'gray'
+            };
+            
+            if (!styleString) return result;
+            
+            // Tìm border tổng hợp
+            const borderMatch = styleString.match(/border:\s*([^;!]+)/i);
+            if (borderMatch) {
+                const parts = borderMatch[1].trim().split(/\s+/);
+                if (parts.length >= 3) {
+                    result.width = parts[0];
+                    result.style = parts[1];
+                    result.color = parts[2];
+                }
+            } else {
+                // Tìm từng thuộc tính riêng
+                const widthMatch = styleString.match(/border-width:\s*([^;!]+)/i);
+                const styleMatch = styleString.match(/border-style:\s*([^;!]+)/i);
+                const colorMatch = styleString.match(/border-color:\s*([^;!]+)/i);
+                
+                if (widthMatch) result.width = widthMatch[1].trim();
+                if (styleMatch) result.style = styleMatch[1].trim();
+                if (colorMatch) result.color = colorMatch[1].trim();
+            }
+            
+            return result;
+        }
+
+        function fixTableAttributes() {
+            document.querySelectorAll('.tinymce-content table').forEach(table => {
+                // Parse border từ style hiện tại
+                const currentStyle = table.getAttribute('style') || '';
+                const borderInfo = parseBorderFromStyle(currentStyle);
+                let newTableStyle = currentStyle;
+                
+                // 1. Xử lý border attribute
+                if (table.hasAttribute('border')) {
+                    const borderAttr = table.getAttribute('border');
+                    
+                    if (borderAttr === '0' || borderAttr === '') {
+                        // Không border
+                        newTableStyle += ' border: none !important;';
+                        borderInfo.width = '0';
+                    } else {
+                        // Dùng kiểu và màu hiện tại, chỉ đổi width
+                        newTableStyle += ` border: ${borderAttr}px ${borderInfo.style} ${borderInfo.color} !important;`;
+                        borderInfo.width = `${borderAttr}px`;
+                    }
+                    table.removeAttribute('border');
+                }
+                
+                // 2. Áp dụng border cho tất cả td, th (QUAN TRỌNG!)
+                table.querySelectorAll('td, th').forEach(cell => {
+                    let cellStyle = cell.getAttribute('style') || '';
+                    
+                    // Kiểm tra xem cell đã có border chưa
+                    const hasBorder = cellStyle.includes('border:') || 
+                                    cellStyle.includes('border-width:') ||
+                                    cellStyle.includes('border-style:') ||
+                                    cellStyle.includes('border-color:');
+                    
+                    if (!hasBorder && borderInfo.width !== '0') {
+                        // Chưa có border, thêm border từ table
+                        cellStyle += ` border: ${borderInfo.width} ${borderInfo.style} ${borderInfo.color} !important;`;
+                    } else if (borderInfo.width === '0') {
+                        // Table không border, cell cũng không border
+                        cellStyle += ' border: none !important;';
+                    }
+                    
+                    // 3. Xử lý cellpadding attribute
+                    if (table.hasAttribute('cellpadding')) {
+                        const padding = table.getAttribute('cellpadding');
+                        cellStyle += ` padding: ${padding}px !important;`;
+                    }
+                    
+                    // 4. Xử lý các attribute khác của cell
+                    if (cell.hasAttribute('border')) {
+                        const cellBorder = cell.getAttribute('border');
+                        if (cellBorder === '0' || cellBorder === '') {
+                            cellStyle += ' border: none !important;';
+                        } else {
+                            // Giữ style và color hiện tại, chỉ đổi width
+                            const cellBorderInfo = parseBorderFromStyle(cellStyle);
+                            cellStyle += ` border: ${cellBorder}px ${cellBorderInfo.style || borderInfo.style} ${cellBorderInfo.color || borderInfo.color} !important;`;
+                        }
+                        cell.removeAttribute('border');
+                    }
+                    
+                    if (cell.hasAttribute('bgcolor')) {
+                        cellStyle += ` background-color: ${cell.getAttribute('bgcolor')} !important;`;
+                        cell.removeAttribute('bgcolor');
+                    }
+                    
+                    if (cell.hasAttribute('width')) {
+                        const width = cell.getAttribute('width');
+                        cellStyle += ` width: ${width}${width.includes('%') ? '' : 'px'} !important;`;
+                        cell.removeAttribute('width');
+                    }
+                    
+                    if (cell.hasAttribute('height')) {
+                        cellStyle += ` height: ${cell.getAttribute('height')}px !important;`;
+                        cell.removeAttribute('height');
+                    }
+                    
+                    if (cell.hasAttribute('align')) {
+                        cellStyle += ` text-align: ${cell.getAttribute('align')} !important;`;
+                        cell.removeAttribute('align');
+                    }
+                    
+                    if (cell.hasAttribute('valign')) {
+                        cellStyle += ` vertical-align: ${cell.getAttribute('valign')} !important;`;
+                        cell.removeAttribute('valign');
+                    }
+                    
+                    if (cellStyle !== cell.getAttribute('style')) {
+                        cell.setAttribute('style', cellStyle);
+                    }
+                });
+                
+                // Xóa cellpadding khỏi table sau khi đã xử lý
+                if (table.hasAttribute('cellpadding')) {
+                    table.removeAttribute('cellpadding');
+                }
+                
+                // 5. Xử lý cellspacing
+                if (table.hasAttribute('cellspacing')) {
+                    const spacing = table.getAttribute('cellspacing');
+                    newTableStyle += ` border-collapse: separate !important; border-spacing: ${spacing}px !important;`;
+                    table.removeAttribute('cellspacing');
+                }
+                
+                // 6. Xử lý các attribute khác của table
+                if (table.hasAttribute('bgcolor')) {
+                    newTableStyle += ` background-color: ${table.getAttribute('bgcolor')} !important;`;
+                    table.removeAttribute('bgcolor');
+                }
+                
+                if (table.hasAttribute('width')) {
+                    const width = table.getAttribute('width');
+                    newTableStyle += ` width: ${width}${width.includes('%') ? '' : 'px'} !important;`;
+                    table.removeAttribute('width');
+                }
+                
+                if (table.hasAttribute('height')) {
+                    newTableStyle += ` height: ${table.getAttribute('height')}px !important;`;
+                    table.removeAttribute('height');
+                }
+                
+                if (table.hasAttribute('align')) {
+                    const align = table.getAttribute('align');
+                    newTableStyle += ` float: ${align} !important; margin-${align === 'left' ? 'right' : 'left'}: 15px !important;`;
+                    table.removeAttribute('align');
+                }
+                
+                // Cập nhật style cho table
+                if (newTableStyle !== currentStyle) {
+                    table.setAttribute('style', newTableStyle);
+                }
+            });
+        }
+
+        // Chạy khi trang load
+        document.addEventListener('DOMContentLoaded', fixTableAttributes);
+
+        // Chạy lại sau 500ms để xử lý nội dung load sau
+        setTimeout(fixTableAttributes, 500);
         
     </script>
 </body>
