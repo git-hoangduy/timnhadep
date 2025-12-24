@@ -155,7 +155,9 @@ input.form-control:not(.form-control-sm){
 .preview-images .preview-item img{
     height: 100%;
 }
-.preview-images .preview-item .delete-image{
+.preview-images .preview-item .delete-image,
+.delete-logo,
+.delete-block-image {
     background-color: #ed0f0f;
     position: absolute;
     right: 2px;
@@ -166,7 +168,9 @@ input.form-control:not(.form-control-sm){
     border-radius: 100%;
     cursor: pointer;
 }
-.preview-images .preview-item .delete-image:after{
+.preview-images .preview-item .delete-image:after,
+.delete-logo:after,
+.delete-block-image:after {
     font-size: 20px;
     color: #fff;
     content: "\F62A";

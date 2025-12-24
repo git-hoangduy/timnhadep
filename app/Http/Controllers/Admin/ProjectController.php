@@ -168,6 +168,16 @@ class ProjectController extends Controller
 
         if($project->fill($data)->save()){
 
+            if ($request->removeLogo == 1) {
+
+                if ($project->logo && File::exists($project->logo)) {
+                    File::delete($project->logo);
+                }
+
+                $project->logo = null;
+                $project->save();
+            }
+
             if ($request->hasFile('logo')) {
 
                 // Xóa logo cũ nếu có
@@ -210,6 +220,18 @@ class ProjectController extends Controller
                         'image' => $this->PATH_IMAGE.$fileNameHash,
                         'name' => $fileName
                     ]);
+                }
+            }
+
+            if (!empty($request->removeBlockImages)) {
+                $removeBlockImages = array_filter(explode(',', $request->removeBlockImages));
+                foreach($removeBlockImages as $removeBlockId) {
+                    $projectBlock = ProjectBlock::find($removeBlockId);
+                    if(File::exists($projectBlock->block_image)){
+                        File::delete($projectBlock->block_image);
+                    }
+                    $projectBlock->block_image = null;
+                    $projectBlock->save();
                 }
             }
 

@@ -98,6 +98,8 @@ function initTinymce(selector) {
     tinymce.init({
         language : "vi",
         selector: selector,
+        valid_elements: '*[*]',
+        extended_valid_elements: 'i[class|aria-hidden]',
         plugins: 'print preview paste importcss searchreplace autolink autoresize autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
         toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
         automatic_uploads: true,
@@ -356,7 +358,7 @@ function initTinymce(selector) {
             }
         ],
         content_style: "@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');",
-        content_css: '/admin/css/tinymce-template-2.css?v=202512213',
+        content_css: '/admin/css/tinymce-template-2.css?v=202512224',
         fontsize_formats: fontSizes,
         setup: function (editor) {
             editor.on('SetContent', function (e) {

@@ -85,7 +85,7 @@
         <div class="mb-3">
             <label for="formFile" class="form-label">Hình nền khối</label>
             <input class="form-control" type="file" id="formFile" name="block_image[]" accept="image/*">
-            <img class="preview-image w-25 mt-2 rounded d-none">
+            {{-- <img class="preview-image w-25 mt-2 rounded d-none"> --}}
         </div>
         <div>
             <label>Nội dung</label>

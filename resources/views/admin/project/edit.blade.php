@@ -46,7 +46,11 @@
                             <label>Logo dự án</label>
                             <input type="file" class="form-control" name="logo">
                             @if($project->logo)
-                                <img src="{{ asset($project->logo) }}" height="80" class="mt-2 rounded">
+                                <div class="mt-3 p-2 border rounded d-inline-block rouded position-relative">
+                                    <img src="{{ asset($project->logo) }}" height="80" class="mt-2 rounded">
+                                    <span class="delete-logo"></span>
+                                    <input type="hidden" name="removeLogo">
+                                </div>
                             @endif
                         </div>
                         <div class="mb-3">
@@ -79,6 +83,7 @@
                             <button type="button" class="btn btn-primary add-page-block">Thêm khối</button>
                         </div>
                         <div class="mb-3 page-blocks">
+                            <input type="hidden" name="removeBlockImages">
                             @foreach($project->blocks as $key => $block)
                                 <div class="page-block-item border rounded mt-3 p-3" data-id="{{ $block->id }}">
                                     <input type="hidden" name="block_id[]" value="{{ $block->id }}">
@@ -90,11 +95,17 @@
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">Hình nền khối</label>
                                         <input class="form-control" type="file" id="formFile" name="block_image[]" accept="image/*">
-                                        <img class="preview-image w-25 mt-2 rounded d-none">
+                                        {{-- <img class="preview-image w-25 mt-2 rounded d-none">
                                         @if ($block->block_image != '')
                                             <img class="preview-image w-25 mt-2 rounded" src="{{ asset($block->block_image) }}">
                                         @else
                                             <img class="preview-image w-25 mt-2 rounded d-none">
+                                        @endif --}}
+                                        @if ($block->block_image != '')
+                                            <div class="mt-3 p-2 border rounded d-inline-block rouded position-relative" data-id="{{ $block->id }}">
+                                                <img src="{{ asset($block->block_image) }}" width="360" class="mt-2 rounded">
+                                                <span class="delete-block-image"></span>
+                                            </div>
                                         @endif
                                     </div>
                                     <div>
@@ -126,7 +137,7 @@
         <div class="mb-3">
             <label for="formFile" class="form-label">Hình nền khối</label>
             <input class="form-control" type="file" id="formFile" name="block_image[]" accept="image/*">
-            <img class="preview-image w-25 mt-2 rounded d-none">
+            {{-- <img class="preview-image w-25 mt-2 rounded d-none"> --}}
         </div>
         <div>
             <label>Nội dung</label>
@@ -151,6 +162,11 @@
                 },
             }
         });
+    });
+
+    $(document).on('click', '.delete-logo', function() {
+        $('input[name="removeLogo"]').val('1');
+        $(this).closest('div').addClass('d-none');
     });
 
     $('.upload-images').on('change', function() {
@@ -230,6 +246,17 @@
         $(this).closest('.page-block-item ').remove();
     });
 
+    $(document).on('click', '.delete-block-image', function() {
+
+        let blockId = $(this).closest('div').attr('data-id');
+        if (blockId) {
+            let removeBlockImages = $('input[name="removeBlockImages"]').val().split(",");
+            removeBlockImages.push(blockId);
+            $('input[name="removeBlockImages"]').val(removeBlockImages.join(","));
+        }
+
+        $(this).closest('div').addClass('d-none');
+    });
     
     $(document).on('click', '.page-block-item .delete-page-block', function() {
 

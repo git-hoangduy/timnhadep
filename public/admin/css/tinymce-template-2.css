@@ -254,7 +254,8 @@ a {
 
 /* Overlay Variations */
 .overlay-dark { 
-    background: rgba(20, 20, 35, 0.6); 
+    /* background: rgba(20, 20, 35, 0.6);  */
+    background: rgba(20, 20, 35, 0.3); 
 }
 
 .overlay-light-dark { 
@@ -386,6 +387,11 @@ a {
     font-size: 6rem;
     color: rgba(255, 255, 255, 0.05);
     font-family: Georgia, serif;
+}
+
+.tinymce-content img{
+    max-width: 100%;
+    border-radius: 10px;
 }
 
 /* Grid Layouts */
