@@ -381,6 +381,48 @@ a {
     border-radius: 10px;
 }
 
+/* Stack layout cho table trên mobile */
+@media (max-width: 767px) {
+    .tinymce-content table,
+    .tinymce-content thead,
+    .tinymce-content tbody,
+    .tinymce-content th,
+    .tinymce-content td,
+    .tinymce-content tr {
+        display: block;
+    }
+    
+    .tinymce-content thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    .tinymce-content tr {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 15px;
+    }
+    
+    .tinymce-content td {
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        padding-left: 50%;
+    }
+    
+    .tinymce-content td:before {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+}
+
 /* Grid Layouts */
 .content-grid {
     display: grid;
