@@ -408,6 +408,7 @@ a {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         position: relative;
         padding-left: 50%;
+        width: 100% !important;
     }
     
     .tinymce-content td:before {
