@@ -20,26 +20,26 @@
                     <div class="row text-center">
                         <div class="col-6">
                             <div class="stat-item">
-                                <div class="stat-number">2,580+</div>
-                                <div class="stat-text">Dự án bất động sản</div>
+                                <div class="stat-number">20+</div>
+                                <div class="stat-text">Năm kinh nghiệm BĐS</div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="stat-item">
-                                <div class="stat-number">15,230+</div>
-                                <div class="stat-text">Tin đăng mua bán</div>
+                                <div class="stat-number">300+</div>
+                                <div class="stat-text">Khách hàng đã hỗ trợ</div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="stat-item">
-                                <div class="stat-number">8,940+</div>
-                                <div class="stat-text">Khách hàng hài lòng</div>
+                                <div class="stat-number">Minh bạch</div>
+                                <div class="stat-text">Pháp lý rõ ràng</div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="stat-item">
-                                <div class="stat-number">98%</div>
-                                <div class="stat-text">Giao dịch thành công</div>
+                                <div class="stat-number">Lâu dài</div>
+                                <div class="stat-text">Đồng hành sau giao dịch</div>
                             </div>
                         </div>
                     </div>
@@ -256,8 +256,8 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <h2 class="section-title">Về Nhà Đẹp</h2>
-                <p class="mb-4">Với hơn <strong>10 năm kinh nghiệm</strong> trong lĩnh vực bất động sản, <strong class="text-primary">Nhà Đẹp</strong> tự hào là đơn vị tư vấn và phân phối bất động sản uy tín hàng đầu tại Việt Nam.</p>
+                <h2 class="section-title">Về Tìm Nhà Đẹp</h2>
+                <p class="mb-4">Với hơn <strong>20 năm kinh nghiệm</strong> trong lĩnh vực bất động sản, <strong class="text-primary">Nhà Đẹp</strong> tự hào là đơn vị tư vấn và phân phối bất động sản uy tín hàng đầu tại Việt Nam.</p>
                 <p class="mb-4">Chúng tôi chuyên tư vấn, môi giới và phân phối các dự án căn hộ, nhà phố, biệt thự cao cấp tại các thành phố lớn. Đội ngũ nhân viên chuyên nghiệp, am hiểu thị trường sẽ mang đến cho khách hàng những giải pháp đầu tư hiệu quả nhất.</p>
                 
                 <div class="row mt-4">
@@ -269,7 +269,7 @@
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Tư vấn chuyên sâu</h5>
-                                    <p>Đội ngũ chuyên gia giàu kinh nghiệm</p>
+                                    <p>Chuyên gia giàu kinh nghiệm</p>
                                 </div>
                             </div>
                         </div>
@@ -336,11 +336,11 @@
                 <div class="stats-container mt-5">
                     <div class="row text-center">
                         <div class="col-4">
-                            <div class="stat-number">2,580+</div>
-                            <div class="stat-label">Dự án</div>
+                            <div class="stat-number">320+</div>
+                            <div class="stat-label">Giao dịch thành công</div>
                         </div>
                         <div class="col-4">
-                            <div class="stat-number">15,230+</div>
+                            <div class="stat-number">500+</div>
                             <div class="stat-label">Khách hàng</div>
                         </div>
                         <div class="col-4">

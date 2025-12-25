@@ -607,6 +607,12 @@
                 alert('Vui lòng đồng ý với điều khoản nhận thông tin');
                 return;
             }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Vui lòng nhập email hợp lệ');
+                return;
+            }
             
             // Hiệu ứng loading
             const submitBtn = this.querySelector('button[type="submit"]');
@@ -614,32 +620,47 @@
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
             submitBtn.disabled = true;
             
-            // Giả lập gửi dữ liệu
-            setTimeout(() => {
-                // Hiển thị thông báo thành công
-                const successMessage = document.createElement('div');
-                successMessage.className = 'alert alert-success mt-3';
-                successMessage.innerHTML = `
-                    <i class="fas fa-check-circle me-2"></i>
-                    <strong>Đăng ký thành công!</strong> Cảm ơn ${name} đã đăng ký nhận tin từ Nhà Đẹp. 
-                    Chúng tôi sẽ gửi thông tin mới nhất đến email ${email}.
-                `;
-                
-                this.parentNode.insertBefore(successMessage, this.nextSibling);
-                
-                // Reset form
-                this.reset();
-                document.getElementById('agreeTerms').checked = true;
-                
-                // Reset button
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('_token', '{{ csrf_token() }}');
+            fetch('{{ route("contact") }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.success) {
+                    // Hiển thị thông báo thành công
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'alert alert-success mt-3';
+                    successMessage.innerHTML = `
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Đăng ký thành công!</strong> Cảm ơn ${name} đã đăng ký nhận tin từ Nhà Đẹp. 
+                        Chúng tôi sẽ gửi thông tin mới nhất đến email ${email}.
+                    `;
+                    
+                    this.parentNode.insertBefore(successMessage, this.nextSibling);
+                    
+                    // Reset form
+                    this.reset();
+                    document.getElementById('agreeTerms').checked = true;
+                    
+                    // Ẩn thông báo sau 5 giây
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 5000);
+                } else {
+                    alert(data.message || 'Đã xảy ra lỗi, xin hãy thử lại!');
+                }
+
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-                
-                // Ẩn thông báo sau 5 giây
-                setTimeout(() => {
-                    successMessage.remove();
-                }, 5000);
-            }, 1500);
+            })
         });
         
         // Tab click to scroll to section

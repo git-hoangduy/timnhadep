@@ -224,6 +224,16 @@ class WebsiteController extends Controller
 
     public function contact(Request $request) {
 
+        if ($request->ajax()) {
+            $data = $request->all();
+            if (Contact::create($data)) {
+                return response()->json(['success' => true, 'message' => 'Gửi yêu cầu thành công']);
+            }
+            else{
+                return response()->json(['success' => false, 'message' => 'Đã xảy ra lỗi, xin hãy thử lại!']);
+            }
+        }
+
         if ($request->isMethod('post')) {
             $this->validate($request, [
                 'name'    => 'required',
@@ -241,6 +251,7 @@ class WebsiteController extends Controller
 
             return redirect()->back();
         }
+
 
         SEOMeta::setTitle('Liên hệ');
         OpenGraph::setTitle('Liên hệ');

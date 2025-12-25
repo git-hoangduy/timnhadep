@@ -79,6 +79,9 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="bi bi-person-circle"></i> Khách hàng
+                                    @if ($contact->count() > 0)
+                                        <small class="bg-danger px-2 text-white rounded-pill">{{ $contact->count() }}</small>   
+                                    @endif
                                 </a>
                                 <div class="dropdown-menu">
                                     <div class="row">
@@ -90,7 +93,10 @@
                                                 Người đăng ký
                                             </a>
                                             <a class="dropdown-item" href="{{ route('contact.index') }}">
-                                                Danh sách liên hệ
+                                                Liên hệ, Yêu cầu 
+                                                @if ($contact->count() > 0)
+                                                    <small class="bg-danger px-2 text-white rounded-pill">{{ $contact->count() }}</small>   
+                                                @endif
                                             </a>
                                             <!-- <a class="dropdown-item" href="{{ route('user.index') }}">
                                                 Danh sách người dùng

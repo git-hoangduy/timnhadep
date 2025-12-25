@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
 use App\Models\Footer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -37,6 +38,7 @@ class ViewServiceProvider extends ServiceProvider
             $pages = Page::where('status', 1)->get();
             $listingCategories = ListingCategory::where('status', 1)->get();
 
+
             // $pageCategories = PageCategory::where(['level' => 1, 'status' => 1])->get();
             // $postCategories = PostCategory::where(['level' => 1, 'status' => 1])->get();
             // $footers = Footer::where('status', 1)->get();
@@ -44,9 +46,17 @@ class ViewServiceProvider extends ServiceProvider
             // $view->with('pageCategories', $pageCategories);
             // $view->with('postCategories', $postCategories);
             // $view->with('footers', $footers);
-
+            
             $view->with('pages', $pages);
             $view->with('listingCategories', $listingCategories);
+        });
+
+        View::composer([
+            'admin/*', 
+        ], function ($view) {
+
+            $contact = Contact::where('status', 0)->get();
+            $view->with('contact', $contact);
         });
     }
 }

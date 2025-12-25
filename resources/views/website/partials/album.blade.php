@@ -1,5 +1,5 @@
 @if($album->images->count())
-<h3>Hình ảnh dự án</h3>
+{{-- <h3>Hình ảnh dự án</h3> --}}
 
 <div class="album gallery">
 

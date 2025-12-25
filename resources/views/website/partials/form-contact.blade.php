@@ -7,7 +7,8 @@
                     <p class="mb-4">Nhận thông tin mới nhất về dự án bất động sản, tin tức thị trường và ưu đãi đặc biệt từ Nhà Đẹp</p>
                     
                     <div class="newsletter-form animate-on-scroll">
-                        <form id="subscribeForm" class="row g-3 justify-content-center">
+                        <form id="subscribeForm" class="row g-3 justify-content-center" action="{{ route('contact') }}" method="POST">
+                            @csrf
                             <div class="col-md-5">
                                 <input type="text" class="form-control form-control-lg" placeholder="Họ và tên của bạn" required>
                             </div>
