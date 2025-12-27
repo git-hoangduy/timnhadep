@@ -75,8 +75,8 @@
                                     <div class="project-card animate-on-scroll">
                                         <div class="project-img">
                                             <img src="{{ $item->avatar != '' ? asset($item->avatar->image) : asset('uploads/default.png') }}" alt="{{$item->name}}">
-                                            @if($key == 0)
-                                                <div class="project-badge d-none">
+                                            @if($item->is_highlight == 1)
+                                                <div class="project-badge">
                                                     <span class="badge bg-primary">Mới</span>
                                                 </div>
                                             @endif
