@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    body{
+        background-image: url('{{ asset("admin/images/login-bg.jpg") }}');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        width: 100vw;
+    }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-5">
@@ -8,6 +18,7 @@
                 <div class="card-header">Đăng nhập</div>
 
                 <div class="card-body px-4">
+                    <a href="{{ route('home') }}" target="_blank"><h6 class="text-end">Mở trang chủ</h6></a>
                     @include('admin.includes.notification')
                     <form method="POST" action="{{ route('admin.postLogin') }}">
                         @csrf

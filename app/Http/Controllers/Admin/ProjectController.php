@@ -335,4 +335,13 @@ class ProjectController extends Controller
 
         return response()->json($result);
     }
+
+    public function isHighlight(Request $request) {
+        $post = Project::where('id', $request->id)->first();
+        \DB::table('projects')->where('id', $request->id)->update([
+            'is_highlight' => $request->status, 
+            'updated_at' => $post->updated_at
+        ]);
+        return response()->json(['success' => true]);
+    }
 }

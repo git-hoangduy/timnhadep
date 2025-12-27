@@ -53,7 +53,7 @@ Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.log
 
 Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () {
 
-    Route::get('/', [ContactController::class, 'index']);
+    Route::get('/', [ProjectController::class, 'index']);
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
     Route::resourceExtend('order', OrderController::class);
@@ -92,6 +92,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () 
     
     // Ajax routes
     Route::post('/post/is-highlight', [PostController::class, 'isHighlight'])->name('post.isHighlight');
+    Route::post('/project/is-highlight', [ProjectController::class, 'isHighlight'])->name('project.isHighlight');
     Route::post('/tinymce/upload-image', [TinymceController::class, 'uploadImage']);
 });
 

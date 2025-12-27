@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Cart;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 
@@ -28,7 +31,7 @@ class WebsiteController extends Controller
 
     public function index() {
         $page = Page::find(1);
-        $projects = Project::where('status', 1)->orderBy('id', 'desc')->limit(6)->get();
+        $projects = Project::where('status', 1)->orderBy('is_highlight', 'desc')->orderBy('id', 'desc')->limit(6)->get();
         $posts = Post::where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
         $listings = Listing::with(['category', 'customer'])
             ->where('status', 1)
@@ -91,7 +94,7 @@ class WebsiteController extends Controller
             $query->whereIn('category_id', $cateIds)->where('status', 1);
         }
 
-        $projects = $query->orderBy('id', 'desc')->paginate(12);
+        $projects = $query->orderBy('is_highlight', 'desc')->orderBy('id', 'desc')->paginate(12);
 
         if (!empty($category)) {
             SEOMeta::setTitle($category->name);
@@ -227,6 +230,11 @@ class WebsiteController extends Controller
         if ($request->ajax()) {
             $data = $request->all();
             if (Contact::create($data)) {
+                // $this->sendMail([
+                //     'name' => $data['name'],
+                //     'email' => $data['email'] ?? '',
+                //     'message' => 'Chỉ đăng ký nhận tin từ website',
+                // ]);
                 return response()->json(['success' => true, 'message' => 'Gửi yêu cầu thành công']);
             }
             else{
@@ -258,6 +266,36 @@ class WebsiteController extends Controller
         OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
 
         return view('website.contact');  
+    }
+
+    public function sendMail($data)
+    {
+        try {
+            $emailData = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'content' => $data['message']
+            ];
+
+            Mail::send('emails.contact', $emailData, function ($message) use ($data) {
+                $message->to('duynguyen.joy@gmail.com')
+                        ->subject('Yêu cầu liên hệ từ website');
+
+                $message->from(
+                    config('mail.from.address'),
+                    config('mail.from.name')
+                );
+            });
+
+            Log::info('Mail đã gửi xong (Laravel không báo lỗi)');
+        } catch (\Throwable $e) {
+            Log::error('LỖI GỬI MAIL', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            dd($e->getMessage());
+        }
     }
 
     public function sitemap($value='')

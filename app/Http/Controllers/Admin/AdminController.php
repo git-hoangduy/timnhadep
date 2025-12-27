@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function login(){
+
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('project.index');
+        }
         return view('admin.auth.login');
     }
     public function postLogin(Request $request){
@@ -22,7 +26,7 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('post.index');
+            return redirect()->route('project.index');
         }
   
         return redirect()->back()->with("error", "Thông tin email hoặc mặt khẩu không chính xác, xin hãy thử lại.");
