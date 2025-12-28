@@ -501,6 +501,10 @@ a {
     .tinymce-content blockquote p:last-child {
         margin-bottom: 0;
     }
+
+    .tinymce-content iframe{
+        height: 280px;
+    }
 }
   
   /* Small mobile styles */
