@@ -399,13 +399,15 @@ a {
     }
     
     .tinymce-content tr {
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        /* border: 1px solid rgba(255, 255, 255, 0.2); */
+        border: none;
         margin-bottom: 15px;
     }
     
     .tinymce-content td {
         border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
+        border-bottom: none;
         position: relative;
         padding-left: 50%;
         width: 100% !important;
@@ -423,6 +425,71 @@ a {
         color: var(--primary-color);
     }
 }
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    .tinymce-content {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .tinymce-content h1, 
+    .tinymce-content h2, 
+    .tinymce-content h3, 
+    .tinymce-content h4, 
+    .tinymce-content h5, 
+    .tinymce-content h6 {
+      margin-top: 1.2em;
+      margin-bottom: 0.6em;
+    }
+    
+    /* Kích thước font nhỏ hơn cho mobile */
+    .tinymce-content h1 { font-size: 1.75rem; }
+    .tinymce-content h2 { font-size: 1.5rem; }
+    .tinymce-content h3 { font-size: 1.25rem; }
+    .tinymce-content h4 { font-size: 1.125rem; }
+    .tinymce-content h5 { font-size: 1rem; }
+    .tinymce-content h6 { font-size: 0.875rem; }
+    
+    .tinymce-content p {
+      margin-bottom: 1.2em;
+      font-size: 1rem;
+    }
+    
+    .tinymce-content ul, 
+    .tinymce-content ol {
+      margin-bottom: 1.2em;
+      padding-left: 1.5em;
+    }
+    
+    .tinymce-content li {
+      margin-bottom: 0.6em;
+      font-size: 1rem;
+    }
+  }
+  
+  /* Small mobile styles */
+  @media screen and (max-width: 480px) {
+    .tinymce-content {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    
+    .tinymce-content h1 { font-size: 1.5rem; }
+    .tinymce-content h2 { font-size: 1.25rem; }
+    .tinymce-content h3 { font-size: 1.125rem; }
+    .tinymce-content h4 { font-size: 1rem; }
+    .tinymce-content h5 { font-size: 0.875rem; }
+    .tinymce-content h6 { font-size: 0.75rem; }
+    
+    .tinymce-content p {
+      font-size: 0.9375rem;
+    }
+    
+    .tinymce-content li {
+      font-size: 0.9375rem;
+    }
+  }
 
 /* Grid Layouts */
 .content-grid {
