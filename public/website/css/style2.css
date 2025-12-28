@@ -466,10 +466,45 @@ a {
       margin-bottom: 0.6em;
       font-size: 1rem;
     }
-  }
+
+    .tinymce-content blockquote {
+        padding: 18px 20px;
+        margin: 1.8em 0;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        border-left-width: 3px;
+        border-radius: 0 calc(var(--border-radius) * 0.8) calc(var(--border-radius) * 0.8) 0;
+    }
+    
+    .tinymce-content blockquote::before {
+        font-size: 4rem;
+        top: -20px;
+        left: 5px;
+    }
+    
+    /* Giảm margin cho các phần tử bên trong blockquote trên mobile */
+    .tinymce-content blockquote p,
+    .tinymce-content blockquote h1,
+    .tinymce-content blockquote h2,
+    .tinymce-content blockquote h3,
+    .tinymce-content blockquote h4,
+    .tinymce-content blockquote h5,
+    .tinymce-content blockquote h6 {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+    
+    .tinymce-content blockquote p:first-child {
+        margin-top: 0;
+    }
+    
+    .tinymce-content blockquote p:last-child {
+        margin-bottom: 0;
+    }
+}
   
   /* Small mobile styles */
-  @media screen and (max-width: 480px) {
+@media screen and (max-width: 480px) {
     .tinymce-content {
       font-size: 13px;
       line-height: 1.4;
@@ -488,6 +523,27 @@ a {
     
     .tinymce-content li {
       font-size: 0.9375rem;
+    }
+
+    .tinymce-content blockquote {
+        padding: 15px 18px;
+        margin: 1.5em 0;
+        font-size: 1rem;
+        line-height: 1.4;
+        border-left-width: 3px;
+    }
+    
+    .tinymce-content blockquote::before {
+        font-size: 3.5rem;
+        top: -15px;
+        left: 5px;
+    }
+    
+    /* Stack layout cho rất nhỏ */
+    .tinymce-content blockquote {
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: var(--border-radius);
     }
   }
 
