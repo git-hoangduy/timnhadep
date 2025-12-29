@@ -54,7 +54,7 @@
                         <div class="info-icon">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        <div class="info-content">
+                        <div class="info-content w-100">
                             <h5>Địa chỉ</h5>
                             <p>{{ setting('info.address', 'Số 123, Đường ABC, Quận XYZ, TP. Hồ Chí Minh') }}</p>
                         </div>
@@ -64,7 +64,7 @@
                         <div class="info-icon">
                             <i class="fas fa-phone-alt"></i>
                         </div>
-                        <div class="info-content">
+                        <div class="info-content w-100">
                             <h5>Điện thoại</h5>
                             <p>{{ setting('info.phone', '0901 234 567') }}</p>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="info-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
-                        <div class="info-content">
+                        <div class="info-content w-100">
                             <h5>Email</h5>
                             <p>{{ setting('info.email', 'contact@nhadep.com') }}</p>
                         </div>
@@ -84,7 +84,7 @@
                         <div class="info-icon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <div class="info-content">
+                        <div class="info-content w-100">
                             <h5>Giờ làm việc</h5>
                             <p>Thứ 2 - Thứ 7: 8:00 - 17:30</p>
                         </div>
