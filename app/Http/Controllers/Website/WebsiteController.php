@@ -234,6 +234,7 @@ class WebsiteController extends Controller
                 SendContactMail::dispatch([
                     'name' => $data['name'],
                     'email' => $data['email'] ?? '',
+                    'phone' => $data['phone'] ?? '',
                     'message' => 'Chỉ đăng ký nhận tin từ website',
                 ]);
                 
@@ -256,6 +257,7 @@ class WebsiteController extends Controller
                 SendContactMail::dispatch([
                     'name' => $data['name'],
                     'email' => $data['email'] ?? '',
+                    'phone' => $data['phone'] ?? '',
                     'message' => $data['message'],
                 ]);
                 

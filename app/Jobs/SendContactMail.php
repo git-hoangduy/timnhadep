@@ -27,6 +27,7 @@ class SendContactMail implements ShouldQueue
             $emailData = [
                 'name' => $this->mailData['name'],
                 'email' => $this->mailData['email'],
+                'phone' => $this->mailData['phone'],
                 'content' => $this->mailData['message']
             ];
 
