@@ -235,7 +235,7 @@ class WebsiteController extends Controller
                     'name' => $data['name'],
                     'email' => $data['email'] ?? '',
                     'phone' => $data['phone'] ?? '',
-                    'message' => 'Chỉ đăng ký nhận tin từ website',
+                    'message' => $data['message'] ?? 'Chỉ đăng ký nhận tin từ website',
                 ]);
                 
                 return response()->json(['success' => true, 'message' => 'Gửi yêu cầu thành công']);
