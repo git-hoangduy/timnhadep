@@ -20,7 +20,7 @@
                     <div class="row text-center">
                         <div class="col-6">
                             <div class="stat-item">
-                                <div class="stat-number">20+</div>
+                                <div class="stat-number">10+</div>
                                 <div class="stat-text">Năm kinh nghiệm BĐS</div>
                             </div>
                         </div>
