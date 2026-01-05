@@ -32,7 +32,7 @@ class SendContactMail implements ShouldQueue
             ];
 
             Mail::send('emails.contact', $emailData, function ($message) {
-                $message->to('duynguyen.joy@gmail.com')
+                $message->to(setting('info.email'))
                         ->subject('Yêu cầu liên hệ từ website');
 
                 $message->from(
