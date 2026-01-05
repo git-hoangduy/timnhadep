@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 
+use App\Jobs\SendContactMail;
+
 use App\Models\Contact;
 use App\Models\Page;
 use App\Models\Project;
@@ -226,47 +228,54 @@ class WebsiteController extends Controller
     }
 
     public function contact(Request $request) {
-
         if ($request->ajax()) {
             $data = $request->all();
             if (Contact::create($data)) {
-                // $this->sendMail([
-                //     'name' => $data['name'],
-                //     'email' => $data['email'] ?? '',
-                //     'message' => 'Chỉ đăng ký nhận tin từ website',
-                // ]);
+                SendContactMail::dispatch([
+                    'name' => $data['name'],
+                    'email' => $data['email'] ?? '',
+                    'message' => 'Chỉ đăng ký nhận tin từ website',
+                ]);
+                
                 return response()->json(['success' => true, 'message' => 'Gửi yêu cầu thành công']);
             }
             else{
                 return response()->json(['success' => false, 'message' => 'Đã xảy ra lỗi, xin hãy thử lại!']);
             }
         }
-
+    
         if ($request->isMethod('post')) {
             $this->validate($request, [
                 'name'    => 'required',
                 'phone'   => 'required',
                 'message'   => 'required',
-            ],);
-
+            ]);
+    
             $data = $request->all();
             if (Contact::create($data)) {
+                SendContactMail::dispatch([
+                    'name' => $data['name'],
+                    'email' => $data['email'] ?? '',
+                    'message' => $data['message'],
+                ]);
+                
                 request()->session()->flash('success', 'Gửi yêu cầu thành công');
             }
             else{
                 request()->session()->flash('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
             }
-
+    
             return redirect()->back();
         }
-
-
+    
         SEOMeta::setTitle('Liên hệ');
         OpenGraph::setTitle('Liên hệ');
         OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
-
+    
         return view('website.contact');  
     }
+    
+    // Xóa hàm sendMail cũ
 
     public function sendMail($data)
     {

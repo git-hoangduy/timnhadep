@@ -11,7 +11,7 @@
  Target Server Version : 100411
  File Encoding         : 65001
 
- Date: 20/12/2025 10:44:28
+ Date: 05/01/2026 20:47:57
 */
 
 SET NAMES utf8mb4;
@@ -58,18 +58,6 @@ CREATE TABLE `album_images`  (
 -- ----------------------------
 -- Records of album_images
 -- ----------------------------
-INSERT INTO `album_images` VALUES (16, 7, 'uploads/albums/dc0e5a81f1df487cfc8e61fc471aa0ce.jpeg', 'Ban-sao-cua-DSC00468-2048x1365.jpeg', 0, '2024-12-28 07:19:21', '2024-12-28 07:19:21');
-INSERT INTO `album_images` VALUES (17, 7, 'uploads/albums/1c6b2ca4515ce9370d4a82240cf768ed.jpeg', 'DTH02182-scaled.jpeg', 0, '2024-12-28 07:19:21', '2024-12-28 07:19:21');
-INSERT INTO `album_images` VALUES (18, 7, 'uploads/albums/23bbca5a2e7f78d052da33bcb98e9ed5.jpeg', 'DTH02243-2048x1366.jpeg', 0, '2024-12-28 07:19:21', '2024-12-28 07:19:21');
-INSERT INTO `album_images` VALUES (19, 8, 'uploads/albums/562bfaaa44f1cfcfd460d4367ea5b792.jpg', 'DSC01539-768x512.jpg', 0, '2024-12-28 07:20:32', '2024-12-28 07:20:32');
-INSERT INTO `album_images` VALUES (20, 8, 'uploads/albums/f96b5717c82f50dc1db03c612dfad1df.jpg', 'IMG_2840-768x512.jpg', 0, '2024-12-28 07:20:32', '2024-12-28 07:20:32');
-INSERT INTO `album_images` VALUES (21, 8, 'uploads/albums/14417e727a3d39274b9419c9e17d718e.jpg', 'IMG_2848-768x512.jpg', 0, '2024-12-28 07:20:32', '2024-12-28 07:20:32');
-INSERT INTO `album_images` VALUES (22, 9, 'uploads/albums/41d1284b7c393b4b0a9b1061f9f87e68.jpg', 'DSC01598.jpg', 0, '2024-12-28 07:21:12', '2024-12-28 07:21:12');
-INSERT INTO `album_images` VALUES (23, 9, 'uploads/albums/d0952d39ab9fc4e31b3e001e6ce48b72.jpg', 'DSC01615-768x512.jpg', 0, '2024-12-28 07:21:12', '2024-12-28 07:21:12');
-INSERT INTO `album_images` VALUES (24, 9, 'uploads/albums/1493c899e92dce63c8bf4f9ce39e5c90.jpg', 'DSC01636.jpg', 0, '2024-12-28 07:21:12', '2024-12-28 07:21:12');
-INSERT INTO `album_images` VALUES (25, 10, 'uploads/albums/bb816142f42a40ee368634f5934eb0d6.jpeg', 'Ban-sao-cua-DSC00468-2048x1365.jpeg', 0, '2024-12-28 07:21:44', '2024-12-28 07:21:44');
-INSERT INTO `album_images` VALUES (26, 10, 'uploads/albums/a720e5a0c907e291867c500d626a2efa.jpg', 'DSC00621.jpg', 0, '2024-12-28 07:21:44', '2024-12-28 07:21:44');
-INSERT INTO `album_images` VALUES (27, 10, 'uploads/albums/7243abc20795e0844837241f839cd41e.jpg', 'DSC00688.jpg', 0, '2024-12-28 07:21:44', '2024-12-28 07:21:44');
 
 -- ----------------------------
 -- Table structure for albums
@@ -90,10 +78,6 @@ CREATE TABLE `albums`  (
 -- ----------------------------
 -- Records of albums
 -- ----------------------------
-INSERT INTO `albums` VALUES (7, '[ALBUM-007]', 'Cơ sở vật chất tiêu chuẩn quốc tế', 'co-so-vat-chat-tieu-chuan-quoc-te', NULL, 1, '2024-12-28 07:19:21', '2024-12-28 07:19:21');
-INSERT INTO `albums` VALUES (8, '[ALBUM-008]', '100+ Dự án khám phá và sáng tạo', '100-du-an-kham-pha-va-sang-tao', NULL, 1, '2024-12-28 07:20:32', '2024-12-28 07:20:32');
-INSERT INTO `albums` VALUES (9, '[ALBUM-009]', 'Trải nghiệm ẩm thực đa vùng miền', 'trai-nghiem-am-thuc-da-vung-mien', NULL, 1, '2024-12-28 07:21:12', '2024-12-28 07:21:12');
-INSERT INTO `albums` VALUES (10, '[ALBUM-010]', 'Chú trọng sức khoẻ toàn diện cho trẻ', 'chu-trong-suc-khoe-toan-dien-cho-tre', NULL, 1, '2024-12-28 07:21:44', '2024-12-28 07:21:44');
 
 -- ----------------------------
 -- Table structure for attribute_values
@@ -177,13 +161,42 @@ CREATE TABLE `contacts`  (
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of contacts
 -- ----------------------------
-INSERT INTO `contacts` VALUES (8, 'Hoàng Duy', '0386603198', 'Tư vấn dự án Sunshine City', 'duynguyen.joy@gmail.com', '1', NULL, NULL, 0, '2025-12-19 21:04:18', '2025-12-19 21:06:42');
-INSERT INTO `contacts` VALUES (9, 'thfghgf', '0386 603 198', 'trỷt', 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-20 10:27:33', '2025-12-20 10:43:38');
+INSERT INTO `contacts` VALUES (14, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 1, '2025-12-25 21:05:18', '2025-12-25 21:10:03');
+INSERT INTO `contacts` VALUES (15, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:25:49', '2025-12-25 22:25:49');
+INSERT INTO `contacts` VALUES (16, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:25:59', '2025-12-25 22:25:59');
+INSERT INTO `contacts` VALUES (17, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:26:13', '2025-12-25 22:26:13');
+INSERT INTO `contacts` VALUES (18, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:27:25', '2025-12-25 22:27:25');
+INSERT INTO `contacts` VALUES (19, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:30:22', '2025-12-25 22:30:22');
+INSERT INTO `contacts` VALUES (20, 'đsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:30:47', '2025-12-25 22:30:47');
+INSERT INTO `contacts` VALUES (21, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:31:16', '2025-12-25 22:31:16');
+INSERT INTO `contacts` VALUES (22, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:33:14', '2025-12-25 22:33:14');
+INSERT INTO `contacts` VALUES (23, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:33:55', '2025-12-25 22:33:55');
+INSERT INTO `contacts` VALUES (24, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:34:10', '2025-12-25 22:34:10');
+INSERT INTO `contacts` VALUES (25, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:36:50', '2025-12-25 22:36:50');
+INSERT INTO `contacts` VALUES (26, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:37:54', '2025-12-25 22:37:54');
+INSERT INTO `contacts` VALUES (27, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:39:15', '2025-12-25 22:39:15');
+INSERT INTO `contacts` VALUES (28, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:40:19', '2025-12-25 22:40:19');
+INSERT INTO `contacts` VALUES (29, 'đsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:40:56', '2025-12-25 22:40:56');
+INSERT INTO `contacts` VALUES (30, 's', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:42:15', '2025-12-25 22:42:15');
+INSERT INTO `contacts` VALUES (31, 'dsadsa', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-25 22:44:30', '2025-12-25 22:44:30');
+INSERT INTO `contacts` VALUES (32, 'dsds', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 20:14:53', '2025-12-26 20:14:53');
+INSERT INTO `contacts` VALUES (33, 'dd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 20:24:31', '2025-12-26 20:24:31');
+INSERT INTO `contacts` VALUES (34, 'dd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 20:30:28', '2025-12-26 20:30:28');
+INSERT INTO `contacts` VALUES (35, 'đ', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 21:07:02', '2025-12-26 21:07:02');
+INSERT INTO `contacts` VALUES (36, 'dd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 21:08:45', '2025-12-26 21:08:45');
+INSERT INTO `contacts` VALUES (37, 'd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 21:10:13', '2025-12-26 21:10:13');
+INSERT INTO `contacts` VALUES (38, 'd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 21:12:53', '2025-12-26 21:12:53');
+INSERT INTO `contacts` VALUES (39, 'd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 21:13:30', '2025-12-26 21:13:30');
+INSERT INTO `contacts` VALUES (40, 'd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-26 21:15:18', '2025-12-26 21:15:18');
+INSERT INTO `contacts` VALUES (41, 'sadas', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2025-12-27 15:32:13', '2025-12-27 15:32:13');
+INSERT INTO `contacts` VALUES (42, 'd', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2026-01-05 20:29:59', '2026-01-05 20:29:59');
+INSERT INTO `contacts` VALUES (43, 'dsdas', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2026-01-05 20:43:53', '2026-01-05 20:43:53');
+INSERT INTO `contacts` VALUES (44, 'dsadsad', NULL, NULL, 'duynguyen.joy@gmail.com', NULL, NULL, NULL, 0, '2026-01-05 20:45:02', '2026-01-05 20:45:02');
 
 -- ----------------------------
 -- Table structure for customers
@@ -997,6 +1010,26 @@ INSERT INTO `footers` VALUES (4, 'Hệ thống Candles Kids', '<p class=\"h4 mb-
 INSERT INTO `footers` VALUES (5, 'Liên kết', '<p class=\"h4 mb-1 heading-font strong\"><span style=\"font-size: 14px;\">Busy Bees UK</span></p>\r\n<p class=\"h4 mb-1 heading-font strong\"><span style=\"font-size: 14px;\">Busy Bees Global</span></p>\r\n<p class=\"h4 mb-1 heading-font strong\"><span style=\"font-size: 14px;\">Busy Bees Asia</span></p>\r\n<p class=\"h4 mb-1 heading-font strong\"><span style=\"font-size: 14px;\">Busy Bees Global Preschool</span></p>\r\n<p class=\"h4 mb-1 heading-font strong\"><span style=\"font-size: 14px;\">Điều khoản sử dụng</span></p>\r\n<p class=\"h4 mb-1 heading-font strong\"><span style=\"font-size: 14px;\">Ch&iacute;nh s&aacute;ch bảo mật</span></p>', 1, '2024-12-22 21:21:11', '2024-12-26 21:16:53');
 
 -- ----------------------------
+-- Table structure for jobs
+-- ----------------------------
+DROP TABLE IF EXISTS `jobs`;
+CREATE TABLE `jobs`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `queue` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempts` tinyint UNSIGNED NOT NULL,
+  `reserved_at` int UNSIGNED NULL DEFAULT NULL,
+  `available_at` int UNSIGNED NOT NULL,
+  `created_at` int UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `jobs_queue_index`(`queue` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of jobs
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for listing_categories
 -- ----------------------------
 DROP TABLE IF EXISTS `listing_categories`;
@@ -1040,7 +1073,7 @@ CREATE TABLE `listing_images`  (
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of listing_images
@@ -1077,11 +1110,12 @@ CREATE TABLE `listings`  (
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of listings
 -- ----------------------------
+INSERT INTO `listings` VALUES (24, 36, 'sale', 'Xu hướng thị trường bất động sản 2023: Cơ hội cho nhà đầu tư', 'xu-huong-thi-truong-bat-dong-san-2023-co-hoi-cho-nha-dau-tu', NULL, '88', '<p>88</p>', '344432', '33223', '3223', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2025-12-20 14:26:41', '2025-12-20 14:26:41', '2025-12-20 14:37:53');
 
 -- ----------------------------
 -- Table structure for migrations
@@ -1092,7 +1126,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -1105,6 +1139,7 @@ INSERT INTO `migrations` VALUES (5, '2018_12_23_120000_create_shoppingcart_table
 INSERT INTO `migrations` VALUES (6, '2020_01_01_000001_create_provinces_table', 2);
 INSERT INTO `migrations` VALUES (7, '2020_01_01_000002_create_districts_table', 2);
 INSERT INTO `migrations` VALUES (8, '2020_01_01_000003_create_wards_table', 2);
+INSERT INTO `migrations` VALUES (9, '2026_01_05_203410_create_jobs_table', 3);
 
 -- ----------------------------
 -- Table structure for page_blocks
@@ -1307,7 +1342,6 @@ CREATE TABLE `posts`  (
 -- ----------------------------
 -- Records of posts
 -- ----------------------------
-INSERT INTO `posts` VALUES (18, 31, 'Xu hướng thị trường bất động sản 2023: Cơ hội cho nhà đầu tư', 'xu-huong-thi-truong-bat-dong-san-2023-co-hoi-cho-nha-dau-tu', 'uploads/posts/85a40e9eefc1314a4aacb77877d52be3.avif', 'Thị trường bất động sản năm 2023 có nhiều biến động với sự điều chỉnh về giá và nhu cầu. Các chuyên gia nhận định đây là cơ hội tốt cho nhà đầu tư dài hạn...', '<h2>Tổng quan thị trường 2023</h2>\r\n<p>Năm 2023, thị trường bất động sản Việt Nam tiếp tục đối mặt với nhiều th&aacute;ch thức từ bối cảnh kinh tế vĩ m&ocirc;. Tuy nhi&ecirc;n, đ&acirc;y cũng l&agrave; năm đ&aacute;nh dấu sự điều chỉnh t&iacute;ch cực v&agrave; h&igrave;nh th&agrave;nh xu hướng mới.</p>\r\n<p>Theo b&aacute;o c&aacute;o của Bộ X&acirc;y dựng, tổng cung bất động sản trong 9 th&aacute;ng đầu năm giảm khoảng 30% so với c&ugrave;ng kỳ năm ngo&aacute;i. Tuy nhi&ecirc;n, thanh khoản thị trường đang c&oacute; dấu hiệu phục hồi từ qu&yacute; III/2023.</p>\r\n<p><img src=\"https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80\" alt=\"Ph&acirc;n t&iacute;ch thị trường\" /></p>\r\n<h2>Xu hướng nổi bật</h2>\r\n<h3>1. Ph&acirc;n kh&uacute;c căn hộ chung cư trung v&agrave; cao cấp</h3>\r\n<p>Ph&acirc;n kh&uacute;c căn hộ chung cư tiếp tục dẫn đầu thị trường với sức h&uacute;t từ c&aacute;c dự &aacute;n c&oacute; vị tr&iacute; đắc địa v&agrave; tiện &iacute;ch đồng bộ. C&aacute;c dự &aacute;n tại Quận 2, Quận 7 TP.HCM v&agrave; khu vực ph&iacute;a T&acirc;y H&agrave; Nội đang thu h&uacute;t sự quan t&acirc;m lớn.</p>\r\n<h3>2. Bất động sản c&ocirc;ng nghiệp</h3>\r\n<p>Lĩnh vực bất động sản c&ocirc;ng nghiệp tiếp tục tăng trưởng mạnh nhờ l&agrave;n s&oacute;ng đầu tư FDI. C&aacute;c khu c&ocirc;ng nghiệp tại B&igrave;nh Dương, Đồng Nai, Long An l&agrave; điểm n&oacute;ng thu h&uacute;t nh&agrave; đầu tư.</p>\r\n<h3>3. Bất động sản nghỉ dưỡng</h3>\r\n<p>Sau đại dịch, nhu cầu về bất động sản nghỉ dưỡng tăng mạnh. C&aacute;c tỉnh ven biển như Kh&aacute;nh H&ograve;a, B&agrave; Rịa - Vũng T&agrave;u, Quảng Ninh tiếp tục l&agrave; thị trường tiềm năng.</p>\r\n<blockquote>\"Năm 2023 được xem l&agrave; thời điểm tốt để đầu tư d&agrave;i hạn v&agrave;o bất động sản. Nh&agrave; đầu tư cần t&igrave;m hiểu kỹ v&agrave; lựa chọn sản phẩm c&oacute; tiềm năng tăng trưởng thực.\"</blockquote>\r\n<h2>Cơ hội cho nh&agrave; đầu tư</h2>\r\n<p><strong>1. Gi&aacute; điều chỉnh, cơ hội mua v&agrave;o tốt</strong><br />Sau giai đoạn tăng n&oacute;ng, nhiều ph&acirc;n kh&uacute;c đ&atilde; điều chỉnh gi&aacute; từ 10-20%. Đ&acirc;y l&agrave; cơ hội để nh&agrave; đầu tư mua v&agrave;o với mức gi&aacute; hợp l&yacute;.</p>\r\n<p><strong>2. Ch&iacute;nh s&aacute;ch hỗ trợ từ Ch&iacute;nh phủ</strong><br />G&oacute;i t&iacute;n dụng 120.000 tỷ đồng cho nh&agrave; ở x&atilde; hội v&agrave; c&aacute;c ch&iacute;nh s&aacute;ch hỗ trợ kh&aacute;c đang tạo động lực cho thị trường.</p>\r\n<p><strong>3. Xu hướng ph&aacute;t triển bền vững</strong><br />C&aacute;c dự &aacute;n xanh, th&acirc;n thiện với m&ocirc;i trường đang trở th&agrave;nh xu hướng v&agrave; c&oacute; tiềm năng tăng trưởng tốt.</p>\r\n<h2>Lời khuy&ecirc;n cho nh&agrave; đầu tư</h2>\r\n<ul>\r\n<li><strong>Nghi&ecirc;n cứu kỹ thị trường:</strong>&nbsp;Hiểu r&otilde; ph&acirc;n kh&uacute;c, vị tr&iacute; v&agrave; tiềm năng ph&aacute;t triển</li>\r\n<li><strong>Đầu tư d&agrave;i hạn:</strong>&nbsp;Bất động sản l&agrave; k&ecirc;nh đầu tư d&agrave;i hạn, cần ki&ecirc;n nhẫn</li>\r\n<li><strong>Ch&uacute; trọng ph&aacute;p l&yacute;:</strong>&nbsp;Đảm bảo t&iacute;nh ph&aacute;p l&yacute; minh bạch trước khi quyết định</li>\r\n<li><strong>Đa dạng h&oacute;a danh mục:</strong>&nbsp;Ph&acirc;n bổ vốn v&agrave;o nhiều ph&acirc;n kh&uacute;c để giảm rủi ro</li>\r\n<li><strong>Lựa chọn đối t&aacute;c uy t&iacute;n:</strong>&nbsp;L&agrave;m việc với c&aacute;c chủ đầu tư v&agrave; m&ocirc;i giới c&oacute; uy t&iacute;n</li>\r\n</ul>', NULL, NULL, 1, 1, '2025-12-15 20:22:45', '2025-12-15 20:22:45', '2025-12-18 22:05:41');
 
 -- ----------------------------
 -- Table structure for project_blocks
@@ -1322,13 +1356,15 @@ CREATE TABLE `project_blocks`  (
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of project_blocks
 -- ----------------------------
-INSERT INTO `project_blocks` VALUES (3, 3, 'Tổng quang', NULL, '<p>1111</p>', '2025-12-18 21:35:35', '2025-12-18 21:35:35');
-INSERT INTO `project_blocks` VALUES (4, 2, 'Tổng quang', NULL, '<p><strong>Sunshine City</strong> l&agrave; khu đ&ocirc; thị sinh th&aacute;i th&ocirc;ng minh đầu ti&ecirc;n tại TP.HCM, được ph&aacute;t triển bởi Tập đo&agrave;n Sunshine Group với tổng vốn đầu tư hơn 5.000 tỷ đồng. Dự &aacute;n tọa lạc tại vị tr&iacute; v&agrave;ng Quận 7, th&agrave;nh phố Hồ Ch&iacute; Minh.</p>\r\n<p>Với diện t&iacute;ch tổng thể 20 hecta, Sunshine City được thiết kế theo m&ocirc; h&igrave;nh \"th&agrave;nh phố trong th&agrave;nh phố\" với đầy đủ tiện &iacute;ch nội khu.</p>\r\n<div class=\"stats-grid\">\r\n<div class=\"stat-item\">\r\n<div class=\"stat-number\">20</div>\r\n<div class=\"stat-label\">Diện t&iacute;ch tổng thể</div>\r\n</div>\r\n<div class=\"stat-item\">\r\n<div class=\"stat-number\">3</div>\r\n<div class=\"stat-label\">Căn hộ &amp; biệt thự</div>\r\n</div>\r\n<div class=\"stat-item\">\r\n<div class=\"stat-number\">15</div>\r\n<div class=\"stat-label\">T&ograve;a căn hộ</div>\r\n</div>\r\n<div class=\"stat-item\">\r\n<div class=\"stat-number\">40</div>\r\n<div class=\"stat-label\">Mật độ x&acirc;y dựng</div>\r\n</div>\r\n</div>\r\n<h3>Thiết kế kiến tr&uacute;c độc đ&aacute;o</h3>\r\n<p>Sunshine City được thiết kế bởi kiến tr&uacute;c sư nổi tiếng người Singapore - &ocirc;ng Richard Hassell, với concept \"Living in Nature\" - sống h&agrave;i h&ograve;a với thi&ecirc;n nhi&ecirc;n. C&aacute;c t&ograve;a nh&agrave; được bố tr&iacute; th&ocirc;ng minh để tối ưu h&oacute;a &aacute;nh s&aacute;ng tự nhi&ecirc;n v&agrave; th&ocirc;ng gi&oacute;.</p>\r\n<div class=\"content-gallery\">\r\n<div class=\"gallery-item\"><img src=\"https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=80\" alt=\"Kiến tr&uacute;c hiện đại\" />\r\n<div class=\"gallery-caption\">\r\n<h5>Kiến tr&uacute;c hiện đại</h5>\r\n<p>Thiết kế tối ưu &aacute;nh s&aacute;ng</p>\r\n</div>\r\n</div>\r\n<div class=\"gallery-item\"><img src=\"https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=80\" alt=\"Kh&ocirc;ng gian xanh\" />\r\n<div class=\"gallery-caption\">\r\n<h5>Kh&ocirc;ng gian xanh</h5>\r\n<p>H&agrave;i h&ograve;a với thi&ecirc;n nhi&ecirc;n</p>\r\n</div>\r\n</div>\r\n<div class=\"gallery-item\"><img src=\"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;q=80\" alt=\"View to&agrave;n cảnh\" />\r\n<div class=\"gallery-caption\">\r\n<h5>View to&agrave;n cảnh</h5>\r\n<p>Tầm nh&igrave;n th&agrave;nh phố</p>\r\n</div>\r\n</div>\r\n</div>\r\n<!-- Simple Gallery Component -->\r\n<p>[ALBUM-010]</p>', '2025-12-20 08:39:42', '2025-12-20 09:51:38');
+INSERT INTO `project_blocks` VALUES (6, 7, NULL, 'uploads/projects/080133cd6324e61bfd237df01ad17b4f.jpg', '<div class=\"tinymce-content\">\r\n<h3>Thiết kế kiến tr&uacute;c độc đ&aacute;o</h3>\r\n<p>Sunshine City được thiết kế bởi kiến tr&uacute;c sư nổi tiếng người Singapore - &ocirc;ng Richard Hassell, với concept \"Living in Nature\" - sống h&agrave;i h&ograve;a với thi&ecirc;n nhi&ecirc;n. C&aacute;c t&ograve;a nh&agrave; được bố tr&iacute; th&ocirc;ng minh để tối ưu h&oacute;a &aacute;nh s&aacute;ng tự nhi&ecirc;n v&agrave; th&ocirc;ng gi&oacute;.</p>\r\n<p></p>\r\n<div class=\"tinymce-content\">\r\n<h3>5 ph&acirc;n khu chức năng</h3>\r\n<ul>\r\n<li><strong>Khu căn hộ cao cấp</strong> (15 t&ograve;a nh&agrave;, 32 tầng)</li>\r\n<li><strong>Khu biệt thự song lập v&agrave; đơn lập</strong></li>\r\n<li><strong>Khu phức hợp thương mại - văn ph&ograve;ng</strong></li>\r\n<li><strong>Khu tiện &iacute;ch c&ocirc;ng cộng</strong></li>\r\n<li><strong>Khu c&ocirc;ng vi&ecirc;n v&agrave; hồ điều h&ograve;a</strong></li>\r\n</ul>\r\n</div>\r\n<p>&nbsp;</p>\r\n</div>\r\n<p>&nbsp;</p>\r\n<table style=\"border-collapse: collapse; width: 99.9666%; height: 57.6px; border-color: #E03E2D; border-style: dotted;\" border=\"1\" cellpadding=\"10\">\r\n<tbody>\r\n<tr style=\"height: 28.8px;\">\r\n<td style=\"width: 49.7496%; height: 28.8px;\">1</td>\r\n<td style=\"width: 49.7496%; height: 28.8px;\">2</td>\r\n</tr>\r\n<tr style=\"height: 28.8px;\">\r\n<td style=\"width: 49.7496%; height: 28.8px;\">3</td>\r\n<td style=\"width: 49.7496%; height: 28.8px;\">4</td>\r\n</tr>\r\n</tbody>\r\n</table>', '2025-12-20 14:51:28', '2025-12-28 08:12:06');
+INSERT INTO `project_blocks` VALUES (7, 7, 'gyyt', NULL, '<div class=\"tinymce-content\">\r\n<div class=\"content-grid\" style=\"grid-template-columns: repeat(4, 1fr);\">\r\n<div class=\"grid-item\">\r\n<div class=\"transport-icon\">&nbsp;</div>\r\n<div class=\"transport-content\">\r\n<h4>Metro số 4</h4>\r\n<p>Ga Metro ngay cổng ch&iacute;nh dự &aacute;n, kết nối nhanh đến trung t&acirc;m th&agrave;nh phố</p>\r\n</div>\r\n</div>\r\n<div class=\"grid-item\">\r\n<div class=\"transport-icon\">&nbsp;</div>\r\n<div class=\"transport-content\">\r\n<h4>Đường v&agrave;nh đai 2</h4>\r\n<p>Tiếp gi&aacute;p đường v&agrave;nh đai 2, di chuyển đến c&aacute;c quận trung t&acirc;m trong 10 ph&uacute;t</p>\r\n</div>\r\n</div>\r\n<div class=\"grid-item\">\r\n<div class=\"transport-icon\">&nbsp;</div>\r\n<div class=\"transport-content\">\r\n<h4>S&acirc;n bay T&acirc;n Sơn Nhất</h4>\r\n<p>Chỉ 15 ph&uacute;t di chuyển đến s&acirc;n bay quốc tế T&acirc;n Sơn Nhất</p>\r\n</div>\r\n</div>\r\n<div class=\"grid-item\">\r\n<div class=\"transport-icon\">&nbsp;</div>\r\n<div class=\"transport-content\">\r\n<h4>Cảng Hi-Tech</h4>\r\n<p>Tiếp cận cảng c&ocirc;ng nghệ cao chỉ trong 8 ph&uacute;t</p>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n<p>&nbsp;</p>', '2025-12-20 14:51:28', '2025-12-20 14:51:28');
+INSERT INTO `project_blocks` VALUES (8, 8, NULL, 'uploads/projects/f2eda0e3f334868f45548153a274caef.png', '<div class=\"tinymce-content\">\r\n<h3>Thiết kế kiến tr&uacute;c độc đ&aacute;o</h3>\r\n<p>Sunshine City được thiết kế bởi kiến tr&uacute;c sư nổi tiếng người Singapore - &ocirc;ng Richard Hassell, với concept \"Living in Nature\" - sống h&agrave;i h&ograve;a với thi&ecirc;n nhi&ecirc;n. C&aacute;c t&ograve;a nh&agrave; được bố tr&iacute; th&ocirc;ng minh để tối ưu h&oacute;a &aacute;nh s&aacute;ng tự nhi&ecirc;n v&agrave; th&ocirc;ng gi&oacute;.</p>\r\n</div>\r\n<p>&nbsp;</p>', '2025-12-24 19:39:06', '2025-12-28 08:10:54');
+INSERT INTO `project_blocks` VALUES (9, 8, NULL, NULL, NULL, '2025-12-24 19:51:08', '2025-12-24 19:51:22');
 
 -- ----------------------------
 -- Table structure for project_categories
@@ -1364,7 +1400,7 @@ CREATE TABLE `project_images`  (
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of project_images
@@ -1396,14 +1432,13 @@ CREATE TABLE `projects`  (
   `created_at` datetime NULL DEFAULT NULL,
   `updated_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of projects
 -- ----------------------------
-INSERT INTO `projects` VALUES (2, NULL, 'Sunshine City', 'Khu đô thị sinh thái', 'uploads/projects/a104bdb93279f522dd371246b9669f42.png', 'Quận 7, TP. Hồ Chí Minh', '12.5 - 25 tỷ VNĐ', 'sunshine-city', NULL, 'Khu đô thị hiện đại với đầy đủ tiện ích: trường học quốc tế, bệnh viện, trung tâm thương mại, công viên 10ha.', NULL, NULL, NULL, 1, 0, '2025-12-15 19:28:42', '2025-12-19 20:40:59');
-INSERT INTO `projects` VALUES (3, NULL, 'Golden River', NULL, NULL, 'Quận 1, TP. Hồ Chí Minh', '25 - 50 tỷ VNĐ', 'golden-river', NULL, 'Căn hộ cao cấp với view sông Sài Gòn, thiết kế sang trọng, nội thất nhập khẩu từ Ý, hệ thống an ninh 24/7.', NULL, NULL, NULL, 1, 0, '2025-12-15 20:10:52', '2025-12-18 21:26:48');
-INSERT INTO `projects` VALUES (4, NULL, 'Eco Lake - Khu đô thị sinh thái hồ nước', '35', NULL, 'Quận 2, TP. Hồ Chí Minh', '15 - 35 tỷ VNĐ', 'eco-lake-khu-do-thi-sinh-thai-ho-nuoc', NULL, 'Khu đô thị sinh thái với không gian xanh, hồ nước nhân tạo rộng 3ha, công viên 5ha và khu vui chơi trẻ em.', NULL, NULL, NULL, 1, 0, '2025-12-15 20:16:30', '2025-12-19 20:16:49');
+INSERT INTO `projects` VALUES (7, NULL, 'uu', NULL, NULL, NULL, NULL, 'uu', NULL, NULL, NULL, NULL, NULL, 1, 1, '2025-12-20 14:00:59', '2025-12-24 19:34:52');
+INSERT INTO `projects` VALUES (8, NULL, 'poop', NULL, NULL, NULL, NULL, 'poop', NULL, NULL, NULL, NULL, NULL, 1, 1, '2025-12-24 19:39:06', '2025-12-24 19:39:06');
 
 -- ----------------------------
 -- Table structure for provinces
@@ -1533,11 +1568,11 @@ INSERT INTO `settings` VALUES (17, 'social', 'social.instagram', 'https://timnha
 INSERT INTO `settings` VALUES (18, 'social', 'social.twitter', '09009090');
 INSERT INTO `settings` VALUES (19, 'seo', 'seo.meta_keywords', 'Meta Keywords');
 INSERT INTO `settings` VALUES (20, 'seo', 'seo.meta_description', 'Meta Description');
-INSERT INTO `settings` VALUES (23, 'seo', 'seo.ogimage', 'uploads/settings/8b466e5b1a2655c4a7bab8939f813698.jpg');
-INSERT INTO `settings` VALUES (24, 'info', 'info.logo', 'uploads/settings/ff018a896c8fb3cf8e79332f92bc67e8.png');
+INSERT INTO `settings` VALUES (23, 'seo', 'seo.ogimage', 'uploads/settings/33c3f25354f4b8d598553f9f98987ff5.png');
+INSERT INTO `settings` VALUES (24, 'info', 'info.logo', 'uploads/settings/80efb61b393c0f73ea99158a2db8f564.png');
 INSERT INTO `settings` VALUES (25, 'social', 'social.zalo', '0943723986');
 INSERT INTO `settings` VALUES (26, 'info', 'info.copyright', '© 2023 Tìm Nhà Đẹp. Tất cả các quyền được bảo lưu.');
-INSERT INTO `settings` VALUES (27, 'info', 'info.shortcut', 'uploads/settings/831624b0fc62d0afc65abb86f63c3287.png');
+INSERT INTO `settings` VALUES (27, 'info', 'info.shortcut', 'uploads/settings/7cefdcbfd023f9c04dedd7753f080997.png');
 INSERT INTO `settings` VALUES (28, 'info', 'info.description', 'Kênh bất động sản số 1 Việt Nam, kết nối người mua và người bán, cung cấp thông tin dự án chính xác và đầy đủ nhất.');
 INSERT INTO `settings` VALUES (29, 'info', 'info.time', 'Thứ 2 - CN: 8:00 - 20:00');
 
