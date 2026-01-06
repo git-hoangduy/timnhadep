@@ -88,7 +88,8 @@ a {
     padding: 8px 16px !important;
     margin: 0 3px;
     text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    font-size: 0.95rem;
+    /* font-size: 0.95rem; */
+    font-size: 14px;
 }
 
 .navbar-transparent .nav-link::after {
