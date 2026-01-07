@@ -228,8 +228,21 @@ class WebsiteController extends Controller
     }
 
     public function contact(Request $request) {
+
         if ($request->ajax()) {
-            $data = $request->all();
+
+            $request->validate([
+                'name' => [
+                    'required',
+                    'string',
+                    'max:100',
+                    'regex:/^[\p{L}\s\'\-.]+$/u'
+                ],
+                // 'phone' => 'required|regex:/^[0-9]{10,11}$/',
+                'email' => 'required|email|max:255',
+            ]);
+            
+            $data = $request->except(['honeypot', 'recaptcha_token']);
             if (Contact::create($data)) {
                 SendContactMail::dispatch([
                     'name' => $data['name'],
@@ -246,19 +259,24 @@ class WebsiteController extends Controller
         }
     
         if ($request->isMethod('post')) {
-            $this->validate($request, [
-                'name'    => 'required',
-                'phone'   => 'required',
-                'message'   => 'required',
+
+            $request->merge([
+                'phone' => str_replace(' ', '', $request->phone)
+            ]);
+            
+            $request->validate([
+                'name' => 'required|string|max:100|regex:/^[\p{L}\s\'\-.]+$/u',
+                'phone' => 'required|regex:/^[0-9]{10,11}$/',
+                'email' => 'required|email|max:255',
             ]);
     
-            $data = $request->all();
+            $data = $request->except(['honeypot', 'recaptcha_token']);
             if (Contact::create($data)) {
                 SendContactMail::dispatch([
                     'name' => $data['name'],
                     'email' => $data['email'] ?? '',
                     'phone' => $data['phone'] ?? '',
-                    'message' => $data['message'],
+                    'message' => $data['message'] ?? '',
                 ]);
                 
                 request()->session()->flash('success', 'Gửi yêu cầu thành công');

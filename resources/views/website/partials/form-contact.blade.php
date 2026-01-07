@@ -7,13 +7,14 @@
                     <p class="mb-4">Nhận thông tin mới nhất về dự án bất động sản, tin tức thị trường và ưu đãi đặc biệt từ Nhà Đẹp</p>
                     
                     <div class="newsletter-form animate-on-scroll">
-                        <form id="subscribeForm" class="row g-3 justify-content-center" action="{{ route('contact') }}" method="POST">
+                        <form id="subscribeForm" class="row g-3 justify-content-center" action="{{ route('contact') }}" method="POST" class="need-recaptcha">
                             @csrf
+                            <input type="hidden" name="honeypot" style="display:none;">
                             <div class="col-md-5">
-                                <input type="text" class="form-control form-control-lg" placeholder="Họ và tên của bạn" required>
+                                <input type="text" name="name" class="form-control form-control-lg" placeholder="Họ và tên của bạn" required>
                             </div>
                             <div class="col-md-5">
-                                <input type="email" class="form-control form-control-lg" placeholder="Địa chỉ email" required>
+                                <input type="email" name="email" class="form-control form-control-lg" placeholder="Địa chỉ email" required>
                             </div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary btn-lg w-100 px-2">Đăng ký</button>

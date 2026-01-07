@@ -190,6 +190,7 @@
                         <div class="newsletter-form animate-on-scroll">
                             <form id="subscribeForm" method="POST" action="{{ route('contact') }}" class="row g-3 justify-content-center">
                                 @csrf
+                                <input type="hidden" name="honeypot" style="display:none;">
                                 <!-- Hidden field for project name -->
                                 <input type="hidden" name="message" value="Tư vấn dự án {{ $project->name }}">
                                 

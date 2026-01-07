@@ -210,8 +210,34 @@
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+     <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
     <script>
+        
+        function attachRecaptcha(form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
 
+                grecaptcha.ready(() => {
+                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {
+                        action: 'submit'
+                    }).then(token => {
+                        let input = form.querySelector('input[name="recaptcha_token"]');
+                        if (!input) {
+                            input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'recaptcha_token';
+                            form.appendChild(input);
+                        }
+                        input.value = token;
+                        form.submit();
+                    });
+                });
+            });
+        }
+
+        document.querySelectorAll('form.need-recaptcha').forEach(form => {
+            attachRecaptcha(form);
+        });
 
         $.ajaxSetup({
             headers: {

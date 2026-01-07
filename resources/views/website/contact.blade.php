@@ -100,7 +100,7 @@
                     
                     <form action="{{ route('contact') }}" method="POST">
                         @csrf
-                        
+                        <input type="hidden" name="honeypot" style="display:none;">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>

@@ -99,7 +99,9 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () 
 // Frontend routes
 Route::get('sitemap.xml', [WebsiteController::class, 'sitemap']);
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
-Route::match(['get', 'post'], '/lien-he', [WebsiteController::class, 'contact'])->name('contact');
+// Route::match(['get', 'post'], '/lien-he', [WebsiteController::class, 'contact'])->name('contact');
+Route::get('/lien-he', [WebsiteController::class, 'contact'])->name('contact');
+Route::post('/lien-he', [WebsiteController::class, 'contact'])->name('contact')->middleware('recaptcha');
 Route::get('/gioi-thieu', [WebsiteController::class, 'about'])->name('about');
 Route::get('/trang/{slug}', [WebsiteController::class, 'page'])->name('page');
 Route::get('/danh-muc-bai-viet/{slug?}', [WebsiteController::class, 'post'])->name('post');
