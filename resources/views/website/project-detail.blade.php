@@ -301,8 +301,34 @@
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/js/glightbox.min.js"></script>
-    
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
     <script>
+
+        function attachRecaptcha(form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                grecaptcha.ready(() => {
+                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {
+                        action: 'submit'
+                    }).then(token => {
+                        let input = form.querySelector('input[name="recaptcha_token"]');
+                        if (!input) {
+                            input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'recaptcha_token';
+                            form.appendChild(input);
+                        }
+                        input.value = token;
+                        form.submit();
+                    });
+                });
+            });
+        }
+
+        document.querySelectorAll('form.need-recaptcha').forEach(form => {
+            attachRecaptcha(form);
+        });
+
         // ========== INITIALIZATIONS ==========
         const lightbox = GLightbox({
             touchNavigation: true,
@@ -533,123 +559,226 @@
         });
 
         // ========== NEWSLETTER FORM ==========
-        document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
-            e.preventDefault();
+        // document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
+        //     e.preventDefault();
             
-            // Validate form
-            const name = this.querySelector('input[name="name"]').value;
-            const phone = this.querySelector('input[name="phone"]').value;
-            const email = this.querySelector('input[name="email"]').value;
-            const agreeTerms = document.getElementById('agreeTerms').checked;
+        //     // Validate form
+        //     const name = this.querySelector('input[name="name"]').value;
+        //     const phone = this.querySelector('input[name="phone"]').value;
+        //     const email = this.querySelector('input[name="email"]').value;
+        //     const agreeTerms = document.getElementById('agreeTerms').checked;
             
-            if (!name || !phone || !email) {
-                alert('Vui lòng điền đầy đủ thông tin');
-                return;
-            }
+        //     if (!name || !phone || !email) {
+        //         alert('Vui lòng điền đầy đủ thông tin');
+        //         return;
+        //     }
             
-            if (!agreeTerms) {
-                alert('Vui lòng đồng ý với điều khoản nhận thông tin');
-                return;
-            }
+        //     if (!agreeTerms) {
+        //         alert('Vui lòng đồng ý với điều khoản nhận thông tin');
+        //         return;
+        //     }
             
-            // Phone validation (Vietnamese phone number)
-            const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
-            if (!phoneRegex.test(phone)) {
-                alert('Vui lòng nhập số điện thoại hợp lệ');
-                return;
-            }
+        //     // Phone validation (Vietnamese phone number)
+        //     const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+        //     if (!phoneRegex.test(phone)) {
+        //         alert('Vui lòng nhập số điện thoại hợp lệ');
+        //         return;
+        //     }
             
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Vui lòng nhập email hợp lệ');
-                return;
-            }
+        //     // Email validation
+        //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //     if (!emailRegex.test(email)) {
+        //         alert('Vui lòng nhập email hợp lệ');
+        //         return;
+        //     }
             
-            // Loading effect
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
-            submitBtn.disabled = true;
+        //     // Loading effect
+        //     const submitBtn = this.querySelector('button[type="submit"]');
+        //     const originalText = submitBtn.innerHTML;
+        //     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+        //     submitBtn.disabled = true;
             
-            // Submit form via AJAX
-            const formData = new FormData(this);
+        //     // Submit form via AJAX
+        //     const formData = new FormData(this);
             
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.redirected) {
-                    // If redirected (Laravel's redirect back)
-                    return response.text().then(html => {
-                        // Create a temporary div to parse the HTML
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = html;
+        //     fetch(this.action, {
+        //         method: 'POST',
+        //         body: formData,
+        //         headers: {
+        //             'X-Requested-With': 'XMLHttpRequest',
+        //             'Accept': 'application/json'
+        //         }
+        //     })
+        //     .then(response => {
+        //         if (response.redirected) {
+        //             // If redirected (Laravel's redirect back)
+        //             return response.text().then(html => {
+        //                 // Create a temporary div to parse the HTML
+        //                 const tempDiv = document.createElement('div');
+        //                 tempDiv.innerHTML = html;
                         
-                        // Look for success/error messages in the response
-                        const successMsg = tempDiv.querySelector('.alert-success');
-                        const errorMsg = tempDiv.querySelector('.alert-error') || tempDiv.querySelector('.alert-danger');
+        //                 // Look for success/error messages in the response
+        //                 const successMsg = tempDiv.querySelector('.alert-success');
+        //                 const errorMsg = tempDiv.querySelector('.alert-error') || tempDiv.querySelector('.alert-danger');
                         
-                        if (successMsg) {
-                            showMessage('success', successMsg.textContent.trim());
-                        } else if (errorMsg) {
-                            showMessage('error', errorMsg.textContent.trim());
-                        } else {
-                            showMessage('success', 'Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ lại sớm.');
+        //                 if (successMsg) {
+        //                     showMessage('success', successMsg.textContent.trim());
+        //                 } else if (errorMsg) {
+        //                     showMessage('error', errorMsg.textContent.trim());
+        //                 } else {
+        //                     showMessage('success', 'Gửi yêu cầu thành công! Chúng tôi sẽ liên hệ lại sớm.');
+        //                 }
+                        
+        //                 // Reset form
+        //                 this.reset();
+        //                 document.getElementById('agreeTerms').checked = true;
+        //             });
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         if (data && data.message) {
+        //             showMessage('success', data.message);
+        //             this.reset();
+        //             document.getElementById('agreeTerms').checked = true;
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //         showMessage('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
+        //     })
+        //     .finally(() => {
+        //         // Reset button
+        //         submitBtn.innerHTML = originalText;
+        //         submitBtn.disabled = false;
+        //     });
+            
+        //     function showMessage(type, text) {
+        //         // Remove existing messages
+        //         const existingMsg = document.querySelector('.form-message');
+        //         if (existingMsg) existingMsg.remove();
+                
+        //         // Create message element
+        //         const messageDiv = document.createElement('div');
+        //         messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} mt-3 form-message`;
+        //         messageDiv.innerHTML = `
+        //             <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+        //             ${text}
+        //         `;
+                
+        //         // Insert after form
+        //         const form = document.getElementById('subscribeForm');
+        //         form.parentNode.insertBefore(messageDiv, form.nextSibling);
+                
+        //         // Auto remove after 5 seconds
+        //         setTimeout(() => {
+        //             messageDiv.remove();
+        //         }, 5000);
+        //     }
+        // });
+        document.getElementById('subscribeForm')?.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = this;
+
+    // ===== VALIDATE (GIỮ NGUYÊN) =====
+    const name = form.querySelector('input[name="name"]').value;
+    const phone = form.querySelector('input[name="phone"]').value;
+    const email = form.querySelector('input[name="email"]').value;
+    const agreeTerms = document.getElementById('agreeTerms').checked;
+
+    if (!name || !phone || !email) {
+        alert('Vui lòng điền đầy đủ thông tin');
+        return;
+    }
+
+    if (!agreeTerms) {
+        alert('Vui lòng đồng ý với điều khoản nhận thông tin');
+        return;
+    }
+
+    const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+    if (!phoneRegex.test(phone)) {
+        alert('Vui lòng nhập số điện thoại hợp lệ');
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Vui lòng nhập email hợp lệ');
+        return;
+    }
+
+    // ===== UI LOADING =====
+    const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+        submitBtn.disabled = true;
+
+        // ===== reCAPTCHA v3 =====
+        grecaptcha.ready(() => {
+            grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'subscribe' })
+                .then(token => {
+                    const formData = new FormData(form);
+
+                    // 👉 FIELD BẠN YÊU CẦU
+                    formData.append('recaptcha_token', token);
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
                         }
-                        
-                        // Reset form
-                        this.reset();
-                        document.getElementById('agreeTerms').checked = true;
+                    })
+                    .then(response => {
+                        if (response.status === 429) {
+                            throw new Error('Bạn thao tác quá nhanh, vui lòng thử lại sau');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            showMessage('success', data.message || 'Gửi yêu cầu thành công!');
+                            form.reset();
+                            document.getElementById('agreeTerms').checked = true;
+                        } else {
+                            showMessage('error', data.message || 'Không thể gửi yêu cầu');
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        showMessage('error', error.message || 'Đã xảy ra lỗi, vui lòng thử lại');
+                    })
+                    .finally(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
                     });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data && data.message) {
-                    showMessage('success', data.message);
-                    this.reset();
-                    document.getElementById('agreeTerms').checked = true;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showMessage('error', 'Đã xảy ra lỗi, xin hãy thử lại!');
-            })
-            .finally(() => {
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            });
-            
-            function showMessage(type, text) {
-                // Remove existing messages
-                const existingMsg = document.querySelector('.form-message');
-                if (existingMsg) existingMsg.remove();
-                
-                // Create message element
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} mt-3 form-message`;
-                messageDiv.innerHTML = `
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
-                    ${text}
-                `;
-                
-                // Insert after form
-                const form = document.getElementById('subscribeForm');
-                form.parentNode.insertBefore(messageDiv, form.nextSibling);
-                
-                // Auto remove after 5 seconds
-                setTimeout(() => {
-                    messageDiv.remove();
-                }, 5000);
-            }
+                })
+                .catch(() => {
+                    showMessage('error', 'Không thể xác thực reCAPTCHA');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
         });
+
+        function showMessage(type, text) {
+            const existingMsg = document.querySelector('.form-message');
+            if (existingMsg) existingMsg.remove();
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} mt-3 form-message`;
+            messageDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+                ${text}
+            `;
+
+            form.parentNode.insertBefore(messageDiv, form.nextSibling);
+            setTimeout(() => messageDiv.remove(), 5000);
+        }
+    });
+
 
         // ========== PARALLAX EFFECT UPDATED ==========
         function initParallax() {

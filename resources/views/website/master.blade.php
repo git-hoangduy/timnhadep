@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="{{ asset('website/css/style.css') }}">
     @stack('styles')
+    <style>
+        .grecaptcha-badge {
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
     
@@ -216,7 +221,6 @@
         function attachRecaptcha(form) {
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
-
                 grecaptcha.ready(() => {
                     grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {
                         action: 'submit'
@@ -621,72 +625,113 @@
         });
         
         // Xử lý form đăng ký nhận tin
-        document.getElementById('subscribeForm')?.addEventListener('submit', function(e) {
+        document.getElementById('subscribeForm')?.addEventListener('submit', function (e) {
             e.preventDefault();
-            
-            // Lấy giá trị từ form
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
-            const agreeTerms = document.getElementById('agreeTerms').checked;
-            
-            if (!agreeTerms) {
-                alert('Vui lòng đồng ý với điều khoản nhận thông tin');
+
+            const form = this;
+
+            // ===== 1. Lấy dữ liệu =====
+            const nameInput  = form.querySelector('input[name="name"]');
+            const emailInput = form.querySelector('input[name="email"]');
+            const agreeTerms = document.getElementById('agreeTerms');
+
+            const name  = nameInput.value.trim();
+            const email = emailInput.value.trim();
+
+            // ===== 2. Validate frontend =====
+            if (!name) {
+                alert('Vui lòng nhập họ và tên');
+                nameInput.focus();
                 return;
             }
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Vui lòng nhập email hợp lệ');
+                emailInput.focus();
                 return;
             }
-            
-            // Hiệu ứng loading
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
+
+            if (!agreeTerms || !agreeTerms.checked) {
+                alert('Vui lòng đồng ý với điều khoản nhận thông tin');
+                return;
+            }
+
+            // ===== 3. Loading button =====
+            const submitBtn   = form.querySelector('button[type="submit"]');
+            const originalBtn = submitBtn.innerHTML;
+
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
             submitBtn.disabled = true;
-            
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('email', email);
-            formData.append('_token', '{{ csrf_token() }}');
-            fetch('{{ route("contact") }}', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.success) {
-                    // Hiển thị thông báo thành công
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'alert alert-success mt-3';
-                    successMessage.innerHTML = `
-                        <i class="fas fa-check-circle me-2"></i>
-                        <strong>Đăng ký thành công!</strong> Cảm ơn ${name} đã đăng ký nhận tin từ Nhà Đẹp. 
-                        Chúng tôi sẽ gửi thông tin mới nhất đến email ${email}.
-                    `;
-                    
-                    this.parentNode.insertBefore(successMessage, this.nextSibling);
-                    
-                    // Reset form
-                    this.reset();
-                    document.getElementById('agreeTerms').checked = true;
-                    
-                    // Ẩn thông báo sau 5 giây
-                    setTimeout(() => {
-                        successMessage.remove();
-                    }, 5000);
-                } else {
-                    alert(data.message || 'Đã xảy ra lỗi, xin hãy thử lại!');
-                }
 
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            })
+            // ===== 4. reCAPTCHA v3 =====
+            grecaptcha.ready(() => {
+                grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {
+                    action: 'subscribe'
+                }).then(token => {
+
+                    // ===== 5. Tạo FormData =====
+                    const formData = new FormData(form);
+                    formData.append('recaptcha_token', token);
+
+                    // ===== 6. Gửi request =====
+                    fetch('{{ route("contact") }}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(async response => {
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw data;
+                        }
+
+                        return data;
+                    })
+                    .then(data => {
+
+                        // ===== 7. Thành công =====
+                        const successMessage = document.createElement('div');
+                        successMessage.className = 'alert alert-success mt-3';
+                        successMessage.innerHTML = `
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>Đăng ký thành công!</strong>
+                            Cảm ơn <strong>${name}</strong>, chúng tôi sẽ gửi thông tin mới nhất tới
+                            <strong>${email}</strong>.
+                        `;
+
+                        form.parentNode.insertBefore(successMessage, form.nextSibling);
+
+                        form.reset();
+                        agreeTerms.checked = true;
+
+                        setTimeout(() => successMessage.remove(), 5000);
+                    })
+                    .catch(error => {
+
+                        // ===== 8. Lỗi =====
+                        let message = 'Đã xảy ra lỗi, vui lòng thử lại';
+
+                        if (error?.message) {
+                            message = error.message;
+                        } else if (error?.errors) {
+                            message = Object.values(error.errors)[0][0];
+                        }
+
+                        alert(message);
+                    })
+                    .finally(() => {
+
+                        // ===== 9. Reset button =====
+                        submitBtn.innerHTML = originalBtn;
+                        submitBtn.disabled = false;
+                    });
+                });
+            });
         });
         
         // Tab click to scroll to section

@@ -13,7 +13,7 @@ class VerifyRecaptcha
         $token = $request->input('recaptcha_token');
 
         if (!$token) {
-            abort(403, 'Recaptcha missing');
+            abort(403, 'Vui lòng xác thực mã Captcha');
         }
 
         $response = Http::asForm()->post(
@@ -29,7 +29,7 @@ class VerifyRecaptcha
             empty($response['success']) ||
             $response['score'] < config('services.recaptcha.min_score')
         ) {
-            abort(403, 'Recaptcha failed');
+            abort(403, 'Xác thực mã Captcha không thành công');
         }
 
         return $next($request);

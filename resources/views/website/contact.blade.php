@@ -98,7 +98,7 @@
                     <h3 class="mb-4">Gửi yêu cầu liên hệ</h3>
                     <p class="text-muted mb-4">Vui lòng điền thông tin bên dưới, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
                     
-                    <form action="{{ route('contact') }}" method="POST">
+                    <form action="{{ route('contact') }}" class="need-recaptcha" method="POST">
                         @csrf
                         <input type="hidden" name="honeypot" style="display:none;">
                         <div class="row">
@@ -168,6 +168,12 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <small class="mb-4 text-muted">
+                                This site is protected by reCAPTCHA and the Google
+                                <a href="https://policies.google.com/privacy" target="_blank" class="text-primary">Privacy Policy</a> and
+                                <a href="https://policies.google.com/terms" target="_blank" class="text-primary">Terms of Service</a> apply.
+                            </small>
                             
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary btn-lg px-5">
