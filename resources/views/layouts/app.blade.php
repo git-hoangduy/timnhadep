@@ -480,6 +480,9 @@
         }
 
         $(function () {
+            // Only run notifications logic when the admin navbar bell exists (avoid prompting on login page)
+            if (!$('#notificationDropdown').length) return;
+
             askBrowserNotificationPermission();
 
             // Initial badge fetch
