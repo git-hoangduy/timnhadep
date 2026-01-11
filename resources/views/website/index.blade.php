@@ -175,7 +175,7 @@
                                         <div class="listing-content">
                                             <h3 class="listing-title">{{ $listing->name }}</h3>
                                             <span class="listing-type">{{ $listing->category->name }}</span>
-                                            <p class="listing-description">{!! nl2br(htmlspecialchars_decode($listing->excerpt)) !!}</p>
+                                            <p class="listing-description">{!! nl2br(e($listing->excerpt)) !!}</p>
                                             <div class="listing-price">{{ $listing->price }} VND</div>
                                         </div>
                                         <div class="listing-footer">
