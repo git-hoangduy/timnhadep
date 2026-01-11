@@ -245,6 +245,27 @@
                         </ul>
 
                         <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown me-2">
+                                <a id="notificationDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fa-regular fa-bell"></i>
+                                    <span id="notificationBadge" class="badge bg-danger d-none" style="position: relative; top: -8px; left: -4px;"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="min-width: 320px;">
+                                    <div class="px-3 py-2 border-bottom fw-semibold d-flex align-items-center justify-content-between">
+                                        <span>Thông báo mới</span>
+                                        <a class="small text-decoration-none" href="{{ route('notification.index') }}">Xem thêm</a>
+                                    </div>
+
+                                    <div id="notificationList" class="py-1">
+                                        <div class="dropdown-item text-center text-muted py-3">Đang tải...</div>
+                                    </div>
+
+                                    <div class="border-top">
+                                        <a class="dropdown-item text-center" href="{{ route('notification.index') }}">Xem thêm</a>
+                                    </div>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="profileDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -293,7 +314,188 @@
     @stack('scripts')
 
     <script>
-        
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function loadNotifications(options) {
+            options = options || {};
+            options.limit = typeof options.limit === 'number' ? options.limit : 10;
+            options.onlyBadge = !!options.onlyBadge;
+            options.includeLatest = options.onlyBadge ? true : !!options.includeLatest;
+            var $list = $('#notificationList');
+            var $badge = $('#notificationBadge');
+
+            if (!$list.length) return;
+
+            if (!options.silent && !options.onlyBadge) {
+                $list.html('<div class="dropdown-item text-center text-muted py-3">Đang tải...</div>');
+            }
+
+            $.ajax({
+                url: '{{ route('notification.list') }}',
+                type: 'GET',
+                data: {
+                    limit: options.onlyBadge ? 0 : options.limit,
+                    mark_read: options.markRead ? 1 : 0,
+                    include_latest: options.includeLatest ? 1 : 0
+                },
+                success: function (res) {
+                    if (!res || !res.success) {
+                        if (!options.onlyBadge) {
+                            $list.html('<div class="dropdown-item text-center text-muted py-3">Không tải được thông báo.</div>');
+                        }
+                        return;
+                    }
+
+                    var unread = parseInt(res.unread || 0, 10);
+                    if (unread > 0) {
+                        $badge.text(unread).removeClass('d-none');
+                    } else {
+                        $badge.text('').addClass('d-none');
+                    }
+
+                    if (options.onlyBadge) {
+                        maybeShowBrowserNotification(res, unread);
+                        return;
+                    }
+
+                    if (options.onlyBadge) return;
+
+                    var items = Array.isArray(res.data) ? res.data : [];
+                    if (!items.length) {
+                        $list.html('<div class="dropdown-item text-center text-muted py-3">Chưa có thông báo.</div>');
+                        return;
+                    }
+
+                    var html = '';
+                    var maxId = 0;
+                    items.forEach(function (n) {
+                        var idNum = parseInt(n.id || 0, 10);
+                        if (idNum > maxId) maxId = idNum;
+                        var msg = escapeHtml(n.message || '');
+                        var time = escapeHtml(n.time || '');
+                        html += '<a class="dropdown-item py-2" href="#">'
+                            + '<div class="d-flex flex-column">'
+                            + '<span class="text-dark" style="white-space: normal;">' + msg + '</span>'
+                            + '<small class="text-muted">' + time + '</small>'
+                            + '</div>'
+                            + '</a>';
+                    });
+                    $list.html(html);
+
+                    // Prevent showing desktop notification for items user just saw.
+                    if (maxId > 0) {
+                        localStorage.setItem('notify_last_id', String(maxId));
+                    }
+                },
+                error: function () {
+                    if (!options.onlyBadge) {
+                        $list.html('<div class="dropdown-item text-center text-muted py-3">Không tải được thông báo.</div>');
+                    }
+                }
+            });
+        }
+
+        function browserNotifyEnabled() {
+            return localStorage.getItem('notify_enabled') === '1';
+        }
+
+        function setBrowserNotifyEnabled(enabled) {
+            localStorage.setItem('notify_enabled', enabled ? '1' : '0');
+        }
+
+        function getLastNotifiedId() {
+            return parseInt(localStorage.getItem('notify_last_id') || '0', 10) || 0;
+        }
+
+        function setLastNotifiedId(id) {
+            localStorage.setItem('notify_last_id', String(parseInt(id || 0, 10) || 0));
+        }
+
+        function shouldAskBrowserNotificationPermission() {
+            if (!('Notification' in window)) return false;
+            if (!window.isSecureContext) return false;
+            if (Notification.permission !== 'default') return false;
+            // Ask only once
+            return localStorage.getItem('notify_asked') !== '1';
+        }
+
+        function askBrowserNotificationPermission() {
+            if (!shouldAskBrowserNotificationPermission()) return;
+            localStorage.setItem('notify_asked', '1');
+
+            var ok = confirm('Bạn có muốn bật thông báo trình duyệt (Chrome) không?');
+            if (!ok) {
+                setBrowserNotifyEnabled(false);
+                return;
+            }
+
+            Notification.requestPermission().then(function (permission) {
+                if (permission === 'granted') {
+                    setBrowserNotifyEnabled(true);
+                    try {
+                        new Notification('Đã bật thông báo', {
+                            body: 'Bạn sẽ nhận thông báo khi có tin mới (khi đang mở trang admin).',
+                            icon: '{{ asset('admin/images/admin.png') }}'
+                        });
+                    } catch (e) {}
+                } else {
+                    setBrowserNotifyEnabled(false);
+                }
+            });
+        }
+
+        function maybeShowBrowserNotification(res, unread) {
+            if (!browserNotifyEnabled()) return;
+            if (!('Notification' in window)) return;
+            if (Notification.permission !== 'granted') return;
+
+            var latest = res && res.latest ? res.latest : null;
+            if (!latest || !latest.id) return;
+
+            var lastId = getLastNotifiedId();
+            var latestId = parseInt(latest.id || 0, 10);
+            if (!latestId || latestId <= lastId) return;
+
+            setLastNotifiedId(latestId);
+
+            var title = 'Thông báo mới';
+            var body = latest.message || '';
+            if (unread && unread > 1) {
+                body = body + '\n(' + unread + ' chưa xem)';
+            }
+
+            try {
+                new Notification(title, {
+                    body: body,
+                    icon: '{{ asset('admin/images/admin.png') }}'
+                });
+            } catch (e) {}
+        }
+
+        $(function () {
+            askBrowserNotificationPermission();
+
+            // Initial badge fetch
+            loadNotifications({ silent: true, markRead: false, onlyBadge: true });
+
+            // Poll unread count every 5s (only when tab is visible)
+            setInterval(function () {
+                if (document.visibilityState !== 'visible') return;
+                loadNotifications({ silent: true, markRead: false, onlyBadge: true });
+            }, 5000);
+
+            // When user opens the dropdown, fetch list and mark those items as read
+            $('#notificationDropdown').on('click', function () {
+                loadNotifications({ markRead: true, onlyBadge: false, limit: 10 });
+            });
+        });
     </script>
 </body>
 </html>

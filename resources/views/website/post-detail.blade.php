@@ -101,7 +101,7 @@
         margin-bottom: 10px;
     }
 
-    .news-content blockquote {
+    .news-content blockquote:not(.tiktok-embed) {
         border-left: 4px solid var(--primary-color);
         padding-left: 20px;
         margin: 30px 0;

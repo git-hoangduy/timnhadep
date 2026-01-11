@@ -31,6 +31,8 @@ use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\AlbumController;
 use App\Http\Controllers\Admin\FooterController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\NotificationController;
+
 
 use App\Http\Controllers\Website\WebsiteController;
 use App\Http\Controllers\Website\UserController as WebsiteUserController;
@@ -82,6 +84,8 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () 
     Route::resourceExtend('album', AlbumController::class);
     Route::resourceExtend('footer', FooterController::class);
     Route::resourceExtend('video', VideoController::class);
+    Route::get('notification/list', [NotificationController::class, 'list'])->name('notification.list');
+    Route::resourceExtend('notification', NotificationController::class);
 
     Route::match(['get', 'post'], '/setting/info', [SettingController::class, 'info'])->name('setting.info');
     Route::match(['get', 'post'], '/setting/social', [SettingController::class, 'social'])->name('setting.social');
@@ -111,6 +115,7 @@ Route::get('/du-an/{slug?}', [WebsiteController::class, 'projectDetail'])->name(
 Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('listing');
 Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('listing');
 Route::get('/mua-ban/{slug?}', [WebsiteController::class, 'listingDetail'])->name('listing.detail');
+Route::post('/mua-ban/get-full-phone', [WebsiteController::class, 'getFullPhone'])->name('listing.get-full-phone');
 
 Route::match(['get', 'post'], '/user/login', [WebsiteUserController::class, 'login'])->name('user.login');
 Route::match(['get', 'post'], '/user/register', [WebsiteUserController::class, 'register'])->name('user.register');

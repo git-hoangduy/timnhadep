@@ -22,6 +22,8 @@ use App\Models\ProjectCategory;
 use App\Models\Album;
 use App\Models\Listing;
 use App\Models\ListingCategory;
+use App\Models\Notification;
+
 
 class WebsiteController extends Controller
 {
@@ -225,6 +227,32 @@ class WebsiteController extends Controller
         OpenGraph::setTitle($listing->name);
         OpenGraph::addImage(asset($listing->image), ['height' => 300, 'width' => 300]);
         return view('website.listing-detail', compact('listing'));
+    }
+
+    public function getFullPhone(Request $request) {
+        $listingId = $request->input('listing_id');
+        $listing = Listing::find($listingId);
+        if ($listing) {
+            if ($listing->customer_phone == '' && $request->customer_phone != $listing->customer_phone) {
+                Notification::create([
+                    'message' => 'Số điện thoại: ' . $request->customer_phone . ' đang quan tâm tin đăng "' . $listing->name . '"',
+                    'ip' => $request->ip(),
+                    'customer_id' => $request->customer_id ?? '',
+                    'customer_name' => $request->customer_name ?? '',
+                    'customer_phone' => $request->customer_phone ?? '',
+                ]);
+            }
+            return response()->json([
+                'success' => true,
+                'phone' => $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone'),
+                'email' => $listing->customer_id != '' ? $listing->customer_email : setting('info.email'),
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Listing not found',
+            ], 404);
+        }
     }
 
     public function contact(Request $request) {

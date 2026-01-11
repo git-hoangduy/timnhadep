@@ -2,6 +2,29 @@
 
 @section('content')
 
+<style>
+    .mark-phone {
+        cursor: pointer;
+    }
+</style>
+@php
+    $phone = $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone');
+    $email = $listing->customer_id != '' ? $listing->customer_email : setting('info.email');
+    $markPhone = '';
+    if (strlen($phone) >= 5) {
+        $markPhone = substr($phone, 0, 3) . '****' . substr($phone, -2);
+    }
+
+
+    $customerId = '';
+    $customerPhone = '';
+    $customerName = '';
+    if (auth()->guard('customer')->check()) {
+        $customerId = auth()->guard('customer')->user()->id;
+        $customerPhone = auth()->guard('customer')->user()->phone ? auth()->guard('customer')->user()->phone : '';
+        $customerName = auth()->guard('customer')->user()->name ? auth()->guard('customer')->user()->name : '';
+    }
+@endphp
 <!-- Breadcrumb -->
 <section class="breadcrumb-section">
     <div class="container">
@@ -97,7 +120,7 @@
                             </p>
                         </div>
 
-                        <div class="map-container">
+                        <div class="map-container d-none">
                             <div class="text-center">
                                 <i class="fas fa-map-marked-alt fa-3x mb-3" style="color: #6c757d;"></i>
                                 <p>Bản đồ vị trí</p>
@@ -126,10 +149,10 @@
                     </div>
 
                     <div class="contact-actions">
-                        <a href="tel:{{ $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone') }}"
-                           class="btn btn-primary">
+                        <a href="tel:{{ $markPhone }}"
+                           class="btn btn-primary mark-phone">
                             <i class="fas fa-phone-alt me-2"></i>
-                            Gọi ngay: {{ $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone') }}
+                            Gọi ngay: {{ $markPhone }}
                         </a>
                     </div>
 
@@ -138,11 +161,11 @@
                         <ul class="list-unstyled">
                             <li class="mb-2">
                                 <i class="fas fa-phone text-primary me-2"></i>
-                                {{ $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone') }}
+                                <span class="mark-phone">{{ $markPhone }}</span>
                             </li>
                             <li class="mb-2">
                                 <i class="fas fa-envelope text-primary me-2"></i>
-                                {{ $listing->customer_id != '' ? $listing->customer_email : setting('info.email') }}
+                                {{ $email }}
                             </li>
                         </ul>
                     </div>
@@ -159,12 +182,51 @@
 
 @push('scripts')
 <script>
-function changeImage(el) {
-    const img = el.querySelector('img');
-    document.getElementById('mainImage').src = img.src;
+    function changeImage(el) {
+        const img = el.querySelector('img');
+        document.getElementById('mainImage').src = img.src;
 
-    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-}
+        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    $('.mark-phone').on('click', function(e) {
+        e.preventDefault();
+
+        if (localStorage.getItem('viewed_listing_{{ $listing->id }}') == 'true') {
+            const fullPhone = '{{ $phone }}';
+            window.location.href = 'tel:' + fullPhone;
+            return;
+        }
+
+        let customerPhone = '{{ $customerPhone }}';
+        let customerName = '{{ $customerName }}';
+        let customerId = '{{ $customerId }}';
+
+        // call ajax get full phone number by listing id
+        $.ajax({
+            url: '{{ route("listing.get-full-phone") }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                listing_id: '{{ $listing->id }}',
+                customer_id: customerId,
+                customer_phone: customerPhone,
+                customer_name: customerName
+            },
+            success: function(response) {
+                if (response.success) {
+                    localStorage.setItem('viewed_listing_{{ $listing->id }}', 'true');
+                    const fullPhone = response.phone;
+                    $('.mark-phone').text(fullPhone);
+                    window.location.href = 'tel:' + fullPhone;
+                }
+            },
+            error: function() {
+                alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+            }
+        });
+
+    });
 </script>
 @endpush

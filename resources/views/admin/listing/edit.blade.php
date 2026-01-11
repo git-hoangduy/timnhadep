@@ -53,8 +53,8 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label required">Giá</label>
                                         <input type="text" class="form-control" name="price" 
-                                               value="{{ old('price', $listing->price) }}" required>
-                                        <small class="form-text text-muted">Nhập giá bằng chữ</small>
+                                               value="{{ old('price', number_format($listing->price)) }}" required>
+                                        <small class="form-text text-muted">Nếu cho thuê, nhập giá theo tháng - Nếu bán, nhập giá bán</small>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label required">Diện tích (m²)</label>
@@ -222,6 +222,15 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+
+    $('input[name="price"]').on('input', function() {
+        // Loại bỏ tất cả ký tự không phải số
+        let value = this.value.replace(/[^0-9]/g, '');
+        value = value.replace(/^0+/, '');
+        let thousandSeparator = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.value = thousandSeparator;
+    });
+
     // Datepicker cho thời gian đăng
     $('#publicAt').daterangepicker({
         drops: 'up',
