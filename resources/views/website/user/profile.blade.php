@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="user-page-wrapper">
-    <div class="user-container">
+    <div class="user-container" style="padding-top:40px;">
         
         <!-- Page Header -->
         <div class="page-header">

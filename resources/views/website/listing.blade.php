@@ -54,7 +54,7 @@
                                 </span>
                             </div>
                             <h3 class="listing-title">{{ $listing->name }}</h3>
-                            <p class="listing-excerpt">{{ $listing->excerpt }}</p>
+                            <p class="listing-excerpt">{!! nl2br(htmlspecialchars_decode($listing->excerpt)) !!}</p>
                             
                             <div class="listing-footer">
                                 <div class="listing-price">{{ $listing->formatted_price }}</div>

@@ -501,7 +501,7 @@ class UserController extends Controller
                 'success' => true,
                 'message' => 'Tin đăng của bạn đã được gửi thành công! Tin sẽ được duyệt trong vòng 24 giờ.',
                 'listing_id' => $listing->id,
-                'redirect' => route('user.order')
+                'redirect' => route('user.my-listings')
             ]);
 
         } catch (\Exception $e) {

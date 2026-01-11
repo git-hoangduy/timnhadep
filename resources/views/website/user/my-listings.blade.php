@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="user-page-wrapper">
-    <div class="user-container">
+    <div class="user-container" style="padding-top:40px;">
         
         <!-- Page Header -->
         <div class="page-header">
@@ -85,8 +85,8 @@
                             <thead>
                                 <tr>
                                     <th>Thông tin tin đăng</th>
-                                    <th>Hình thức</th>
-                                    <th>Giá / Diện tích</th>
+                                    {{-- <th>Hình thức</th> --}}
+                                    <th>Giá</th>
                                     <th>Trạng thái</th>
                                     <th>Ngày đăng</th>
                                     <th class="text-end">Thao tác</th>
@@ -122,7 +122,7 @@
                                             </div>
                                         </td>
                                         
-                                        <td data-label="Hình thức">
+                                        {{-- <td data-label="Hình thức">
                                             @if($listing->type == 'sale')
                                                 <span class="badge-modern" style="background: #fee2e2; color: #dc2626; border-color: #fecaca;">
                                                     Cần bán
@@ -140,11 +140,12 @@
                                                     Cần thuê
                                                 </span>
                                             @endif
-                                        </td>
+                                        </td> 
+                                        --}}
                                         
-                                        <td data-label="Giá / Diện tích">
+                                        <td data-label="Giá">
                                             <div class="fw-bold text-dark">{{ $listing->price }}</div>
-                                            <small class="text-muted">{{ $listing->area }} m²</small>
+                                            {{-- <small class="text-muted">{{ $listing->area }} m²</small> --}}
                                         </td>
                                         
                                         <td data-label="Trạng thái">

@@ -29,6 +29,11 @@
 <!-- Listing Detail -->
 <section class="listing-detail-page">
     <div class="container">
+        @if ($listing->status == 0)
+            <div class="alert alert-warning text-center" role="alert">
+                Tin đăng này hiện đang chờ duyệt. Vui lòng quay lại sau!
+            </div>
+        @else
         <div class="row">
 
             <!-- Left Column -->
@@ -121,10 +126,10 @@
                     </div>
 
                     <div class="contact-actions">
-                        <a href="tel:{{ $listing->customer_phone }}"
+                        <a href="tel:{{ $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone') }}"
                            class="btn btn-primary">
                             <i class="fas fa-phone-alt me-2"></i>
-                            Gọi ngay: {{ $listing->customer_phone }}
+                            Gọi ngay: {{ $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone') }}
                         </a>
                     </div>
 
@@ -133,11 +138,11 @@
                         <ul class="list-unstyled">
                             <li class="mb-2">
                                 <i class="fas fa-phone text-primary me-2"></i>
-                                {{ $listing->customer_phone }}
+                                {{ $listing->customer_id != '' ? $listing->customer_phone : setting('info.phone') }}
                             </li>
                             <li class="mb-2">
                                 <i class="fas fa-envelope text-primary me-2"></i>
-                                {{ $listing->customer_email }}
+                                {{ $listing->customer_id != '' ? $listing->customer_email : setting('info.email') }}
                             </li>
                         </ul>
                     </div>
@@ -146,6 +151,7 @@
             </div>
 
         </div>
+        @endif
     </div>
 </section>
 

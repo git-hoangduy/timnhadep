@@ -443,7 +443,7 @@ a {
 /* Post Listing Section */
 .post-listing-section {
   padding: 100px 0;
-  background-color: var(--light-gray);
+  /* background-color: var(--light-gray); */
 }
 
 .post-card {
@@ -780,7 +780,7 @@ a {
 /* Featured Listings */
 .featured-listings {
   padding: 80px 0;
-  background-color: var(--light-gray);
+  /* background-color: var(--light-gray); */
 }
 
 .listing-card {
@@ -1371,7 +1371,8 @@ a {
 }
 
 .listing-title {
-  font-size: 28px;
+  /* font-size: 28px; */
+  font-size: 22px;
   font-weight: 700;
   margin-bottom: 15px;
   color: #222;

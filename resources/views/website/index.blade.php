@@ -110,7 +110,7 @@
                         <p class="text-center text-muted mb-5">Đăng tin miễn phí, tiếp cận hàng nghìn khách hàng tiềm năng trong vài phút</p>
                         
                         <div class="row mb-5">
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-6 col-md-6 mb-3">
                                 <div class="post-card animate-on-scroll">
                                     <div class="post-icon">
                                         <i class="fas fa-user-circle"></i>
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-6 col-md-6 mb-3">
                                 <div class="post-card animate-on-scroll">
                                     <div class="post-icon">
                                         <i class="fas fa-edit"></i>
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-4 col-md-6 d-none">
                                 <div class="post-card animate-on-scroll">
                                     <div class="post-icon">
                                         <i class="fas fa-handshake"></i>
@@ -151,7 +151,7 @@
                             
                             <div class="row">
                                 @foreach($listings as $listing)
-                                <div class="col-lg-6">
+                                <div class="col-lg-4 mb-3">
                                     <div class="listing-card animate-on-scroll">
                                         <div class="listing-header">
                                             <div class="listing-user">
@@ -175,7 +175,7 @@
                                         <div class="listing-content">
                                             <h3 class="listing-title">{{ $listing->name }}</h3>
                                             <span class="listing-type">{{ $listing->category->name }}</span>
-                                            <p class="listing-description">{!! nl2br(e($listing->excerpt)) !!}</p>
+                                            <p class="listing-description">{!! nl2br(htmlspecialchars_decode($listing->excerpt)) !!}</p>
                                             <div class="listing-price">{{ $listing->price }} VND</div>
                                         </div>
                                         <div class="listing-footer">
