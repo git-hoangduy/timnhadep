@@ -1442,6 +1442,8 @@ a {
 
 .listing-description {
   margin-bottom: 30px;
+  max-height: 100px;
+  overflow: hidden;
 }
 
 .description-title {
