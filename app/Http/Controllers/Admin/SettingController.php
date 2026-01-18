@@ -7,14 +7,59 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
 
+use Illuminate\Support\Facades\Http;
+
 use App\Models\Setting;
 use App\Models\Bank;
+use App\Models\Province;
+use App\Models\Ward;
 
 class SettingController extends Controller
 {
     private $PATH_IMAGE = 'uploads/settings/';
 
     public function info(Request $request) {
+
+        // load province 
+        // $provinces = Province::all();
+        // $apiKey = 'hvn_kE9EqK9i3pP26rHYV5PJ6358KyroC5f6';
+
+        // foreach ($provinces as $province) {
+        //     $page = 1;
+            
+        //     do {
+        //         $response = Http::withHeaders([
+        //             'Authorization' => $apiKey
+        //         ])->get("https://tinhthanhpho.com/api/v1/new-provinces/{$province->code}/wards", [
+        //             'page' => $page
+        //         ]);
+                
+        //         if ($response->successful()) {
+        //             $data = $response->json();
+                    
+        //             foreach ($data['data'] as $ward) {
+        //                 Ward::firstOrCreate(
+        //                     ['code' => $ward['code']], // Kiểm tra trùng code
+        //                     [
+        //                         'name' => $ward['name'],
+        //                         'type' => $ward['type'],
+        //                         'province_code' => $ward['province_code']
+        //                     ]
+        //                 );
+        //             }
+                    
+        //             $page++;
+        //             $totalPages = ceil($data['metadata']['total'] / $data['metadata']['limit']);
+        //         } else {
+        //             break;
+        //         }
+                
+        //         usleep(500000); // Giảm delay xuống 0.5 giây
+        //         set_time_limit(30); // Reset time limit mỗi vòng lặp
+                
+        //     } while ($page <= $totalPages);
+        // }
+        // end
 
         $type = 'info';
 

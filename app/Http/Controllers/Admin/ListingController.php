@@ -8,7 +8,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use File;
 use Carbon\Carbon;
-
+use App\Models\Province;
+use App\Models\Ward;
 use App\Models\Listing;
 use App\Models\ListingCategory;
 use App\Models\ListingImage;
@@ -42,7 +43,8 @@ class ListingController extends Controller
     public function create()
     {
         $categories = ListingCategory::where(['status' => 1, 'level' => 1])->get();
-        return view('admin.listing.create', compact('categories'));
+        $provinces = Province::orderBy('name', 'asc')->get();
+        return view('admin.listing.create', compact('categories', 'provinces'));
     }
 
     public function store(Request $request)
@@ -54,6 +56,8 @@ class ListingController extends Controller
             'type' => 'required|in:sale,rent,buy,rental',
             'price' => 'required|string|max:100',
             'area' => 'required|string|max:50',
+            'province_code' => 'required|exists:provinces,code',
+            'ward_code' => 'required|exists:wards,code',
             'location' => 'required|string|max:500',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
@@ -86,6 +90,8 @@ class ListingController extends Controller
             'is_highlight' => $request->is_highlight ?? 0,
             'price' => str_replace(',', '', $request->price),
             'area' => $request->area,
+            'province_code' => $request->province_code,
+            'ward_code' => $request->ward_code,
             'location' => $request->location,
             'meta_keywords' => $request->meta_keywords,
             'meta_description' => $request->meta_description,
@@ -118,8 +124,9 @@ class ListingController extends Controller
     public function edit($id)
     {
         $categories = ListingCategory::where(['status' => 1, 'level' => 1])->get();
+        $provinces = Province::orderBy('name', 'asc')->get();
         $listing = Listing::find($id);
-        return view('admin.listing.edit', compact('listing', 'categories'));
+        return view('admin.listing.edit', compact('listing', 'categories', 'provinces'));
     }
 
     public function update(Request $request, $id)
@@ -133,6 +140,8 @@ class ListingController extends Controller
             'type' => 'required|in:sale,rent,buy,rental',
             'price' => 'required|string|max:100',
             'area' => 'required|string|max:50',
+            'province_code' => 'required|exists:provinces,code',
+            'ward_code' => 'required|exists:wards,code',
             'location' => 'required|string|max:500',
             'content' => 'required|string',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
@@ -173,6 +182,8 @@ class ListingController extends Controller
             'is_highlight' => $request->is_highlight ?? 0,
             'price' => str_replace(',', '', $request->price),
             'area' => $request->area,
+            'province_code' => $request->province_code,
+            'ward_code' => $request->ward_code,
             'location' => $request->location,
             'meta_keywords' => $request->meta_keywords,
             'meta_description' => $request->meta_description,
@@ -299,6 +310,18 @@ class ListingController extends Controller
             'success' => true,
             'message' => 'Đã duyệt tin đăng thành công!',
             'listing' => $listing
+        ]);
+    }
+
+    public function getWards(Request $request)
+    {
+        $wards = Ward::where('province_code', $request->province_code)
+                    ->orderBy('name', 'asc')
+                    ->get();
+        
+        return response()->json([
+            'success' => true,
+            'data' => $wards
         ]);
     }
 }

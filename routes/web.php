@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth:admin'], 'prefix' => 'admin'], function () 
     Route::resourceExtend('project', ProjectController::class);
     Route::resourceExtend('project-category', ProjectCategoryController::class);
     Route::resourceExtend('listing', ListingController::class);
+    Route::get('/get-wards', [ListingController::class, 'getWards'])->name('admin.get.wards');
     Route::post('listing/approve', [ListingController::class, 'approve'])->name('listing.approve');
     Route::resourceExtend('listing-category', ListingCategoryController::class);
     Route::resourceExtend('feature', FeatureController::class);
@@ -117,6 +118,7 @@ Route::get('/danh-muc-mua-ban', [WebsiteController::class, 'listing'])->name('li
 Route::get('/mua-ban/{slug?}', [WebsiteController::class, 'listingDetail'])->name('listing.detail');
 Route::post('/mua-ban/get-full-phone', [WebsiteController::class, 'getFullPhone'])->name('listing.get-full-phone');
 
+Route::get('/listing/get-wards', [WebsiteController::class, 'getWards'])->name('listing.get.wards');
 Route::match(['get', 'post'], '/user/login', [WebsiteUserController::class, 'login'])->name('user.login');
 Route::match(['get', 'post'], '/user/register', [WebsiteUserController::class, 'register'])->name('user.register');
 Route::get('user/logout', [WebsiteUserController::class, 'logout'])->name('user.logout');

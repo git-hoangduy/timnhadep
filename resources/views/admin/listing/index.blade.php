@@ -48,6 +48,10 @@
                     <small class="text-secondary">{{ "Hiển thị " .  $listings->firstItem() . "-" . $listings->lastItem() . " của " . $listings ->total() . ' Bài mua bán' }}</small>
                 </div>
                 <div class="card-body">
+
+                    <div class="card-title mb-3 border rounded p-3 text-muted mb-3">
+                        <small>Tin ở trạng thái chờ duyệt sẽ không hiển thị trên trang chủ.</small>
+                    </div>
                     
                     @include('admin.includes.notification')
 
@@ -91,7 +95,7 @@
                                             class="btn btn-sm btn-success btn-approve" 
                                             data-id="{{ $item->id }}"
                                             data-name="{{ $item->name }}">
-                                        <i class="fas fa-check"></i> Duyệt
+                                        <i class="fas fa-check"></i> Phê duyệt
                                     </button>
                                     @elseif($item->status == \App\Models\Listing::STATUS_ACTIVE)
                                     <span class="text-success"><i class="fas fa-check-circle"></i> Đã duyệt</span>

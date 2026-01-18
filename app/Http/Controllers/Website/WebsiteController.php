@@ -23,6 +23,9 @@ use App\Models\Album;
 use App\Models\Listing;
 use App\Models\ListingCategory;
 use App\Models\Notification;
+use App\Models\Province;
+use App\Models\Ward;
+
 
 
 class WebsiteController extends Controller
@@ -201,22 +204,75 @@ class WebsiteController extends Controller
         return view('website.post-detail', compact('post', 'recentPosts'));
     }
 
-    public function listing(Request $request, $slug = '') {
+    // public function listing(Request $request, $slug = '') {
 
-        $query = Listing::where('status', 1);
+    //     $query = Listing::where('status', 1);
     
-        // Apply filters
+    //     // Apply filters
+    //     if ($request->category) {
+    //         $query->where('category_id', $request->category);
+    //     }
+        
+    //     if ($request->price_range) {
+    //         // Add price range logic
+    //     }
+        
+    //     $listings = $query->paginate(12);
+        
+    //     return view('website.listing', compact('listings'));
+    // }
+
+    public function listing(Request $request, $slug = '')
+    {
+        $query = Listing::where('status', 1);
+
+        // Lọc theo tỉnh/thành
+        if ($request->province_code) {
+            $query->where('province_code', $request->province_code);
+        }
+        
+        // Lọc theo phường/xã
+        if ($request->ward_code) {
+            $query->where('ward_code', $request->ward_code);
+        }
+        
+        // Lọc theo danh mục
         if ($request->category) {
             $query->where('category_id', $request->category);
         }
         
-        if ($request->price_range) {
-            // Add price range logic
+        // Lọc theo hình thức
+        if ($request->type) {
+            $query->where('type', $request->type);
         }
         
-        $listings = $query->paginate(12);
+        // Lọc theo khoảng giá
+        if ($request->min_price || $request->max_price) {
+            $minPrice = $request->min_price ? ($request->min_price) : 0;
+            $maxPrice = $request->max_price ? ($request->max_price) : null;
+
+            
+            if ($maxPrice) {
+                $query->whereBetween('price', [$minPrice, $maxPrice]);
+            } else {
+                $query->where('price', '>=', $minPrice);
+            }
+        }
+
+        $listings = $query->orderBy('created_at', 'desc')->paginate(12);
         
-        return view('website.listing', compact('listings'));
+        // Lấy danh sách tỉnh/thành và danh mục cho filter
+        $provinces = \App\Models\Province::orderBy('name', 'asc')->get();
+        $categories = \App\Models\ListingCategory::where(['status' => 1, 'level' => 1])
+                                                ->orderBy('name', 'asc')
+                                                ->get();
+        
+        // Tính giá cao nhất trong database (triệu đồng) để làm max range
+        $maxPriceInDB = Listing::where('status', 1)->max('price') ?? 0;
+        $step = 1000000;
+        $maxPriceRange = ceil($maxPriceInDB / $step) * $step;
+      
+        return view('website.listing', compact('listings', 'provinces', 'categories', 'maxPriceRange'));
     }
 
     public function listingDetail(Request $request, $slug = '') {
@@ -366,5 +422,17 @@ class WebsiteController extends Controller
             'pages' => $pages,
             'projects' => $projects
         ])->header('Content-Type', 'text/xml');
+    }
+
+    public function getWards(Request $request)
+    {
+        $wards = Ward::where('province_code', $request->province_code)
+                    ->orderBy('name', 'asc')
+                    ->get();
+        
+        return response()->json([
+            'success' => true,
+            'data' => $wards
+        ]);
     }
 }

@@ -63,7 +63,38 @@
                                         <small class="form-text text-muted">Nhập diện tích bằng số</small>
                                     </div>
                                 </div>
-                                
+
+                                {{-- Tỉnh/Thành phố và Phường/Xã --}}
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label required">Tỉnh/Thành phố</label>
+                                        <select class="form-control select2" name="province_code" id="province_select" required>
+                                            <option value="">Chọn tỉnh/thành phố</option>
+                                            @foreach($provinces as $province)
+                                                <option value="{{ $province->code }}" 
+                                                    {{ old('province_code', $listing->province_code) == $province->code ? 'selected' : '' }}>
+                                                    {{ $province->type }} {{ $province->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label required">Quận/Huyện/Phường/Xã</label>
+                                        <select class="form-control select2" name="ward_code" id="ward_select" required>
+                                            <option value="">Vui lòng chọn tỉnh/thành trước</option>
+                                            @if($listing->province_code && $listing->ward_code)
+                                                @php
+                                                    $ward = \App\Models\Ward::where('code', $listing->ward_code)->first();
+                                                @endphp
+                                                @if($ward)
+                                                    <option value="{{ $ward->code }}" selected>
+                                                        {{ $ward->type }} {{ $ward->name }}
+                                                    </option>
+                                                @endif
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>                            
                                 <div class="mb-3">
                                     <label class="form-label required">Địa chỉ</label>
                                     <input type="text" class="form-control" name="location" 
@@ -348,6 +379,8 @@ $(document).ready(function() {
             type: "required",
             price: "required",
             area: "required",
+            province_code: "required",
+            ward_code: "required",
             location: "required",
             content: "required",
             status: "required"
@@ -358,6 +391,8 @@ $(document).ready(function() {
             type: "Vui lòng chọn hình thức",
             price: "Vui lòng nhập giá",
             area: "Vui lòng nhập diện tích",
+            province_code: "Vui lòng chọn tỉnh/thành",
+            ward_code: "Vui lòng chọn quận/huyện/phường/xã",
             location: "Vui lòng nhập địa chỉ",
             content: "Vui lòng nhập mô tả",
             status: "Vui lòng chọn trạng thái"
@@ -372,5 +407,73 @@ $(document).ready(function() {
         }
     });
 });
+
+// Xử lý load phường/xã theo tỉnh/thành
+$('#province_select').on('change', function() {
+    let provinceCode = $(this).val();
+    let wardSelect = $('#ward_select');
+    
+    if (!provinceCode) {
+        wardSelect.html('<option value="">Vui lòng chọn tỉnh/thành trước</option>');
+        wardSelect.prop('disabled', true);
+        return;
+    }
+    
+    // Hiển thị loading
+    wardSelect.html('<option value="">Đang tải...</option>');
+    wardSelect.prop('disabled', false);
+    
+    $.ajax({
+        url: '{{ route("admin.get.wards") }}',
+        type: 'GET',
+        data: {
+            province_code: provinceCode
+        },
+        success: function(response) {
+            if (response.success && response.data.length > 0) {
+                let options = '<option value="">Chọn phường/xã</option>';
+                let selectedWardCode = '{{ $listing->ward_code ?? "" }}';
+                
+                $.each(response.data, function(index, ward) {
+                    let selected = ward.code == selectedWardCode ? 'selected' : '';
+                    options += `<option value="${ward.code}" ${selected}>${ward.type} ${ward.name}</option>`;
+                });
+                wardSelect.html(options);
+            } else {
+                wardSelect.html('<option value="">Không có dữ liệu phường/xã</option>');
+            }
+        },
+        error: function() {
+            wardSelect.html('<option value="">Lỗi tải dữ liệu</option>');
+        }
+    });
+});
+
+// KHÔNG trigger change khi page load cho edit, chỉ load wards khi cần
+@if(isset($listing) && $listing->province_code)
+    $(document).ready(function() {
+        // Chỉ load wards nếu ward_select chưa có option đúng
+        let currentWardCode = '{{ $listing->ward_code ?? "" }}';
+        let hasCorrectWard = false;
+        
+        $('#ward_select option').each(function() {
+            if ($(this).val() == currentWardCode) {
+                hasCorrectWard = true;
+                return false;
+            }
+        });
+        
+        if (!hasCorrectWard) {
+            $('#province_select').trigger('change');
+        }
+    });
+@endif
+
+// Mặc định chọn TP Hồ Chí Minh khi tạo mới
+@if(!isset($listing))
+    $(document).ready(function() {
+        $('#province_select').trigger('change');
+    });
+@endif
 </script>
 @endpush
