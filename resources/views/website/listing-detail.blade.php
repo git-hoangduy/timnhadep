@@ -116,7 +116,7 @@
                             <p>
                                 <i class="fas fa-map-marker-alt text-primary me-2"></i>
                                 <strong>Địa chỉ:</strong>
-                                {{ $listing->location }}
+                                {{ $listing->province->name.', '.$listing->ward->name.', ' }}  {{ $listing->location }}
                             </p>
                         </div>
 

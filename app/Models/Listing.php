@@ -76,6 +76,16 @@ class Listing extends Model
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_code', 'code');
+    }
+
+    public function ward()
+    {
+        return $this->belongsTo(Ward::class, 'ward_code', 'code');
+    }
+
     // Accessor cho status text
     public function getStatusTextAttribute()
     {

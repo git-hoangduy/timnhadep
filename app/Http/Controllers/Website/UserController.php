@@ -449,8 +449,10 @@ class UserController extends Controller
                 'content' => $request->description,
                 'status' => 0, // 0 = chờ duyệt
                 'is_highlight' => 0,
-                'price' => $request->price,
+                'price' => str_replace(',', '', $request->price),
                 'area' => $request->area,
+                'province_code' => $request->province_code,
+                'ward_code' => $request->ward_code,
                 'location' => $request->location,
                 'meta_keywords' => $request->title,
                 'meta_description' => $excerpt,

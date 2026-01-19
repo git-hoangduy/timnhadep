@@ -156,13 +156,32 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="price" class="form-label">Giá <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="price" name="price" placeholder="Ví dụ: 2 tỷ, 15 triệu/tháng" required>
-                                    <small class="form-text text-muted">Nhập giá bằng chữ (ví dụ: 2 tỷ, 15 triệu/tháng)</small>
+                                    <input type="text" class="form-control" id="price" name="price" placeholder="Ví dụ: 1000000" required>
+                                    <small class="form-text text-muted">Nếu cho thuê, nhập giá theo tháng - Nếu bán, nhập giá bán</small>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="area" class="form-label">Diện tích (m²) <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="area" name="area" placeholder="Ví dụ: 70, 80-100" required>
                                     <small class="form-text text-muted">Nhập diện tích bằng số (ví dụ: 70 hoặc 80-100)</small>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="post_province" class="form-label">Tỉnh/Thành phố <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="post_province" name="province_code" required>
+                                        <option value="">Chọn tỉnh/thành phố</option>
+                                        <?php $provinces = \App\Models\Province::orderBy('id')->get(); ?>
+                                        @foreach($provinces as $province)
+                                            <option value="{{ $province->code }}">{{ $province->type }} {{ $province->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="post_ward" class="form-label">Phường/Xã <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="post_ward" name="ward_code" required disabled>
+                                        <option value="">Chọn tỉnh thành trước</option>
+                                    </select>
                                 </div>
                             </div>
                             
@@ -221,6 +240,14 @@
      <script async src="https://www.tiktok.com/embed.js"></script>
 
     <script>
+
+        $('input[name="price"]').on('input', function() {
+            // Loại bỏ tất cả ký tự không phải số
+            let value = this.value.replace(/[^0-9]/g, '');
+            value = value.replace(/^0+/, '');
+            let thousandSeparator = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.value = thousandSeparator;
+        });
         
         function attachRecaptcha(form) {
             form.addEventListener('submit', function (e) {
@@ -626,6 +653,48 @@
                     }, 5000);
                 }
             });
+        });
+
+        // Load phường/xã khi chọn tỉnh trong form đăng tin
+        $('#post_province').on('change', function() {
+            let provinceCode = $(this).val();
+            let wardSelect = $('#post_ward');
+
+            if (!provinceCode) {
+                wardSelect.html('<option value="">Chọn tỉnh thành trước</option>').prop('disabled', true);
+                return;
+            }
+
+            // Hiển thị loading
+            wardSelect.html('<option value="">Đang tải...</option>').prop('disabled', true);
+
+            $.ajax({
+                url: '{{ route("listing.get.wards") }}',
+                type: 'GET',
+                data: {
+                    province_code: provinceCode
+                },
+                success: function(response) {
+                    if (response.success && response.data.length > 0) {
+                        let options = '<option value="">Chọn phường/xã</option>';
+                        $.each(response.data, function(index, ward) {
+                            options += `<option value="${ward.code}">${ward.name}</option>`;
+                        });
+                        wardSelect.html(options).prop('disabled', false);
+                    } else {
+                        wardSelect.html('<option value="">Không có dữ liệu</option>').prop('disabled', true);
+                    }
+                },
+                error: function() {
+                    wardSelect.html('<option value="">Lỗi tải dữ liệu</option>').prop('disabled', true);
+                }
+            });
+        });
+
+        // Reset ward khi modal đóng
+        $('#postModal').on('hidden.bs.modal', function() {
+            $('#post_province').val('');
+            $('#post_ward').html('<option value="">Chọn tỉnh thành trước</option>').prop('disabled', true);
         });
         
         // Xử lý form đăng ký nhận tin

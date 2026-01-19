@@ -196,7 +196,15 @@
                                         <div class="listing-price">{{ $listing->formatted_price }}</div>
                                         <div class="listing-location">
                                             <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                            {{ Str::limit($listing->location, 25) }}
+                                            {{-- {{ Str::limit($listing->location, 25) }} --}}
+                                            @if ($listing->province)
+                                                {{$listing->province->name }}
+                                                @if ($listing->ward?->name)
+                                                    , {{$listing->ward?->name }}
+                                                @endif
+                                            @else
+                                                {{ Str::limit($listing->location, 25) }}
+                                            @endif
                                         </div>
                                     </div>
 
@@ -389,13 +397,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            /* margin-bottom: 15px; */
         }
 
         .listing-price {
             color: var(--primary-color);
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
         .listing-location {
@@ -403,6 +411,7 @@
             font-size: 0.9rem;
             display: flex;
             align-items: center;
+            margin-bottom: 0;
         }
 
         @media (max-width: 768px) {
