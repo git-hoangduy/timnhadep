@@ -356,7 +356,7 @@ function initTinymce(selector) {
             // }
         ],
         content_style: "@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');",
-        content_css: '/admin/css/tinymce-template.css?v3',
+        content_css: '/admin/css/tinymce-template.css?v4',
         fontsize_formats: fontSizes,
         setup: function (editor) {
             editor.on('SetContent', function (e) {
@@ -380,6 +380,12 @@ function initTinymce(selector) {
                     });
                 });
 
+                /* ===== TikTok embed: disable editing ===== */
+                const tiktokEmbeds = container.querySelectorAll('blockquote.tiktok-embed');
+
+                tiktokEmbeds.forEach(el => {
+                    el.setAttribute('contenteditable', 'false');
+                });
             });
         }
     });
