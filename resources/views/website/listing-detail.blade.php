@@ -195,6 +195,7 @@
 
         if (localStorage.getItem('viewed_listing_{{ $listing->id }}') == 'true') {
             const fullPhone = '{{ $phone }}';
+            $('.mark-phone').text(fullPhone);
             window.location.href = 'tel:' + fullPhone;
             return;
         }
@@ -227,6 +228,13 @@
             }
         });
 
+    });
+
+    $(document).ready(function() {
+        if (localStorage.getItem('viewed_listing_{{ $listing->id }}') == 'true') {
+            const fullPhone = '{{ $phone }}';
+            $('.mark-phone').text(fullPhone);
+        }
     });
 </script>
 @endpush
