@@ -30,6 +30,22 @@
 .mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
     left: 20px;
 }
+.mce-content-body .tiktok-embed{
+  border: 2px dotted #000;
+  padding: 10px;
+  aspect-ratio: 9 / 16 !important;
+  width: 100%;
+  max-width: 320px !important;
+  margin: 0 auto;
+}
+
+.mce-object-iframe iframe[src*="youtube.com/embed"],
+.mce-object-iframe iframe[src*="youtu.be/"] {
+    width: 100% !important;
+    /* height: auto !important; */
+    aspect-ratio: 16 / 9 !important;
+    /* max-width: 100% !important; */
+}
 /* * {
     margin: 0; 
     padding: 0;

@@ -1,3 +1,69 @@
+<style>
+    .zalo-box {
+        display: inline-block;
+        position: fixed;
+        bottom: 90px;
+        bottom: 25px;
+        left: 25px;
+        z-index: 9999;
+        width: 50px;
+        height: 50px;
+        border-radius: 30px;
+    }
+
+    .zalo-box img {
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+        object-fit: contain;
+        border: 1px solid #d0e2fd;
+    }
+
+    .zalo-box {
+        display: inline-block;
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        z-index: 9999;
+        width: 50px;
+        height: 50px;
+        border-radius: 30px;
+        animation: zalo-pulse 1.8s infinite;
+    }
+
+    .zalo-box::before,
+    .zalo-box::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: rgba(0, 136, 255, 0.4);
+        animation: zalo-wave 1.8s infinite;
+    }
+
+    .zalo-box::after {
+        animation-delay: 0.9s;
+    }
+
+    @keyframes zalo-pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes zalo-wave {
+        0% {
+            transform: scale(1);
+            opacity: 0.6;
+        }
+        100% {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+</style>
+
 {{-- Contact form any page --}}
 @include('website.partials.form-contact')
 
@@ -5,6 +71,12 @@
 <a href="#" class="back-to-top" id="backToTop">
     <i class="fas fa-chevron-up"></i>
 </a>
+
+@if (setting('social.zalo') != '')
+    <a href="https://zalo.me/{{ setting('social.zalo') }}" class="zalo-box" target="_blank">
+        <img src="{{ asset('website/images/zalo.png') }}" alt="">
+    </a>
+@endif
 
 <!-- Footer -->
 <footer class="footer" id="contact">

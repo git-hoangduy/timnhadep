@@ -382,6 +382,13 @@ function initTinymce(selector) {
                     });
                 });
 
+                /* ===== TikTok embed: disable editing ===== */
+                const tiktokEmbeds = container.querySelectorAll('blockquote.tiktok-embed');
+
+                tiktokEmbeds.forEach(el => {
+                    el.setAttribute('contenteditable', 'false');
+                });
+
             });
         }
     });
