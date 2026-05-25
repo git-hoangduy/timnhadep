@@ -1448,6 +1448,10 @@ a {
   overflow: hidden;
 }
 
+.listing-info  .listing-description {
+  max-height: unset;
+}
+
 .description-title {
   font-size: 20px;
   font-weight: 700;
