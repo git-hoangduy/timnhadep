@@ -864,7 +864,7 @@ a {
 
 .listing-footer {
   /* padding: 15px 25px 25px; */
-  padding: 15px 0 0;
+  padding: 15px 0 15px;
   border-top: 1px solid var(--light-gray);
   display: flex;
   justify-content: space-between;

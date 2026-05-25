@@ -176,14 +176,21 @@
                                             <h3 class="listing-title">{{ $listing->name }}</h3>
                                             <span class="listing-type">{{ $listing->category->name }}</span>
                                             <p class="listing-description">{!! nl2br(htmlspecialchars_decode($listing->excerpt)) !!}</p>
-                                            <div class="listing-price">{{ $listing->price }} VND</div>
+                                            <div class="listing-price">{{ $listing->formatted_price }}</div>
                                         </div>
-                                        <div class="listing-footer">
-                                            <div class="listing-location">
+                                        <div class="listing-footer px-3">
+                                            {{-- <div class="listing-location">
                                                 <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                                {{ $listing->position }}
-                                            </div>
-                                            <a href="{{route('listing.detail', ['slug' => $listing->slug])}}" class="btn btn-outline-primary btn-sm">Liên hệ ngay</a>
+                                                @if ($listing->province)
+                                                    {{ $listing->province->name }}
+                                                    @if ($listing->ward?->name)
+                                                        , {{ $listing->ward->name }}
+                                                    @endif
+                                                @else
+                                                    {{ Str::limit($listing->location, 25) }}
+                                                @endif
+                                            </div> --}}
+                                            <a href="{{route('listing.detail', ['slug' => $listing->slug])}}" class="btn btn-outline-primary btn-sm w-100">Liên hệ ngay</a>
                                         </div>
                                     </div>
                                 </div>
