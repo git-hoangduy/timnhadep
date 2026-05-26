@@ -854,6 +854,20 @@ a {
   margin-bottom: 20px;
   color: var(--gray-color);
   line-height: 1.6;
+  height: 90px;
+  overflow: hidden;
+  position: relative;
+}
+
+.listing-description::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, white);
+  pointer-events: none;
 }
 
 .listing-price {

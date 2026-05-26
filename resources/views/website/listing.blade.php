@@ -388,9 +388,22 @@
         .listing-excerpt {
             color: var(--gray-color);
             margin-bottom: 20px;
-            min-height: 4.2rem;
+            height: 90px;
+            overflow: hidden;
+            position: relative;
             line-height: 1.6;
             font-size: 0.95rem;
+        }
+
+        .listing-excerpt::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, white);
+            pointer-events: none;
         }
 
         .listing-footer {

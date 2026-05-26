@@ -16,7 +16,7 @@
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
-    <link rel="stylesheet" href="{{ asset('website/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/css/style.css') }}?v=20260526">
     @stack('styles')
     <style>
         .grecaptcha-badge {

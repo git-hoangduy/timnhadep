@@ -94,8 +94,11 @@
                                 {{-- Mô tả --}}
                                 <div class="mb-3">
                                     <label class="form-label">Nội dung ngắn</label>
-                                    <textarea name="excerpt" rows="3" class="form-control" 
-                                              placeholder="Mô tả ngắn gọn về bất động sản...">{{ old('excerpt') }}</textarea>
+                                    <textarea name="excerpt" rows="3" class="form-control"
+                                              placeholder="Ví dụ: Chung cư 2PN full nội thất cao cấp, tầng 12 view thoáng, ban công rộng. Diện tích 68m². Giá thuê 9 triệu/tháng, đã bao gồm phí quản lý. Liên hệ ngay để đặt lịch xem nhà.">{{ old('excerpt') }}</textarea>
+                                    <div class="form-text text-muted">
+                                        <strong>Gợi ý:</strong> Nên bao gồm số phòng ngủ, diện tích, nội thất, tầng, hướng và giá thuê. Giữ ngắn gọn trong 2–3 câu để khách dễ đọc.
+                                    </div>
                                 </div>
 
                                 {{-- Hình ảnh (tham khảo từ Page) --}}
@@ -108,8 +111,18 @@
                                 
                                 <div class="mb-3">
                                     <label class="form-label">Mô tả chi tiết</label>
-                                    <textarea name="content" rows="6" class="form-control tinymce" 
-                                              placeholder="Mô tả chi tiết về bất động sản: số phòng, hướng nhà, tiện ích, nội thất...">{{ old('content') }}</textarea>
+                                    <textarea name="content" rows="6" class="form-control tinymce">{{ old('content') }}</textarea>
+                                    <div class="form-text text-muted mt-1">
+                                        <strong>Gợi ý nội dung:</strong>
+                                        <ul class="mb-0 mt-1 ps-3" style="font-size: 0.875rem;">
+                                            <li><strong>Thông tin căn hộ:</strong> Số phòng ngủ, phòng tắm, diện tích (m²), tầng, hướng nhà/ban công</li>
+                                            <li><strong>Nội thất:</strong> Full nội thất / Nội thất cơ bản / Không nội thất — liệt kê đồ có sẵn (máy lạnh, tủ lạnh, máy giặt, bếp…)</li>
+                                            <li><strong>Tiện ích tòa nhà:</strong> Hồ bơi, gym, bảo vệ 24/7, hầm xe, thang máy, khu BBQ…</li>
+                                            <li><strong>Chi phí:</strong> Phí quản lý, giá điện nước, phí giữ xe</li>
+                                            <li><strong>Điều kiện thuê:</strong> Thời hạn thuê tối thiểu, đặt cọc, có nuôi thú cưng không</li>
+                                            <li><strong>Vị trí:</strong> Gần trường học, siêu thị, bệnh viện, tuyến metro/bus</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 
                                 {{-- SEO --}}
