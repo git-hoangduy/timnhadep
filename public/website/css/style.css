@@ -854,12 +854,15 @@ a {
   margin-bottom: 20px;
   color: var(--gray-color);
   line-height: 1.6;
+}
+
+.listing-card .listing-description {
   height: 90px;
   overflow: hidden;
   position: relative;
 }
 
-.listing-description::after {
+.listing-card .listing-description::after {
   content: '';
   position: absolute;
   bottom: 0;
