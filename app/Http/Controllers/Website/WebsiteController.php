@@ -300,22 +300,23 @@ class WebsiteController extends Controller
 
     public function listingDetail(Request $request, $slug = '') {
 
-        $listing = Listing::where('slug', $slug)->first();
+        $listing = Listing::with(['avatar', 'images'])->where('slug', $slug)->first();
         if (!$listing) {
             abort(404);
         }
 
         $listingDesc = $listing->meta_description ?: $listing->excerpt ?: setting('seo.meta_description');
+        $ogImage = $listing->avatar_image !== 'uploads/no-image.jpg'
+            ? asset($listing->avatar_image)
+            : asset(setting('seo.ogimage'));
+
         SEOMeta::setTitle($listing->name);
         SEOMeta::setDescription($listingDesc);
         OpenGraph::setTitle($listing->name . ' | ' . setting('info.name'));
         OpenGraph::setUrl(url()->current());
         OpenGraph::setDescription($listingDesc);
-        if ($listing->image) {
-            OpenGraph::addImage(asset($listing->image), ['height' => 630, 'width' => 1200]);
-        } else {
-            OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
-        }
+        OpenGraph::addImage($ogImage, ['height' => 630, 'width' => 1200]);
+
         return view('website.listing-detail', compact('listing'));
     }
 
