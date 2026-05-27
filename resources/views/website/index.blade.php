@@ -4,44 +4,95 @@
 <!-- Hero Section -->
 <section class="hero-section" id="home">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="hero-content">
-                    <h1 class="animate__animated animate__fadeInDown">Tìm Ngôi Nhà Hoàn Hảo Cho Gia Đình Bạn</h1>
-                    <p class="animate__animated animate__fadeInUp animate__delay-1s">Khám phá hàng nghìn bất động sản cao cấp, đăng tin mua bán miễn phí và nhận tư vấn từ chuyên gia hàng đầu.</p>
-                    <div class="animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="#projects" class="btn btn-primary me-3 mb-3 mb-md-0"><i class="fas fa-building me-2"></i>Xem dự án</a>
-                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#postModal"><i class="fas fa-plus-circle me-2"></i>Đăng tin ngay</button>
-                    </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-9 col-lg-11 text-center">
+                <div class="hero-content-new animate__animated animate__fadeInDown">
+                    <h1>Tìm Ngôi Nhà Hoàn Hảo<br class="d-none d-md-block"> Cho Gia Đình Bạn</h1>
+                    <p>Khám phá hàng nghìn bất động sản cao cấp, đăng tin mua bán miễn phí và nhận tư vấn từ chuyên gia hàng đầu.</p>
+                </div>
+
+                <!-- Search Box -->
+                <div class="hero-searchbox animate__animated animate__fadeInUp animate__delay-1s">
+                    <form action="{{ route('listing') }}" method="GET">
+                        <div class="hsbx-inner">
+                            <div class="hsbx-field">
+                                <span class="hsbx-label"><i class="fas fa-exchange-alt me-1"></i> Hình thức</span>
+                                <select name="type" class="hsbx-select">
+                                    <option value="">Mua &amp; Thuê</option>
+                                    <option value="sale">Cần mua</option>
+                                    <option value="rent">Cần thuê</option>
+                                </select>
+                            </div>
+                            <div class="hsbx-divider"></div>
+                            <div class="hsbx-field">
+                                <span class="hsbx-label"><i class="fas fa-map-marker-alt me-1"></i> Khu vực</span>
+                                <select name="province_code" class="hsbx-select">
+                                    <option value="">Toàn quốc</option>
+                                    @foreach($provinces as $prov)
+                                        <option value="{{ $prov->code }}">{{ $prov->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="hsbx-divider"></div>
+                            <div class="hsbx-field">
+                                <span class="hsbx-label"><i class="fas fa-th-large me-1"></i> Loại BĐS</span>
+                                <select name="category" class="hsbx-select">
+                                    <option value="">Tất cả loại</option>
+                                    @foreach($listingCategories as $cat)
+                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="hsbx-btn">
+                                <i class="fas fa-search"></i>
+                                <span>Tìm kiếm</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="hero-cta-row animate__animated animate__fadeInUp animate__delay-2s">
+                    <a href="#section-tabs" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-building me-2"></i>Xem dự án
+                    </a>
+                    <button class="btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#postModal">
+                        <i class="fas fa-plus-circle me-2"></i>Đăng tin miễn phí
+                    </button>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="hero-stats animate__animated animate__fadeIn animate__delay-1s">
-                    <div class="row text-center">
-                        <div class="col-6">
-                            <div class="stat-item">
-                                <div class="stat-number">10+</div>
-                                <div class="stat-text">Năm kinh nghiệm BĐS</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-item">
-                                <div class="stat-number">300+</div>
-                                <div class="stat-text">Khách hàng đã hỗ trợ</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-item">
-                                <div class="stat-number">Minh bạch</div>
-                                <div class="stat-text">Pháp lý rõ ràng</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="stat-item">
-                                <div class="stat-number">Lâu dài</div>
-                                <div class="stat-text">Đồng hành sau giao dịch</div>
-                            </div>
-                        </div>
+        </div>
+    </div>
+
+    <!-- Stats Strip -->
+    <div class="hero-bottom-strip">
+        <div class="container">
+            <div class="hbs-grid">
+                <div class="hbs-item">
+                    <div class="hbs-icon"><i class="fas fa-medal"></i></div>
+                    <div class="hbs-text">
+                        <strong>10+ Năm</strong>
+                        <span>Kinh nghiệm BĐS</span>
+                    </div>
+                </div>
+                <div class="hbs-item">
+                    <div class="hbs-icon"><i class="fas fa-users"></i></div>
+                    <div class="hbs-text">
+                        <strong>300+</strong>
+                        <span>Khách hàng tin tưởng</span>
+                    </div>
+                </div>
+                <div class="hbs-item">
+                    <div class="hbs-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="hbs-text">
+                        <strong>320+</strong>
+                        <span>Giao dịch thành công</span>
+                    </div>
+                </div>
+                <div class="hbs-item">
+                    <div class="hbs-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="hbs-text">
+                        <strong>100%</strong>
+                        <span>Pháp lý minh bạch</span>
                     </div>
                 </div>
             </div>
@@ -151,46 +202,33 @@
                             
                             <div class="row">
                                 @foreach($listings as $listing)
-                                <div class="col-lg-4 mb-3">
+                                <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="listing-card animate-on-scroll">
-                                        <div class="listing-header">
-                                            <div class="listing-user">
-                                                <div class="user-avatar">
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="{{ $listing->customer->name ?? 'Tìm nhà đẹp' }}">
-                                                </div>
-                                                <div>
-                                                    <div class="user-name">{{ $listing->customer->name ?? 'Tìm nhà đẹp' }}</div>
-                                                    <!-- <div class="user-rating">
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star text-warning"></i>
-                                                        <i class="fas fa-star-half-alt text-warning"></i>
-                                                        <span class="ms-1">4.5</span>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                            <div class="listing-date">{{ $listing->created_at->diffForHumans() }}</div>
+                                        <div class="listing-thumb">
+                                            <img src="{{ $listing->image ? asset($listing->image) : asset('uploads/default.png') }}" alt="{{ $listing->name }}">
+                                            <span class="listing-thumb-badge {{ $listing->type == 'sale' ? 'badge-sale' : 'badge-rent' }}">
+                                                {{ $listing->type == 'sale' ? 'Cần bán' : 'Cho thuê' }}
+                                            </span>
                                         </div>
                                         <div class="listing-content">
                                             <h3 class="listing-title">{{ $listing->name }}</h3>
-                                            <span class="listing-type">{{ $listing->category->name }}</span>
-                                            <p class="listing-description">{!! nl2br(htmlspecialchars_decode($listing->excerpt)) !!}</p>
-                                            <div class="listing-price">{{ $listing->formatted_price }}</div>
+                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                                                <span class="listing-type">{{ $listing->category->name }}</span>
+                                                <div class="listing-price">{{ $listing->formatted_price }}</div>
+                                            </div>
+                                            @if($listing->province)
+                                            <div class="listing-location-info">
+                                                <i class="fas fa-map-marker-alt text-primary me-1"></i>
+                                                {{ $listing->province->name }}@if($listing->ward), {{ $listing->ward->name }}@endif
+                                            </div>
+                                            @endif
                                         </div>
                                         <div class="listing-footer px-3">
-                                            {{-- <div class="listing-location">
-                                                <i class="fas fa-map-marker-alt text-primary me-1"></i>
-                                                @if ($listing->province)
-                                                    {{ $listing->province->name }}
-                                                    @if ($listing->ward?->name)
-                                                        , {{ $listing->ward->name }}
-                                                    @endif
-                                                @else
-                                                    {{ Str::limit($listing->location, 25) }}
-                                                @endif
-                                            </div> --}}
-                                            <a href="{{route('listing.detail', ['slug' => $listing->slug])}}" class="btn btn-outline-primary btn-sm w-100">Liên hệ ngay</a>
+                                            <div class="d-flex align-items-center gap-2 text-muted">
+                                                <i class="fas fa-user-circle"></i>
+                                                <small>{{ $listing->customer->name ?? 'Người đăng' }}</small>
+                                            </div>
+                                            <a href="{{route('listing.detail', ['slug' => $listing->slug])}}" class="btn btn-primary btn-sm">Xem chi tiết</a>
                                         </div>
                                     </div>
                                 </div>

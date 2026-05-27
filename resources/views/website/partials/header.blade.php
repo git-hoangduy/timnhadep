@@ -4,7 +4,8 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                <span>Tìm</span>NhàĐẹp
+                <span class="logo-box"><i class="fas fa-home"></i></span>
+                Tìm Nhà<span class="logo-accent">Đẹp</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>

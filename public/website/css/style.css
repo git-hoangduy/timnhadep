@@ -186,13 +186,36 @@ a {
 }
 
 .navbar-brand {
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: 800;
-  color: var(--primary-color);
+  color: var(--dark-color);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  letter-spacing: -1.2px;
 }
 
-.navbar-brand span {
-  color: var(--secondary-color);
+.logo-box {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 10px rgba(235, 93, 30, 0.35);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.navbar-brand:hover .logo-box {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.logo-accent {
+  color: var(--primary-color);
 }
 
 .nav-item {
@@ -2475,4 +2498,356 @@ a {
       justify-content: flex-start;
       margin-top: 15px;
   }
+}
+
+/* ============================================================
+   HERO REDESIGN — centered layout with search bar
+   ============================================================ */
+
+/* Remove old white-fade pseudo-element, stats strip replaces it */
+.hero-section::before {
+    display: none;
+}
+
+/* New hero padding; overflow visible so Nice Select dropdown isn't clipped */
+.hero-section {
+    padding: 150px 0 0;
+    overflow: visible;
+}
+
+/* Centered headline + subtitle */
+.hero-content-new h1 {
+    font-size: 3.4rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content-new p {
+    font-size: 1.2rem;
+    margin-bottom: 35px;
+    opacity: 0.95;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---- Search box ---- */
+.hero-searchbox {
+    margin-bottom: 30px;
+}
+
+.hsbx-inner {
+    background: white;
+    border-radius: 60px;
+    padding: 8px 8px 8px 24px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.hsbx-field {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    padding: 4px 8px;
+}
+
+.hsbx-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.hsbx-select {
+    border: none;
+    padding: 0;
+    font-size: 0.95rem;
+    color: var(--gray-color);
+    background-color: transparent;
+    box-shadow: none !important;
+    outline: none;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.hsbx-select:focus {
+    box-shadow: none !important;
+    outline: none;
+}
+
+.hsbx-divider {
+    width: 1px;
+    height: 40px;
+    background: #e9ecef;
+    flex-shrink: 0;
+    margin: 0 4px;
+}
+
+.hsbx-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 32px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.hsbx-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(235, 93, 30, 0.4);
+}
+
+/* ---- CTA buttons row below search ---- */
+.hero-cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 55px;
+}
+
+/* ---- Stats strip at the bottom of hero ---- */
+.hero-bottom-strip {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 22px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.hbs-grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.hbs-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: white;
+}
+
+.hbs-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.hbs-text strong {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.hbs-text span {
+    font-size: 0.82rem;
+    opacity: 0.85;
+}
+
+/* ============================================================
+   LISTING CARDS — thumbnail image support
+   ============================================================ */
+
+.listing-thumb {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.listing-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.listing-card:hover .listing-thumb img {
+    transform: scale(1.06);
+}
+
+.listing-thumb-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+}
+
+.listing-thumb-badge.badge-sale {
+    background: var(--primary-color);
+}
+
+.listing-thumb-badge.badge-rent {
+    background: var(--secondary-color);
+}
+
+.listing-location-info {
+    font-size: 0.85rem;
+    color: var(--gray-color);
+    margin-top: 6px;
+}
+
+/* ============================================================
+   RESPONSIVE — hero redesign
+   ============================================================ */
+
+@media (max-width: 991px) {
+    .hero-content-new h1 {
+        font-size: 2.6rem;
+    }
+
+    .hsbx-inner {
+        flex-wrap: wrap;
+        border-radius: 16px;
+        padding: 16px;
+        gap: 10px;
+    }
+
+    .hsbx-field {
+        flex: 1 1 calc(50% - 10px);
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 10px 14px;
+    }
+
+    .hsbx-divider {
+        display: none;
+    }
+
+    .hsbx-btn {
+        width: 100%;
+        justify-content: center;
+        border-radius: 8px;
+        padding: 14px;
+    }
+
+    .hbs-item {
+        flex: 1 1 calc(50% - 16px);
+    }
+}
+
+@media (max-width: 575px) {
+    .hero-section {
+        padding: 120px 0 0;
+    }
+
+    .hero-content-new h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content-new p {
+        font-size: 1rem;
+    }
+
+    .hsbx-field {
+        flex: 1 1 100%;
+    }
+
+    /* Mobile stats: 2 col grid, left-aligned so icons stack consistently */
+    .hbs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 8px;
+        max-width: 340px;
+        margin: 0 auto;
+    }
+
+    .hbs-item {
+        flex: unset;
+        justify-content: flex-start;
+    }
+
+    .hero-cta-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-cta-row .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* ============================================================
+   BTN-OUTLINE-LIGHT in hero CTA row — match rounded style
+   ============================================================ */
+.hero-cta-row .btn-outline-light {
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    color: white;
+    transition: var(--transition);
+    font-size: 1rem;
+}
+
+.hero-cta-row .btn-outline-light:hover,
+.hero-cta-row .btn-outline-light:focus,
+.hero-cta-row .btn-outline-light:active {
+    background-color: white !important;
+    border-color: white !important;
+    color: var(--primary-color) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+/* ============================================================
+   HERO SEARCHBOX — native select styling
+   ============================================================ */
+.hsbx-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23aaa'/%3E%3C/svg%3E") no-repeat right 2px center;
+    background-size: 9px;
+    padding-right: 18px;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--dark-color);
+    cursor: pointer;
+}
+
+.hsbx-select:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.hsbx-field:focus-within .hsbx-label {
+    color: var(--primary-color);
 }

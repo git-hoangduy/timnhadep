@@ -43,13 +43,15 @@ class WebsiteController extends Controller
         $listings = Listing::with(['category', 'customer', 'province', 'ward'])
             ->where('status', 1)
             ->orderBy('created_at', 'desc')
-            ->limit(8)
+            ->limit(6)
             ->get();
+        $provinces = Province::orderBy('name', 'asc')->get();
         SEOMeta::setTitle('Trang chủ');
+        OpenGraph::setTitle('Trang chủ | ' . setting('info.name'));
         OpenGraph::setUrl(url()->current());
         OpenGraph::setDescription(setting('seo.meta_description'));
-        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
-        return view('website.index', compact('page', 'projects', 'posts', 'listings'));
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
+        return view('website.index', compact('page', 'projects', 'posts', 'listings', 'provinces'));
     }
 
 
@@ -57,8 +59,10 @@ class WebsiteController extends Controller
 
         $page = Page::where('slug', $slug)->first();
         SEOMeta::setTitle($page->name);
-        OpenGraph::setTitle($page->name);
-        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
+        OpenGraph::setTitle($page->name . ' | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription($page->meta_description ?: setting('seo.meta_description'));
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
 
         return view('website.page', compact('page'));
     }
@@ -77,15 +81,12 @@ class WebsiteController extends Controller
 
         $posts = $query->orderBy('is_highlight', 'desc')->orderBy('id', 'desc')->paginate(16);
 
-        if (!empty($category)) {
-            SEOMeta::setTitle($category->name);
-            OpenGraph::setTitle($category->name);
-        } else {
-            SEOMeta::setTitle('Tất cả bài viết');
-            OpenGraph::setTitle('Tất cả bài viết');
-        }
-        
-        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
+        $pageTitle = !empty($category) ? $category->name : 'Tin tức';
+        SEOMeta::setTitle($pageTitle);
+        OpenGraph::setTitle($pageTitle . ' | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription(!empty($category) && $category->meta_description ? $category->meta_description : setting('seo.meta_description'));
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
 
         return view('website.post', compact('posts', 'category'));
     }
@@ -103,15 +104,12 @@ class WebsiteController extends Controller
 
         $projects = $query->orderBy('is_highlight', 'desc')->orderBy('id', 'desc')->paginate(12);
 
-        if (!empty($category)) {
-            SEOMeta::setTitle($category->name);
-            OpenGraph::setTitle($category->name);
-        } else {
-            SEOMeta::setTitle('Tất cả dự án');
-            OpenGraph::setTitle('Tất cả dự án');
-        }
-        
-        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
+        $pageTitle = !empty($category) ? $category->name : 'Dự án bất động sản';
+        SEOMeta::setTitle($pageTitle);
+        OpenGraph::setTitle($pageTitle . ' | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription(!empty($category) && $category->meta_description ? $category->meta_description : setting('seo.meta_description'));
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
 
         return view('website.project', compact('projects', 'category'));
     }
@@ -183,24 +181,43 @@ class WebsiteController extends Controller
                               ->get();
         }
     
-        SEOMeta::setTitle($project->name ?: $project->slogan);
-        OpenGraph::setTitle($project->name ?: $project->slogan);
+        $projectTitle = $project->name ?: $project->slogan;
+        $projectDesc = $project->meta_description ?: $project->excerpt ?: setting('seo.meta_description');
+        SEOMeta::setTitle($projectTitle);
+        SEOMeta::setDescription($projectDesc);
+        OpenGraph::setTitle($projectTitle . ' | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription($projectDesc);
         if ($project->image) {
-            OpenGraph::addImage(asset($project->image), ['height' => 300, 'width' => 300]);
+            OpenGraph::addImage(asset($project->image), ['height' => 630, 'width' => 1200]);
+        } else {
+            OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
         }
-        
+
         return view('website.project-detail', compact('project', 'recentPosts'));
     }
 
     public function postDetail(Request $request, $slug = '') {
 
         $post = Post::where('slug', $slug)->first();
+        if (!$post) {
+            abort(404);
+        }
 
         $recentPosts = Post::where('id', '<>', $post->id)->where('status', 1)->where('public_at', '<=' , date('Y-m-d H:i:s'))->where('category_id', $post->category_id)->limit(8)->get();
 
+        $postDesc = $post->meta_description ?: $post->excerpt ?: setting('seo.meta_description');
         SEOMeta::setTitle($post->name);
-        OpenGraph::setTitle($post->name);
-        OpenGraph::addImage(asset($post->image), ['height' => 300, 'width' => 300]);
+        SEOMeta::setDescription($postDesc);
+        OpenGraph::setTitle($post->name . ' | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription($postDesc);
+        OpenGraph::setType('article');
+        if ($post->image) {
+            OpenGraph::addImage(asset($post->image), ['height' => 630, 'width' => 1200]);
+        } else {
+            OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
+        }
         return view('website.post-detail', compact('post', 'recentPosts'));
     }
 
@@ -260,28 +277,45 @@ class WebsiteController extends Controller
         }
 
         $listings = $query->orderBy('created_at', 'desc')->paginate(12);
-        
+
         // Lấy danh sách tỉnh/thành và danh mục cho filter
         $provinces = \App\Models\Province::orderBy('name', 'asc')->get();
         $categories = \App\Models\ListingCategory::where(['status' => 1, 'level' => 1])
                                                 ->orderBy('name', 'asc')
                                                 ->get();
-        
+
         // Tính giá cao nhất trong database (triệu đồng) để làm max range
         $maxPriceInDB = Listing::where('status', 1)->max('price') ?? 0;
         $step = 1000000;
         $maxPriceRange = ceil($maxPriceInDB / $step) * $step;
-      
+
+        SEOMeta::setTitle('Tin đăng bất động sản');
+        OpenGraph::setTitle('Tin đăng bất động sản | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription(setting('seo.meta_description'));
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
+
         return view('website.listing', compact('listings', 'provinces', 'categories', 'maxPriceRange'));
     }
 
     public function listingDetail(Request $request, $slug = '') {
 
         $listing = Listing::where('slug', $slug)->first();
+        if (!$listing) {
+            abort(404);
+        }
 
+        $listingDesc = $listing->meta_description ?: $listing->excerpt ?: setting('seo.meta_description');
         SEOMeta::setTitle($listing->name);
-        OpenGraph::setTitle($listing->name);
-        OpenGraph::addImage(asset($listing->image), ['height' => 300, 'width' => 300]);
+        SEOMeta::setDescription($listingDesc);
+        OpenGraph::setTitle($listing->name . ' | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription($listingDesc);
+        if ($listing->image) {
+            OpenGraph::addImage(asset($listing->image), ['height' => 630, 'width' => 1200]);
+        } else {
+            OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
+        }
         return view('website.listing-detail', compact('listing'));
     }
 
@@ -373,8 +407,10 @@ class WebsiteController extends Controller
         }
     
         SEOMeta::setTitle('Liên hệ');
-        OpenGraph::setTitle('Liên hệ');
-        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 300, 'width' => 300]);
+        OpenGraph::setTitle('Liên hệ | ' . setting('info.name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::setDescription(setting('seo.meta_description'));
+        OpenGraph::addImage(asset(setting('seo.ogimage')), ['height' => 630, 'width' => 1200]);
     
         return view('website.contact');  
     }
