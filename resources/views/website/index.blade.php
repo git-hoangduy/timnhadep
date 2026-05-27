@@ -205,7 +205,7 @@
                                 <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="listing-card animate-on-scroll">
                                         <div class="listing-thumb">
-                                            <img src="{{ $listing->image ? asset($listing->image) : asset('uploads/default.png') }}" alt="{{ $listing->name }}">
+                                            <img src="{{ asset($listing->avatar_image) }}" alt="{{ $listing->name }}">
                                             <span class="listing-thumb-badge {{ $listing->type == 'sale' ? 'badge-sale' : 'badge-rent' }}">
                                                 {{ $listing->type == 'sale' ? 'Cần bán' : 'Cho thuê' }}
                                             </span>

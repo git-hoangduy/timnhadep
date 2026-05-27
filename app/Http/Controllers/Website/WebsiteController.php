@@ -40,7 +40,7 @@ class WebsiteController extends Controller
         $page = Page::find(1);
         $projects = Project::where('status', 1)->orderBy('is_highlight', 'desc')->orderBy('id', 'desc')->limit(6)->get();
         $posts = Post::where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
-        $listings = Listing::with(['category', 'customer', 'province', 'ward'])
+        $listings = Listing::with(['category', 'customer', 'province', 'ward', 'avatar', 'images'])
             ->where('status', 1)
             ->orderBy('created_at', 'desc')
             ->limit(6)
