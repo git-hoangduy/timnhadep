@@ -354,7 +354,8 @@ a {
 .tabs-navigation .nav-link {
   background-color: transparent;
   border: none;
-  color: var(--gray-color);
+  box-shadow: inset 0 0 0 2px var(--primary-color);
+  color: var(--primary-color);
   font-weight: 600;
   font-size: 1.1rem;
   padding: 12px 30px !important;

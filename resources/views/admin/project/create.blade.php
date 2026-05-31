@@ -59,6 +59,13 @@
                                     <option value="0">Không kích hoạt</option>
                                 </select>
                            </div>
+                           <div class="col-md-6">
+                                <label>Giao diện trang chi tiết</label>
+                                <select name="style" class="form-control select2">
+                                    <option value="dark">🌑 Tối (Dark)</option>
+                                    <option value="light">☀️ Sáng (Light)</option>
+                                </select>
+                           </div>
                         </div>
                         <div class="mb-3 pt-3 border-top">
                             <button type="button" class="btn btn-primary add-page-block">Thêm khối</button>

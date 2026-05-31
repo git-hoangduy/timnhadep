@@ -3,15 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $project->name }} - {{ $project->slogan }}</title>
+
+    @php
+        $seoTitle       = $project->name . ($project->slogan ? ' - ' . $project->slogan : '');
+        $seoDescription = $project->meta_description ?: ($project->excerpt ?: $project->name . ' - ' . ($project->position ?? '') . '. ' . setting('info.description', ''));
+        $seoKeywords    = $project->meta_keywords ?: ($project->name . ($project->position ? ', ' . $project->position : '') . ', bất động sản, dự án');
+        $seoImage       = $project->images->first() ? asset($project->images->first()->image) : asset(setting('info.logo', ''));
+        $seoUrl         = route('project.detail', ['slug' => $project->slug]);
+        $projectStyle   = ($project->style ?? 'dark') === 'light' ? 'light' : 'dark';
+    @endphp
+
+    <title>{{ $seoTitle }} | {{ setting('info.name', 'Tìm Nhà Đẹp') }}</title>
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ $seoUrl }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta property="og:url" content="{{ $seoUrl }}">
+    <meta property="og:site_name" content="{{ setting('info.name', 'Tìm Nhà Đẹp') }}">
+    <meta property="og:locale" content="vi_VN">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+
     <link rel="icon" type="image/x-icon" href="{{ asset(setting('info.shortcut')) }}">
+
     <!-- CSS Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.min.css">
-    <link rel="stylesheet" href="{{ asset('website/css/style2.css') }}?v=20260106">
+    @if($projectStyle === 'light')
+        <link rel="stylesheet" href="{{ asset('website/css/style2-light.css') }}?v=20260531">
+    @else
+        <link rel="stylesheet" href="{{ asset('website/css/style2.css') }}?v=20260106">
+    @endif
 </head>
 <body>
     <!-- Header -->

@@ -58,6 +58,7 @@ class ProjectController extends Controller
             'position' => $request->position,
             'excerpt' => $request->excerpt,
             'status' => $request->status,
+            'style' => in_array($request->style, ['dark', 'light']) ? $request->style : 'dark',
         ];
         $slug  = Str::slug($data['name']);
         $check = Project::where('slug', $slug)->first();
@@ -157,8 +158,9 @@ class ProjectController extends Controller
             'position' => $request->position,
             'excerpt' => $request->excerpt,
             'status' => $request->status,
+            'style' => in_array($request->style, ['dark', 'light']) ? $request->style : 'dark',
         ];
-        
+
         $slug  = Str::slug($data['name']);
         $check = Project::where(['slug' => $slug])->where('id', '<>', $id)->first();
         if(!empty($check)){
